@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "638375278193",
+    "project_id": "mapata-367015",
+    "storage_bucket": "mapata-367015.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:638375278193:android:690a6cfbfd8f38f9d14dd0",
+        "android_client_info": {
+          "package_name": "com.mapata.mapata"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "638375278193-4k2ga7feiga0gks9c64m8rjqj9jpe7mu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBy1-boiorTmsNq2POkAWWr57kV_blSa8M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "638375278193-4k2ga7feiga0gks9c64m8rjqj9jpe7mu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

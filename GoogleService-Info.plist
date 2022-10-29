@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>638375278193-ujdkrgcp4t6elckl5dec0bgdackt7hrv.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.638375278193-ujdkrgcp4t6elckl5dec0bgdackt7hrv</string>
+	<key>API_KEY</key>
+	<string>AIzaSyB5IGy2eMITsAxRoSXIoh5hL-x2H0oS9wQ</string>
+	<key>GCM_SENDER_ID</key>
+	<string>638375278193</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.mapata.mapata</string>
+	<key>PROJECT_ID</key>
+	<string>mapata-367015</string>
+	<key>STORAGE_BUCKET</key>
+	<string>mapata-367015.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:638375278193:ios:4fef40d9f9a33bfad14dd0</string>
+</dict>
+</plist>
