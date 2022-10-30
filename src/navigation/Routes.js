@@ -4,7 +4,7 @@ const ROUTES = {
   },
   SCREEN: {
     HOME: "HomeScreen",
-    SETTINGS: "SettingsScreen",
+    PROFILE: "ProfileScreen",
   },
   TAB: {
     HOME: "HomeTab",
