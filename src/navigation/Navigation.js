@@ -7,6 +7,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import HomeScreen from "../screens/HomeScreen";
 import SettingsScreen from "../screens/SettingsScreen";
 import ROUTES from "./Routes";
+import { AppHeader } from "../components";
 
 const Tab = createBottomTabNavigator();
 const HomeStackNavigator = createStackNavigator();
@@ -18,7 +19,7 @@ function HomeStack() {
         name={ROUTES.SCREEN.HOME}
         component={HomeScreen}
         options={{
-          headerShown: false,
+          header: () => <AppHeader title={"Mapata"} />,
         }}
       />
       <HomeStackNavigator.Screen
@@ -38,6 +39,7 @@ function MyTabs() {
       initialRouteName={ROUTES.TAB.HOME}
       screenOptions={{
         tabBarActiveTintColor: "green",
+        headerShown: false,
       }}
     >
       <Tab.Screen name={ROUTES.STACK.HOME} component={HomeStack} />

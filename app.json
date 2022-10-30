@@ -7,8 +7,8 @@
     "icon": "./src/assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./src/assets/splash.png",
-      "resizeMode": "contain",
+      "image": "./src/assets/mapataSplash.png",
+      "resizeMode": "center",
       "backgroundColor": "#ffffff"
     },
     "updates": {
@@ -18,11 +18,15 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.mapata.mapata",
+      "config": {
+        "googleMapsApiKey": "AIzaSyAyHskBgN3a-10f4uDLbi5fqXkxFjyTBBY"
+      }
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./src/assets/adaptive-icon.png",
+        "foregroundImage": "./src/assets/mapataSplash.png",
         "backgroundColor": "#FFFFFF"
       }
     },
