@@ -1,21 +1,22 @@
 import React from "react";
-import { Appbar } from "react-native-paper";
+import { Appbar, useTheme } from "react-native-paper";
 import { StyleSheet } from "react-native";
-import COLORS from "../../constants/colors";
 
 const AppHeader = ({ title }) => {
+  const { colors } = useTheme();
+
+  const styles = StyleSheet.create({
+    header: {
+      backgroundColor: colors.primary,
+    },
+  });
+
   return (
     <Appbar.Header style={styles.header} mode={"center-aligned"}>
-      <Appbar.Action icon="menu" color={COLORS.WHITE} onPress={() => {}} />
-      <Appbar.Content title={title} color={COLORS.WHITE} />
+      <Appbar.Action icon="menu" color={colors.white} onPress={() => {}} />
+      <Appbar.Content title={title} color={colors.white} />
     </Appbar.Header>
   );
 };
-
-const styles = StyleSheet.create({
-  header: {
-    backgroundColor: COLORS.PRIMARY,
-  },
-});
 
 export default AppHeader;

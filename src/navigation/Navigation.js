@@ -1,9 +1,7 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer, useTheme } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import COLORS from "../constants/colors";
-import ROUTES from "./Routes";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 //Stacks
@@ -12,6 +10,8 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { AppHeader } from "../components";
 import HomeScreen from "../screens/HomeScreen";
 import ProfileScreen from "../screens/ProfileScreen";
+
+import ROUTES from "../constants/routes";
 
 const Tab = createBottomTabNavigator();
 const HomeStackNavigator = createStackNavigator();
@@ -38,15 +38,15 @@ function HomeStack() {
 }
 
 function MyTabs() {
+  const { colors } = useTheme();
+
   return (
     <Tab.Navigator
       initialRouteName={ROUTES.TAB.HOME}
       screenOptions={{
-        tabBarActiveTintColor: COLORS.PRIMARY,
+        tabBarActiveTintColor: colors.primary,
         headerShown: false,
-  
       }}
-      
     >
       <Tab.Screen
         name={ROUTES.STACK.HOME}
@@ -72,9 +72,9 @@ function MyTabs() {
   );
 }
 
-export default function Navigation() {
+export default function Navigation({ onReady }) {
   return (
-    <NavigationContainer>
+    <NavigationContainer onReady={onReady}>
       <MyTabs />
     </NavigationContainer>
   );

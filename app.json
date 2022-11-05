@@ -4,12 +4,12 @@
     "slug": "mapata",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./src/assets/icon.png",
+    "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./src/assets/mapata-splash.png",
+      "image": "./assets/mapata-splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#abcc23"
+      "backgroundColor": "#fff"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -26,12 +26,12 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./src/assets/mapata-splash.png",
-        "backgroundColor": "#abcc23"
+        "foregroundImage": "./assets/mapata-splash.png",
+        "backgroundColor": "#fff"
       }
     },
     "web": {
-      "favicon": "./src/assets/favicon.png"
+      "favicon": "./assets/favicon.png"
     }
   }
 }

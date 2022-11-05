@@ -1,15 +1,14 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { View, StyleSheet } from "react-native";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
-import { StyleSheet } from "react-native";
 
 const HomeScreen = () => {
   return (
-    <View>
+    <View style={{ height: "100%", width: "100%", backgroundColor: "pink" }}>
       <MapView
         provider={PROVIDER_GOOGLE}
         style={{ height: "100%", width: "100%" }}
-      ></MapView>
+      />
     </View>
   );
 };
