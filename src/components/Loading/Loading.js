@@ -13,7 +13,6 @@ const Loading = ({ show, text }) => {
     },
     text: {
       color: colors.primary,
-      textTransform: "uppercase",
       marginTop: 10,
     },
   });

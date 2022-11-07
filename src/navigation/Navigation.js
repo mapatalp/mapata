@@ -12,9 +12,12 @@ import HomeScreen from "../screens/HomeScreen";
 import ProfileScreen from "../screens/ProfileScreen";
 
 import ROUTES from "../constants/routes";
+import LoginScreen from "../screens/LoginScreen";
+import RegisterScreen from "../screens/RegisterScreen";
 
 const Tab = createBottomTabNavigator();
 const HomeStackNavigator = createStackNavigator();
+const AuthenticationStackNavigator = createStackNavigator();
 
 function HomeStack() {
   return (
@@ -37,7 +40,30 @@ function HomeStack() {
   );
 }
 
-function MyTabs() {
+function AuthenticationStack() {
+  return (
+    <AuthenticationStackNavigator.Navigator
+      initialRouteName={ROUTES.SCREEN.LOGIN}
+    >
+      <AuthenticationStackNavigator.Screen
+        name={ROUTES.SCREEN.LOGIN}
+        component={LoginScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <AuthenticationStackNavigator.Screen
+        name={ROUTES.SCREEN.REGISTER}
+        component={RegisterScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+    </AuthenticationStackNavigator.Navigator>
+  );
+}
+
+function AuthenticatedTabs() {
   const { colors } = useTheme();
 
   return (
@@ -73,9 +99,10 @@ function MyTabs() {
 }
 
 export default function Navigation({ onReady }) {
+  const userLoggedIn = true;
   return (
     <NavigationContainer onReady={onReady}>
-      <MyTabs />
+      {userLoggedIn ? <AuthenticatedTabs /> : <AuthenticationStack />}
     </NavigationContainer>
   );
 }

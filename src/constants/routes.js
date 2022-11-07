@@ -5,10 +5,11 @@ const ROUTES = {
   SCREEN: {
     HOME: "HomeScreen",
     PROFILE: "ProfileScreen",
+    LOGIN: "LoginScreen",
+    REGISTER: "RegisterScreen",
   },
   TAB: {
     HOME: "HomeTab",
-
   },
   DRAWER: {},
 };
