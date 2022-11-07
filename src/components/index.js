@@ -1,3 +1,4 @@
 import AppHeader from "./Header/AppHeader";
+import Loading from "./Loading/Loading";
 
-export { AppHeader };
+export { AppHeader, Loading };
