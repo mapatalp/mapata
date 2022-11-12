@@ -4,13 +4,15 @@ import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import * as Location from "expo-location";
 import Toast from "react-native-toast-message";
 import { Button, FAB, useTheme } from "react-native-paper";
-
+import { useNavigation } from "@react-navigation/native";
 import { Loading } from "../components";
+import ROUTES from "../constants/routes";
 
 const { width } = Dimensions.get("window");
 
 const HomeScreen = () => {
   const { colors } = useTheme();
+  const { navigate } = useNavigation();
   const [loading, setLoading] = useState(false);
 
   const styles = StyleSheet.create({
@@ -80,7 +82,7 @@ const HomeScreen = () => {
         icon="plus"
         color={colors.white}
         style={styles.fab}
-        onPress={() => console.log("Pressed")}
+        onPress={() => navigate(ROUTES.SCREEN.CREATE_PUBLICATION)}
       />
     </View>
   );

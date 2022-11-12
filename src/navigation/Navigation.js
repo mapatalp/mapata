@@ -4,13 +4,11 @@ import { NavigationContainer, useTheme } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-//Stacks
-
 //screens
 import { AppHeader } from "../components";
 import HomeScreen from "../screens/HomeScreen";
 import ProfileScreen from "../screens/ProfileScreen";
-
+import CreatePublicationScreen from "../screens/publication/CreatePublicationScreen";
 import ROUTES from "../constants/routes";
 import LoginScreen from "../screens/LoginScreen";
 import RegisterScreen from "../screens/RegisterScreen";
@@ -35,6 +33,14 @@ function HomeStack() {
         options={{
           headerShown: false,
         }}
+      />
+      <HomeStackNavigator.Screen
+        name={ROUTES.SCREEN.CREATE_PUBLICATION}
+        component={CreatePublicationScreen}
+        options={{
+          header: () => <AppHeader title={"Mapata"} />,
+        }}
+        canGoBack
       />
     </HomeStackNavigator.Navigator>
   );
@@ -85,7 +91,7 @@ function AuthenticatedTabs() {
         }}
       />
       <Tab.Screen
-        name={ROUTES.SCREEN.PROFILE}
+        name={ROUTES.STACK.PROFILE}
         component={ProfileScreen}
         options={{
           tabBarLabel: "Perfil",
