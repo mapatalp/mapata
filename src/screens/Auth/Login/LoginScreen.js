@@ -1,16 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Toast from "react-native-toast-message";
 import { useFormik } from "formik";
+import * as WebBrowser from "expo-web-browser";
+import { GoogleAuthProvider, signInWithCredential } from "firebase/auth";
+import * as Google from "expo-auth-session/providers/google";
 
 import { Button, Loading, TextInput, Text } from "../../../components";
 
 import ROUTES from "../../../constants/routes";
-import AUTH_METHODS from "../../../constants/authMethods";
+import { initialValues, validationSchema } from "./LoginScreen.data";
+import { auth } from "../../../firebase/config";
 
-import { loginWithGoogle } from "../../../utils/authUtils";
-
+WebBrowser.maybeCompleteAuthSession();
 const LoginScreen = () => {
   const [loading, setLoading] = useState(false);
   const [password, setPassword] = useState("");
@@ -18,24 +21,29 @@ const LoginScreen = () => {
 
   const { navigate } = useNavigation();
 
-  const { errors, handleSubmit, setFieldValue, isSubmitting } = useFormik({
-    initialValues: initialValues(),
-    validationSchema: validationSchema(),
-    validateOnChange: false,
-    onSubmit: async (values) => {
-      await loginWithGoogle({ ...values })
+  const [request, response, promptAsync] = Google.useIdTokenAuthRequest({
+    clientId:
+      "638375278193-4k2ga7feiga0gks9c64m8rjqj9jpe7mu.apps.googleusercontent.com",
+  });
+
+  useEffect(() => {
+    if (response?.type === "success") {
+      const { id_token } = response.params;
+      const credential = GoogleAuthProvider.credential(id_token);
+      signInWithCredential(auth, credential)
         .then((result) => {
           console.log(
-            "🚀 ~ file: LoginScreen.js ~ line 25 ~ onSubmit: ~ result",
+            "🚀 ~ file: LoginScreen.js ~ line 64 ~ .then ~ result",
             result
           );
 
           Toast.show({
-            type: "sucess",
+            type: "success",
             text1: "Sesión iniciada",
+            position: "bottom",
           });
 
-          navigate(ROUTES.SCREEN.HOME);
+          // navigate(ROUTES.STACK.HOME);
         })
         .catch((error) => {
           console.log(
@@ -49,13 +57,17 @@ const LoginScreen = () => {
             text1: "Ocurrió un error con Google",
           });
         });
+    }
+  }, [response]);
+
+  const { errors, handleSubmit, setFieldValue, isSubmitting } = useFormik({
+    initialValues: initialValues(),
+    validationSchema: validationSchema(),
+    validateOnChange: false,
+    onSubmit: async (values) => {
+      console.log(values);
     },
   });
-
-  const submitForm = async (method) => {
-    await setFieldValue("method", method);
-    handleSubmit();
-  };
 
   return (
     <>
@@ -71,17 +83,19 @@ const LoginScreen = () => {
         <Text style={{ alignSelf: "center" }}>Login screen</Text>
         {/** Mapata logo image */}
 
-        <TextInput />
+        <Button
+          disabled={!request}
+          onPress={() => {
+            promptAsync();
+          }}
+        >
+          Login con Google
+        </Button>
 
-        <Button onPress={() => navigate(ROUTES.SCREEN.REGISTER)} loading={true}>
+        <Button onPress={() => navigate(ROUTES.SCREEN.REGISTER)}>
           Go to Register
         </Button>
-        <Button onPress={() => submitForm(AUTH_METHODS.EMAIL_AND_PASSWORD)}>
-          Submit Email & Pw
-        </Button>
-        <Button onPress={() => submitForm(AUTH_METHODS.GOOGLE)}>
-          Submit Google
-        </Button>
+        <Button onPress={handleSubmit}>Submit Email & Pw</Button>
       </View>
     </>
   );

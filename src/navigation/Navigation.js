@@ -98,7 +98,7 @@ function AuthenticatedTabs() {
 }
 
 export default function Navigation({ onReady }) {
-  const userLoggedIn = true;
+  const userLoggedIn = false;
   return (
     <NavigationContainer onReady={onReady}>
       {userLoggedIn ? <AuthenticatedTabs /> : <AuthenticationStack />}

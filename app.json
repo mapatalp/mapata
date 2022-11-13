@@ -1,11 +1,13 @@
 {
   "expo": {
     "name": "mapata",
+    "owner": "mapata",
     "slug": "mapata",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
+    "scheme":"com.mapata.mapata",
     "splash": {
       "image": "./assets/mapata-splash.png",
       "resizeMode": "contain",
