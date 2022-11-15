@@ -2,16 +2,11 @@ import React from "react";
 
 import { TextInput as PaperTextInput } from "react-native-paper";
 
-const TextInput = ({ title = "", setTitle, placeholder="" }) => {
-  return (
-    <PaperTextInput
-      placeholder={placeholder}
-      value={title}
-      onChangeText={(title) => setTitle(title)}
-      mode="outlined"
-      outlineColor="#fff"
-    />
-  );
+/**
+ * @param {import("react-native-paper").TextInputProps} props
+ */
+const TextInput = (props) => {
+  return <PaperTextInput mode="outlined" outlineColor="#fff" {...props} />;
 };
 
 export default TextInput;
