@@ -14,6 +14,14 @@ for (var i = 0; i < 3; i++) {
   });
 }
 
+const MyPublications = (props) => (
+  <PublicationListScreen id="0" publicationList={publicationList} />
+);
+
+const MyFavourites = (props) => (
+  <PublicationListScreen id="1" publicationList={publicationList} />
+);
+
 function RenderTabs() {
   const { colors } = useTheme();
   const Tab = createMaterialTopTabNavigator();
@@ -28,20 +36,11 @@ function RenderTabs() {
       style={{ marginTop: 20 }}
     >
       <Tab.Screen
-        //uso la misma lista para favoritos y publicaciones para mockear nada mas
-        initialParams={{ publicationList: publicationList }}
         name="Publicaciones"
-        component={() => (
-          <PublicationListScreen publicationList={publicationList} />
-        )}
+        //uso la misma lista para favoritos y publicaciones para mockear nada mas
+        component={MyPublications}
       />
-      <Tab.Screen
-        initialParams={{ publicationList: publicationList }}
-        name="Favoritos"
-        component={() => (
-          <PublicationListScreen publicationList={publicationList} />
-        )}
-      />
+      <Tab.Screen name="Favoritos" component={MyFavourites} />
     </Tab.Navigator>
   );
 }
