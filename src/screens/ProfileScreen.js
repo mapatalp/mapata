@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, Image } from "react-native"; //por que verga tengo que importarlo de aca si en el login screen lo hace desde components
 import { UserProfilePic, Row } from "../components";
-import { useTheme } from "react-native-paper";
+import { useTheme, Card } from "react-native-paper";
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import AsdScreen from "./AsdScreen";
 const Tab = createMaterialTopTabNavigator();
@@ -30,7 +30,7 @@ const ProfileScreen = () => {
         <UserProfilePic/>
       </Row>
       <Text style={{ alignSelf: "center", marginTop: 15, fontWeight: "bold", fontSize: 20}}>Mr. Buny</Text>
-      
+
       <Row additionalStyles={{ marginTop: 20, alignSelf: "center"}}>
         <Image source={{uri: "https://www.edigitalagency.com.au/wp-content/uploads/Facebook-logo-blue-circle-large-transparent-png.png"}}
                 style={{width: 40, height: 40, margin: 5 }}/>
@@ -44,6 +44,9 @@ const ProfileScreen = () => {
                 <Image source={{uri: "https://www.edigitalagency.com.au/wp-content/uploads/Facebook-logo-blue-circle-large-transparent-png.png"}}
                 style={{width: 40, height: 40, margin: 5 }}/>
       </Row>
+      <Card>
+        
+      </Card>
       <MyTabs/>
     </View>
   );
