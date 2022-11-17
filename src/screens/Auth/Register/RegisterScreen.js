@@ -2,10 +2,10 @@ import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { View } from "react-native";
 import { Text } from "react-native-paper";
-import { Button } from "../components";
-import ROUTES from "../constants/routes";
+import { Button } from "../../../components";
+import ROUTES from "../../../constants/routes";
 
-const LoginScreen = () => {
+const RegisterScreen = () => {
   const { navigate } = useNavigation();
   return (
     <View
@@ -16,12 +16,10 @@ const LoginScreen = () => {
         alignContent: "center",
       }}
     >
-      <Text style={{ alignSelf: "center" }}>Login screen</Text>
-      <Button onPress={() => navigate(ROUTES.SCREEN.REGISTER)}>
-        Go to Register
-      </Button>
+      <Text style={{ alignSelf: "center" }}>Register screen</Text>
+      <Button onPress={() => navigate(ROUTES.SCREEN.LOGIN)}>Go to Login</Button>
     </View>
   );
 };
 
-export default LoginScreen;
+export default RegisterScreen;

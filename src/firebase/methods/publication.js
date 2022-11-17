@@ -1,8 +1,8 @@
-import { getDatabase, ref, set } from "firebase/database";
+import { ref, push } from "firebase/database";
 import { db } from "../config";
 
-const createPublication = (publication) => {
-  set(ref(db, "publications"), publication);
+const createPublication = async (publication) => {
+  push(ref(db, "/publications"), publication);
 };
 
 export { createPublication };

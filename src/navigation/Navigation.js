@@ -10,8 +10,7 @@ import HomeScreen from "../screens/HomeScreen";
 import ProfileScreen from "../screens/ProfileScreen";
 import CreatePublicationScreen from "../screens/publication/CreatePublicationScreen";
 import ROUTES from "../constants/routes";
-import LoginScreen from "../screens/LoginScreen";
-import RegisterScreen from "../screens/RegisterScreen";
+import { LoginScreen, RegisterScreen } from "../screens/Auth";
 
 const Tab = createBottomTabNavigator();
 const HomeStackNavigator = createStackNavigator();
@@ -25,13 +24,6 @@ function HomeStack() {
         component={HomeScreen}
         options={{
           header: () => <AppHeader title={"Mapata"} />,
-        }}
-      />
-      <HomeStackNavigator.Screen
-        name={ROUTES.SCREEN.PROFILE}
-        component={ProfileScreen}
-        options={{
-          headerShown: false,
         }}
       />
       <HomeStackNavigator.Screen

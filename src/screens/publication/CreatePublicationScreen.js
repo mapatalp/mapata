@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Formik, useFormik } from "formik";
+import { useFormik } from "formik";
 import {
   initialValues,
   validationSchema,
@@ -15,22 +15,23 @@ import {
 import { Button } from "react-native-paper";
 import { createPublication } from "../../firebase/methods/publication";
 
+
 const CreatePublicationScreen = () => {
   const [selectedList, setSelectedList] = useState([]);
-  const { values, errors, setFieldValue, isSubmitting, handleSubmit } =
-    useFormik({
+
+  const { values, errors, setFieldValue, isSubmitting, handleSubmit } = useFormik({
       initialValues: initialValues(),
       validationSchema: validationSchema(),
       validateOnChange: true,
       onSubmit: async (values) => {
         try {
-      
-          createPublication(values);
+          await createPublication(values);
         } catch (error) {
           // Toast.show({
           //   type: "error",
           //   position: "bottom",
           //   text1: "Complete los campos obligatorios",
+         
           // });
         }
       },
@@ -41,6 +42,7 @@ const CreatePublicationScreen = () => {
       <Row>
         <Column additionalStyles={{ width: "100%" }}>
           <TextInput
+        
             error={errors.title}
             placeholder="Título"
             value={values.title}
@@ -102,7 +104,7 @@ const CreatePublicationScreen = () => {
         />
       </Row>
 
-      <Button onPress={handleSubmit} loading={isSubmitting}>
+      <Button onPress={handleSubmit} disabled={isSubmitting}>
         Enviar
       </Button>
     </ScreenWithInputs>

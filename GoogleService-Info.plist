@@ -30,5 +30,7 @@
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
 	<string>1:638375278193:ios:4fef40d9f9a33bfad14dd0</string>
+	<key>DATABASE_URL</key>
+	<string>https://mapata-367015-default-rtdb.firebaseio.com</string>
 </dict>
 </plist>

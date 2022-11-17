@@ -7,6 +7,5 @@ export const theme = {
     ...DefaultTheme.colors,
     primary: "#FF5353",
     white: "#FFFFFF",
-
   },
 };

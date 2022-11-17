@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "638375278193",
+    "firebase_url": "https://mapata-367015-default-rtdb.firebaseio.com",
     "project_id": "mapata-367015",
     "storage_bucket": "mapata-367015.appspot.com"
   },
@@ -29,6 +30,13 @@
             {
               "client_id": "638375278193-4k2ga7feiga0gks9c64m8rjqj9jpe7mu.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "638375278193-ujdkrgcp4t6elckl5dec0bgdackt7hrv.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mapata.mapata"
+              }
             }
           ]
         }
