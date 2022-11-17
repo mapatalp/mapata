@@ -7,6 +7,7 @@ import ScreenWithInputs from "./ScreenWithInputs/ScreenWithInputs";
 import TextInput from "./Inputs/TextInput";
 import SelectInput from "./Selects/SelectInput";
 import UserProfilePic from "./Shapes/UserProfilePic";
+import PublicationCard from "./Cards/PublicationCard";
 
 export {
   AppHeader,
@@ -18,4 +19,5 @@ export {
   TextInput,
   SelectInput,
   UserProfilePic,
+  PublicationCard,
 };
