@@ -1,6 +1,8 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
+import { getDatabase } from "firebase/database";
+
 export const firebaseConfig = {
   apiKey: "AIzaSyAyHskBgN3a-10f4uDLbi5fqXkxFjyTBBY",
   authDomain: "mapata-367015.firebaseapp.com",
@@ -17,5 +19,6 @@ const app = initializeApp(firebaseConfig);
 
 // Servicios
 export const auth = getAuth(app);
+export const db = getDatabase(app);
 
 export default app;

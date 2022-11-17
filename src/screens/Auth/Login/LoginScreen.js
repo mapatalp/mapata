@@ -24,20 +24,24 @@ const LoginScreen = () => {
     clientId:
       "638375278193-4k2ga7feiga0gks9c64m8rjqj9jpe7mu.apps.googleusercontent.com",
   });
-  const { handleResponse } = useAuth();
+  const { handleResponse, loginWithEmailAndPassword } = useAuth();
 
   useEffect(() => {
     handleResponse({ response, method: "google" });
   }, [request]);
 
-  const { handleSubmit, isSubmitting } = useFormik({
-    initialValues: initialValues(),
-    validationSchema: validationSchema(),
-    validateOnChange: true,
-    onSubmit: async (values) => {
-      console.log(values);
-    },
-  });
+  const { handleSubmit, isSubmitting, values, errors, handleChange } =
+    useFormik({
+      initialValues: initialValues(),
+      validationSchema: validationSchema(),
+      validateOnChange: true,
+      onSubmit: async (values) => {
+        await loginWithEmailAndPassword({
+          email: values.email,
+          password: values.password,
+        }).then(() => navigate(ROUTES.STACK.HOME));
+      },
+    });
 
   return (
     <>
@@ -62,12 +66,27 @@ const LoginScreen = () => {
           Login con Google
         </Button>
 
-        <Button onPress={() => navigate(ROUTES.SCREEN.REGISTER)}>
-          Go to Register
-        </Button>
+        <TextInput
+          value={values.email}
+          error={errors.email}
+          onChangeText={handleChange}
+        />
+        <TextInput
+          value={values.password}
+          error={errors.password}
+          onChangeText={handleChange}
+        />
+
         <Button onPress={handleSubmit} disabled={isSubmitting}>
           Submit Email & Pw
         </Button>
+
+        <Button onPress={() => navigate(ROUTES.SCREEN.REGISTER)}>
+          Go to Register
+        </Button>
+        {/* <Button onPress={() => navigate(ROUTES.SCREEN.REGISTER)}>
+         Te olvidaste la password
+        </Button> */}
       </View>
     </>
   );

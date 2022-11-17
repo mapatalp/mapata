@@ -4,13 +4,11 @@ import { NavigationContainer, useTheme } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-//Stacks
-
 //screens
 import { AppHeader } from "../components";
 import HomeScreen from "../screens/HomeScreen";
 import ProfileScreen from "../screens/ProfileScreen";
-
+import CreatePublicationScreen from "../screens/publication/CreatePublicationScreen";
 import ROUTES from "../constants/routes";
 import { LoginScreen, RegisterScreen } from "../screens/Auth";
 
@@ -29,11 +27,12 @@ function HomeStack() {
         }}
       />
       <HomeStackNavigator.Screen
-        name={ROUTES.SCREEN.PROFILE}
-        component={ProfileScreen}
+        name={ROUTES.SCREEN.CREATE_PUBLICATION}
+        component={CreatePublicationScreen}
         options={{
-          headerShown: false,
+          header: () => <AppHeader title={"Mapata"} />,
         }}
+        canGoBack
       />
     </HomeStackNavigator.Navigator>
   );
@@ -84,7 +83,7 @@ function AuthenticatedTabs() {
         }}
       />
       <Tab.Screen
-        name={ROUTES.SCREEN.PROFILE}
+        name={ROUTES.STACK.PROFILE}
         component={ProfileScreen}
         options={{
           tabBarLabel: "Perfil",
@@ -98,7 +97,7 @@ function AuthenticatedTabs() {
 }
 
 export default function Navigation({ onReady }) {
-  const userLoggedIn = false;
+  const userLoggedIn = true;
   return (
     <NavigationContainer onReady={onReady}>
       {userLoggedIn ? <AuthenticatedTabs /> : <AuthenticationStack />}
