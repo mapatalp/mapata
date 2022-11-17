@@ -13,6 +13,7 @@ import {
   SelectInput,
 } from "../../components";
 import { Button } from "react-native-paper";
+import { createPublication } from "../../firebase/methods/publication";
 
 const CreatePublicationScreen = () => {
   const [selectedList, setSelectedList] = useState([]);
@@ -20,10 +21,11 @@ const CreatePublicationScreen = () => {
     useFormik({
       initialValues: initialValues(),
       validationSchema: validationSchema(),
-      validateOnChange: false,
+      validateOnChange: true,
       onSubmit: async (values) => {
-        console.log(values);
         try {
+      
+          createPublication(values);
         } catch (error) {
           // Toast.show({
           //   type: "error",
@@ -34,20 +36,9 @@ const CreatePublicationScreen = () => {
       },
     });
 
-  const [gender, setGender] = useState({
-    value: "",
-    list: [
-      { _id: "1", value: "MALE" },
-      { _id: "2", value: "FEMALE" },
-      { _id: "3", value: "OTHERS" },
-    ],
-    selectedList: [],
-    error: "",
-  });
-
   return (
     <ScreenWithInputs>
-      <Row additionalStyles={{ marginTop: 10 }}>
+      <Row>
         <Column additionalStyles={{ width: "100%" }}>
           <TextInput
             error={errors.title}
@@ -57,82 +48,58 @@ const CreatePublicationScreen = () => {
           />
         </Column>
       </Row>
-
-      <Row additionalStyles={{ marginTop: 10 }}>
-        <Column additionalStyles={{ width: "100%" }}>
-          <SelectInput
-            label="Sexo"
-            arrayList={[
-              { _id: "1", value: "Hembra" },
-              { _id: "2", value: "Macho" },
-            ]}
-            selectedArrayList={values.gender}
-            onSelection={(value) => {
-              setFieldValue("gender", value.selectedList);
-            }}
-            value={values.gender[0]}
-            errorText={errors.gender}
-            multiEnable={false}
-          />
-        </Column>
-      </Row>
-
       <Row>
-        <Column additionalStyles={{ width: "100%" }}>
-          <SelectInput
-            label="Edad"
-            arrayList={[
-              { _id: "1", value: "Joven" },
-              { _id: "2", value: "Viejo" },
-            ]}
-            selectedArrayList={values.age}
-            onSelection={(value) => {
-              setFieldValue("age", value.selectedList);
-            }}
-            value={values.age[0]}
-            errorText={errors.age}
-            multiEnable={false}
-          />
-        </Column>
+        <SelectInput
+          data={["Hembra", "Macho"]}
+          onSelect={(selectedItem, index) => {
+            setFieldValue("gender", selectedItem);
+          }}
+          value={values.gender}
+          defaultButtonText="Sexo"
+          error={!!errors.gender}
+        />
       </Row>
-
       <Row>
-        <Column additionalStyles={{ width: "100%" }}>
-          <SelectInput
-            label="Edad"
-            arrayList={[
-              { _id: "1", value: "Joven" },
-              { _id: "2", value: "Viejo" },
-            ]}
-            selectedArrayList={values.age}
-            onSelection={(value) => {
-              setFieldValue("age", value.selectedList);
-            }}
-            value={values.age[0]}
-            errorText={errors.age}
-            multiEnable={false}
-          />
-        </Column>
+        <SelectInput
+          buttonStyle={{ width: "100%" }}
+          data={["Joven", "Viejo"]}
+          onSelect={(selectedItem, index) => {
+            setFieldValue("age", selectedItem);
+          }}
+          value={values.age}
+          defaultButtonText="Edad"
+          error={!!errors.age}
+        />
       </Row>
-
       <Row>
-        <Column additionalStyles={{ width: "100%" }}>
-          <SelectInput
-            label="Tipo de animal"
-            arrayList={[
-              { _id: "1", value: "Perro" },
-              { _id: "2", value: "Gato" },
-              { _id: "3", value: "Otro" },
-            ]}
-            selectedArrayList={values.animal}
-            onSelection={(value) => {
-              setFieldValue("animal", value.selectedList);
-            }}
-            value={values.animal[0]}
-            errorText={errors.animal}
-            multiEnable={false}
-          />
-        </Column>
+        <SelectInput
+          buttonStyle={{ width: "100%" }}
+          data={["Lo perdí", "En tránsito", "En la calle"]}
+          onSelect={(selectedItem, index) => {
+            setFieldValue("state", selectedItem);
+          }}
+          value={values.state}
+          defaultButtonText="Estado"
+          error={!!errors.state}
+        />
+      </Row>
+      <Row additionalStyles={{ width: "100%" }}>
+        <SelectInput
+          buttonStyle={{ width: "100%" }}
+          data={["Perro", "Gato", "Otro"]}
+          onSelect={(selectedItem, index) => {
+            setFieldValue("animal", selectedItem);
+          }}
+          buttonTextAfterSelection={(selectedItem, index) => {
+            return selectedItem;
+          }}
+          rowTextForSelection={(item, index) => {
+            return item;
+          }}
+          defaultButtonText="Tipo de animal"
+          value={values.animal}
+          error={!!errors.animal}
+        />
       </Row>
 
       <Button onPress={handleSubmit} loading={isSubmitting}>

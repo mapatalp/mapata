@@ -1,14 +1,33 @@
 import React from "react";
+import { useTheme } from "react-native-paper";
+import { color } from "react-native-reanimated";
 
-import { PaperSelect } from "react-native-paper-select";
+import SelectDropdown from "react-native-select-dropdown";
 
 /**
  *
- * @param {import("react-native-paper-select/lib/typescript/interface/paperSelect.interface").paperSelect} props
+ * @param {import("react-native-select-dropdown").SelectDropdownProps} props
  * @returns
  */
 const SelectInput = (props) => {
-  return <PaperSelect {...props} />;
+  const { colors } = useTheme();
+
+  return (
+    <SelectDropdown
+      {...props}
+      buttonStyle={{
+        width: "100%",
+        backgroundColor:props.error ? colors.background : "white",
+        marginTop: 10,
+        borderRadius: 10,
+        borderWidth:  props.error ? 2 : 0,
+        borderColor: props.error ? colors.error : null,
+      }}
+      buttonTextStyle={{
+        textAlign: "left",
+      }}
+    />
+  );
 };
 
 export default SelectInput;
