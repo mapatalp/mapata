@@ -12,6 +12,7 @@ import { Button, Loading, TextInput, Text } from "../../../components";
 import ROUTES from "../../../constants/routes";
 import { initialValues, validationSchema } from "./LoginScreen.data";
 import { auth } from "../../../firebase/config";
+import useAuth from "../../../customHooks/useAuth";
 
 WebBrowser.maybeCompleteAuthSession();
 const LoginScreen = () => {
@@ -25,45 +26,16 @@ const LoginScreen = () => {
     clientId:
       "638375278193-4k2ga7feiga0gks9c64m8rjqj9jpe7mu.apps.googleusercontent.com",
   });
+  const { handleResponse } = useAuth();
 
   useEffect(() => {
-    if (response?.type === "success") {
-      const { id_token } = response.params;
-      const credential = GoogleAuthProvider.credential(id_token);
-      signInWithCredential(auth, credential)
-        .then((result) => {
-          console.log(
-            "🚀 ~ file: LoginScreen.js ~ line 64 ~ .then ~ result",
-            result
-          );
-
-          Toast.show({
-            type: "success",
-            text1: "Sesión iniciada",
-            position: "bottom",
-          });
-
-          // navigate(ROUTES.STACK.HOME);
-        })
-        .catch((error) => {
-          console.log(
-            "🚀 ~ file: LoginScreen.js ~ line 51 ~ onSubmit: ~ error",
-            error
-          );
-
-          Toast.show({
-            type: "error",
-            position: "bottom",
-            text1: "Ocurrió un error con Google",
-          });
-        });
-    }
-  }, [response]);
+    handleResponse({ response, method: "google" });
+  }, [request]);
 
   const { errors, handleSubmit, setFieldValue, isSubmitting } = useFormik({
     initialValues: initialValues(),
     validationSchema: validationSchema(),
-    validateOnChange: false,
+    validateOnChange: true,
     onSubmit: async (values) => {
       console.log(values);
     },
@@ -95,7 +67,9 @@ const LoginScreen = () => {
         <Button onPress={() => navigate(ROUTES.SCREEN.REGISTER)}>
           Go to Register
         </Button>
-        <Button onPress={handleSubmit}>Submit Email & Pw</Button>
+        <Button onPress={handleSubmit} disabled={isSubmitting}>
+          Submit Email & Pw
+        </Button>
       </View>
     </>
   );
