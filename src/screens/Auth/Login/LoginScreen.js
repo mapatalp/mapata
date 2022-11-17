@@ -4,14 +4,12 @@ import { useNavigation } from "@react-navigation/native";
 import Toast from "react-native-toast-message";
 import { useFormik } from "formik";
 import * as WebBrowser from "expo-web-browser";
-import { GoogleAuthProvider, signInWithCredential } from "firebase/auth";
 import * as Google from "expo-auth-session/providers/google";
 
 import { Button, Loading, TextInput, Text } from "../../../components";
 
 import ROUTES from "../../../constants/routes";
 import { initialValues, validationSchema } from "./LoginScreen.data";
-import { auth } from "../../../firebase/config";
 import useAuth from "../../../customHooks/useAuth";
 
 WebBrowser.maybeCompleteAuthSession();
@@ -32,7 +30,7 @@ const LoginScreen = () => {
     handleResponse({ response, method: "google" });
   }, [request]);
 
-  const { errors, handleSubmit, setFieldValue, isSubmitting } = useFormik({
+  const { handleSubmit, isSubmitting } = useFormik({
     initialValues: initialValues(),
     validationSchema: validationSchema(),
     validateOnChange: true,

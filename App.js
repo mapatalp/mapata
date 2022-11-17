@@ -5,7 +5,6 @@ import Toast from "react-native-toast-message";
 
 import Navigation from "./src/navigation/Navigation";
 import { theme } from "./src/ui";
-import { Loading } from "./src/components";
 
 SplashScreen.preventAutoHideAsync();
 
