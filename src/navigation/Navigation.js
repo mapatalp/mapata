@@ -7,7 +7,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 //screens
 import { AppHeader } from "../components";
 import HomeScreen from "../screens/HomeScreen";
-import ProfileScreen from "../screens/ProfileScreen";
+import ProfileScreen from "../screens/profile/ProfileScreen";
 import CreatePublicationScreen from "../screens/publication/CreatePublicationScreen";
 import ROUTES from "../constants/routes";
 import { LoginScreen, RegisterScreen } from "../screens/Auth";
