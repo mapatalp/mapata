@@ -11,15 +11,16 @@ import {
   ScreenWithInputs,
   TextInput,
   SelectInput,
+  ImagePicker,
 } from "../../components";
 import { Button } from "react-native-paper";
 import { createPublication } from "../../firebase/methods/publication";
 
-
 const CreatePublicationScreen = () => {
   const [selectedList, setSelectedList] = useState([]);
 
-  const { values, errors, setFieldValue, isSubmitting, handleSubmit } = useFormik({
+  const { values, errors, setFieldValue, isSubmitting, handleSubmit } =
+    useFormik({
       initialValues: initialValues(),
       validationSchema: validationSchema(),
       validateOnChange: true,
@@ -31,7 +32,6 @@ const CreatePublicationScreen = () => {
           //   type: "error",
           //   position: "bottom",
           //   text1: "Complete los campos obligatorios",
-         
           // });
         }
       },
@@ -40,9 +40,11 @@ const CreatePublicationScreen = () => {
   return (
     <ScreenWithInputs>
       <Row>
+        <ImagePicker />
+      </Row>
+      <Row>
         <Column additionalStyles={{ width: "100%" }}>
           <TextInput
-        
             error={errors.title}
             placeholder="Título"
             value={values.title}
@@ -102,6 +104,19 @@ const CreatePublicationScreen = () => {
           value={values.animal}
           error={!!errors.animal}
         />
+      </Row>
+
+      <Row>
+        <Column additionalStyles={{ width: "100%" }}>
+          <TextInput
+            error={errors.description}
+            placeholder="Descripción"
+            value={values.description}
+            onChangeText={(title) => setFieldValue("description", title)}
+            multiline
+            numberOfLines={4}
+          />
+        </Column>
       </Row>
 
       <Button onPress={handleSubmit} disabled={isSubmitting}>
