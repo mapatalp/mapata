@@ -14,7 +14,7 @@ const PublicationCard = (props) => {
       <Card.Content>
         <Row>
           <Image
-            source={{ uri: "https://picsum.photos/700" }}
+            source={{ uri: imageUrl }}
             style={{ width: "35%", height: "100%" }}
           />
           <Column additionalStyles={{ marginLeft: 15 }}>
