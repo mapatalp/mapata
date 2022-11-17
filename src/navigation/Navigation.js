@@ -15,6 +15,7 @@ import { LoginScreen, RegisterScreen } from "../screens/Auth";
 const Tab = createBottomTabNavigator();
 const HomeStackNavigator = createStackNavigator();
 const AuthenticationStackNavigator = createStackNavigator();
+const ProfileStackNavigator = createStackNavigator();
 
 function HomeStack() {
   return (
@@ -61,6 +62,20 @@ function AuthenticationStack() {
   );
 }
 
+function ProfileStack() {
+  return (
+    <ProfileStackNavigator.Navigator initialRouteName={ROUTES.SCREEN.PROFILE}>
+      <ProfileStackNavigator.Screen
+        name={ROUTES.SCREEN.PROFILE}
+        component={ProfileScreen}
+        options={{
+          header: () => <AppHeader title={"Mapata"} />,
+        }}
+      />
+    </ProfileStackNavigator.Navigator>
+  );
+}
+
 function AuthenticatedTabs() {
   const { colors } = useTheme();
 
@@ -84,7 +99,7 @@ function AuthenticatedTabs() {
       />
       <Tab.Screen
         name={ROUTES.STACK.PROFILE}
-        component={ProfileScreen}
+        component={ProfileStack}
         options={{
           tabBarLabel: "Perfil",
           tabBarIcon: ({ color }) => (
