@@ -1,5 +1,5 @@
-import React from "react";
-import { StyleSheet, Text, View, Image } from "react-native";
+import { StyleSheet, View, Image } from "react-native";
+import React, { useEffect, useState } from "react";
 
 const styles = StyleSheet.create({
   container: {
@@ -32,7 +32,26 @@ const styles = StyleSheet.create({
  * @param {import("react-native-paper").UserProfilePicProps} props
  */
 const UserProfilePic = () => {
-  var imageUrl = fetchRandomProfileImage();
+  const [imageUrl, setImageUrl] = useState(false);
+
+  useEffect(() => {
+    //TODO borrar
+    const getImage = async () => {
+      const url = await fetchRandomProfileImage();
+      setImageUrl(url);
+    };
+
+    getImage();
+  }, []);
+
+  const fetchRandomProfileImage = async () => {
+    var defaultIconUrl =
+      "https://cdn-icons-png.flaticon.com/512/616/616408.png";
+    return defaultIconUrl;
+  };
+
+  if (!imageUrl) return null;
+
   return (
     <View style={styles.container}>
       <View style={styles.CircleShape}>
@@ -44,9 +63,5 @@ const UserProfilePic = () => {
     </View>
   );
 };
-
-function fetchRandomProfileImage() {
-  return "https://cdn-icons-png.flaticon.com/512/616/616408.png";
-}
 
 export default UserProfilePic;

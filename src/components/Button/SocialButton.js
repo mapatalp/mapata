@@ -1,6 +1,7 @@
 import React from "react";
 import { Image, TouchableOpacity } from "react-native";
-import Toast from "react-native-toast-message";
+import * as Linking from "expo-linking";
+import CONSTANTS from "../../constants/constants";
 
 /**
  * @param {import("react-native-paper").SocialButtonProps} props
@@ -10,18 +11,17 @@ const SocialButton = (props) => {
   return (
     <TouchableOpacity
       onPress={() => {
-        Toast.show({
-          type: "success",
-          position: "bottom",
-          text1: `Tocaste un social media`,
-          visibilityTime: 1500,
-        });
+        if (props.socialUrl.includes(CONSTANTS.HTTP)) {
+          Linking.openURL(props.socialUrl);
+        } else {
+          Linking.openURL(
+            `${CONSTANTS.SOCIALS.WHATSAPP.BASE_URL}?phone=${props.socialUrl}`
+          );
+        }
       }}
     >
       <Image
-        source={{
-          uri: iconUrl,
-        }}
+        source={{ uri: iconUrl }}
         style={{ width: 40, height: 40, margin: 5 }}
       />
     </TouchableOpacity>
@@ -31,17 +31,17 @@ const SocialButton = (props) => {
 function parseSocialIconUrl(socialUrl) {
   var socialIconUrl = "";
   switch (true) {
-    case socialUrl.includes("facebook"):
-      socialIconUrl =
-        "https://www.edigitalagency.com.au/wp-content/uploads/Facebook-logo-blue-circle-large-transparent-png.png";
+    case socialUrl.includes(CONSTANTS.SOCIALS.FACEBOOK.NAME):
+      socialIconUrl = CONSTANTS.SOCIALS.FACEBOOK.ICON_URL;
       break;
-    case socialUrl.includes("instagram"):
-      socialIconUrl =
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Instagram_icon.png/2048px-Instagram_icon.png";
+    case socialUrl.includes(CONSTANTS.SOCIALS.INSTAGRAM.NAME):
+      socialIconUrl = CONSTANTS.SOCIALS.INSTAGRAM.ICON_URL;
+      break;
+    case socialUrl.includes(CONSTANTS.SOCIALS.GOOGLE_MAPS.NAME):
+      socialIconUrl = CONSTANTS.SOCIALS.GOOGLE_MAPS.ICON_URL;
       break;
     default:
-      socialIconUrl =
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/WhatsApp_icon.png/598px-WhatsApp_icon.png";
+      socialIconUrl = CONSTANTS.SOCIALS.WHATSAPP.ICON_URL;
   }
   return socialIconUrl;
 }

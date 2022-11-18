@@ -9,6 +9,7 @@ import SelectInput from "./Selects/SelectInput";
 import UserProfilePic from "./Shapes/UserProfilePic";
 import PublicationCard from "./Cards/PublicationCard";
 import SocialButton from "./Button/SocialButton";
+import Text from "./Text/Text";
 
 export {
   AppHeader,
@@ -22,4 +23,5 @@ export {
   UserProfilePic,
   PublicationCard,
   SocialButton,
+  Text,
 };

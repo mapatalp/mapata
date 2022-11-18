@@ -1,7 +1,8 @@
 import React from "react";
 import { Image } from "react-native"; //por que verga tengo que importarlo de aca si en el login screen lo hace desde components
 import { Card, Title, Paragraph } from "react-native-paper";
-import { Column, Row } from "../../components";
+import Column from "../../components/Grid/Column";
+import Row from "../../components/Grid/Row";
 import Toast from "react-native-toast-message";
 
 /**

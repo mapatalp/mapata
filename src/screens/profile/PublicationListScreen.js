@@ -1,5 +1,5 @@
 import React from "react";
-import { View, ScrollView } from "react-native"; //por que verga tengo que importarlo de aca si en el login screen lo hace desde components
+import { View, ScrollView, Button } from "react-native"; //por que verga tengo que importarlo de aca si en el login screen lo hace desde components
 import { PublicationCard } from "../../components";
 
 const PublicationListScreen = (props) => {

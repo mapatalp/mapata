@@ -1,5 +1,5 @@
 import React from "react";
-import { useTheme } from "react-native-paper";
+import { Button, useTheme } from "react-native-paper";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import PublicationListScreen from "./PublicationListScreen";
 
@@ -14,6 +14,7 @@ for (var i = 0; i < 3; i++) {
   });
 }
 
+//uso la misma lista para favoritos y publicaciones para mockear nada mas
 const MyPublications = (props) => (
   <PublicationListScreen id="0" publicationList={publicationList} />
 );
@@ -23,8 +24,10 @@ const MyFavourites = (props) => (
 );
 
 function RenderTabs() {
+  var isOwner = true; // TODO aplicar validacion
   const { colors } = useTheme();
   const Tab = createMaterialTopTabNavigator();
+
   return (
     <Tab.Navigator
       screenOptions={{
@@ -34,13 +37,18 @@ function RenderTabs() {
         tabBarIndicatorStyle: { backgroundColor: colors.primary },
       }}
       style={{ marginTop: 20 }}
+      onPressed={() => {
+        Toast.show({
+          type: "error",
+          position: "bottom",
+          text1: "Error en los permisos",
+          text2: "Tienes que ir a ajustes de la app y activar la localización",
+        });
+      }}
     >
-      <Tab.Screen
-        name="Publicaciones"
-        //uso la misma lista para favoritos y publicaciones para mockear nada mas
-        component={MyPublications}
-      />
-      <Tab.Screen name="Favoritos" component={MyFavourites} />
+      <Tab.Screen name="Publicaciones" component={MyPublications} />
+
+      {isOwner && <Tab.Screen name="Favoritos" component={MyFavourites} />}
     </Tab.Navigator>
   );
 }
