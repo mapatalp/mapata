@@ -25,6 +25,7 @@ var profile = {
 
 const ProfileScreen = () => {
   let isRefugio = true;
+  let isSelf = true;
   return (
     <View style={{ height: "100%", width: "100%" }}>
       <Row additionalStyles={{ marginTop: 25 }}>
@@ -77,7 +78,7 @@ const ProfileScreen = () => {
           return <SocialButton socialUrl={item} />;
         })}
       </Row>
-      <ProfileTabsScreen />
+      <ProfileTabsScreen isSelf={isSelf} />
     </View>
   );
 };

@@ -23,8 +23,8 @@ const MyFavourites = (props) => (
   <PublicationListScreen id="1" publicationList={publicationList} />
 );
 
-function RenderTabs() {
-  var isOwner = true; // TODO aplicar validacion
+const RenderTabs = (props) => {
+  var isSelf = props.isSelf; // TODO aplicar validacion
   const { colors } = useTheme();
   const Tab = createMaterialTopTabNavigator();
 
@@ -48,11 +48,11 @@ function RenderTabs() {
     >
       <Tab.Screen name="Publicaciones" component={MyPublications} />
 
-      {isOwner && <Tab.Screen name="Favoritos" component={MyFavourites} />}
+      {isSelf && <Tab.Screen name="Favoritos" component={MyFavourites} />}
     </Tab.Navigator>
   );
-}
+};
 
-export function ProfileTabsScreen() {
-  return <RenderTabs />;
-}
+export const ProfileTabsScreen = (props) => {
+  return <RenderTabs isSelf={props.isSelf} />;
+};
