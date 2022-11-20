@@ -36,9 +36,7 @@ const LoginScreen = () => {
     initialValues: initialValues(),
     validationSchema: validationSchema(),
     validateOnChange: true,
-    onSubmit: async (values) => {
-      // console.log(values);
-    },
+    onSubmit: async (values) => {},
   });
 
   return (
