@@ -119,7 +119,11 @@ const CreatePublicationScreen = () => {
         </Column>
       </Row>
 
-      <Button onPress={handleSubmit} disabled={isSubmitting}>
+      <Button
+        style={{ marginBottom: 50 }}
+        onPress={handleSubmit}
+        disabled={isSubmitting}
+      >
         Enviar
       </Button>
     </ScreenWithInputs>

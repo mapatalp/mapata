@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { Button, Image, View, Pressable, Modal } from "react-native";
+import { Image, View, Pressable } from "react-native";
 import * as ImagePicker from "expo-image-picker";
-import { Portal, Provider } from "react-native-paper";
+import { Portal, Provider, Modal, useTheme } from "react-native-paper";
+import Button from "../../components/Button/Button";
 
 import useStorage from "../../customHooks/useStorage";
 
@@ -16,6 +17,7 @@ export default function ImagePickerExample() {
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
   const containerStyle = { backgroundColor: "white", padding: 20 };
+  const { colors } = useTheme();
 
   const pickImageGallery = async () => {
     // No permissions request is necessary for launching the image library
@@ -55,15 +57,37 @@ export default function ImagePickerExample() {
             visible={visible}
             onDismiss={hideModal}
             contentContainerStyle={containerStyle}
+            style={{
+              marginTop: -5,
+            }}
           >
             <Button
-              title="Elegi una imagen de la galeria"
+              style={{
+                borderBottomColor: "black",
+                borderWidth: 1,
+                borderRadius: 0,
+                marginBottom: 5,
+              }}
+              textColor={"black"}
               onPress={pickImageGallery}
-            />
+            >
+              Galería
+            </Button>
             <Button
-              title="Elegi una imagen de la camara"
+              style={{
+                borderBottomColor: "black",
+                borderWidth: 1,
+                borderRadius: 0,
+                marginBottom: 5,
+              }}
+              textColor={"black"}
               onPress={pickImageCamera}
-            />
+            >
+              Camara
+            </Button>
+            <Button onPress={hideModal} textColor={"black"}>
+              Cerrar
+            </Button>
           </Modal>
         </Portal>
       </Provider>
