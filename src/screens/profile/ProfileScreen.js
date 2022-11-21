@@ -9,6 +9,8 @@ import {
 } from "../../components";
 import { Card } from "react-native-paper";
 import { ProfileTabsScreen } from "./ProfileTabsScreen";
+import Appu from "./Appu";
+import { ScrollView } from "react-native-gesture-handler";
 
 var profile = {
   name: "Mapata L.P.",
@@ -72,12 +74,17 @@ const ProfileScreen = (props) => {
         </Column>
       )}
 
-      <Row additionalStyles={{ marginTop: 20, alignSelf: "center" }}>
+      <Row
+        additionalStyles={{
+          marginTop: 20,
+          alignSelf: "center",
+          marginBottom: 15,
+        }}
+      >
         {profile.socialMediaList.map((item, index) => {
           return <SocialButton socialUrl={item} />;
         })}
       </Row>
-
       <ProfileTabsScreen isSelf={isSelf} />
     </View>
   );

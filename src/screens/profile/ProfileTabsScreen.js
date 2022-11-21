@@ -1,40 +1,35 @@
 import React, { useState } from "react";
 import { useTheme } from "react-native-paper";
-import { View, Dimensions } from "react-native";
+import { View } from "react-native";
 import PublicationListScreen from "./PublicationListScreen";
-import { Row, Button } from "../../components";
-import Toast from "react-native-toast-message";
-import { ColorSpace } from "react-native-reanimated";
+import { Row, Button, Column } from "../../components";
 
 var publicationList = [];
+var favoritesList = [];
 
-for (var i = 0; i < 3; i++) {
+for (var i = 0; i < 4; i++) {
   publicationList.push({
     title: `Manucha ${i + 1}`,
     imageUrl: "https://picsum.photos/700",
     date: "12/02/2022",
     description: `Miau miau ${i + 1}`,
   });
+  favoritesList.push({
+    title: `Favsss ${i + 1}`,
+    imageUrl: `https://picsum.photos/id/23${i + 1}/200/300`,
+    date: "12/02/2022",
+    description: `Miau miau ${i + 1}`,
+  });
 }
-
-//uso la misma lista para favoritos y publicaciones para mockear nada mas
-const MyPublications = (props) => (
-  <PublicationListScreen publicationList={publicationList} />
-);
-
-const MyFavourites = (props) => (
-  <PublicationListScreen publicationList={publicationList} />
-);
 
 const RenderTabs = (props) => {
   var isSelf = props.isSelf; // TODO aplicar validacion
   const { colors } = useTheme();
-  //tabBarActiveTintColor: colors.primary,
-  //tabBarInactiveTintColor: "#000",
-  //fontSize: 14,
-  //  tabBarIndicatorStyle: { backgroundColor: colors.primary },
-  var switchToFavourites = false;
-  const [selectedIndexButton, setSelectedIndexButton] = useState("0");
+  const [switchToFavouritesTab, setSwitchToFavouritesTab] = useState(false);
+  const [selected, setSelected] = useState(0);
+  let tabs = isSelf
+    ? ["Mis publicaciones", "Mis favoritos"]
+    : ["Mis publicaciones"];
 
   return (
     <View>
@@ -45,72 +40,36 @@ const RenderTabs = (props) => {
           backgroundColor: "#fff",
         }}
       >
-        <View
-          style={{
-            flex: 1,
-            height: "100%",
-            backgroundColor:
-              selectedIndexButton === "0" ? colors.primary : "fff",
-          }}
-        >
-          <Button
-            style={{
-              alignSelf: "stretch",
-            }}
-            onPress={() => {
-              switchToFavourites = false;
-              setSelectedIndexButton("0");
-              Toast.show({
-                type: "success",
-                position: "bottom",
-                text1: `Tocaste publicaciones index: ${selectedIndexButton}`,
-              });
-            }}
-            textColor={selectedIndexButton === "0" ? "#fff" : colors.primary}
-          >
-            Mis publicaciones
-          </Button>
-        </View>
-        {isSelf && (
-          <View
-            style={{
-              flex: 1,
-              height: "100%",
-              backgroundColor:
-                selectedIndexButton === "1" ? colors.primary : "fff",
-            }}
-          >
-            <Button
-              additionalStyles={{
-                alignSelf: "stretch",
-                height: "100%",
-                textAllCaps: false,
+        {[...Array(tabs.length).keys()].map((item) => {
+          return (
+            <View
+              key={item}
+              style={{
+                flex: 1,
+                backgroundColor:
+                  selected === item ? colors.primary : colors.white,
               }}
-              onPress={() => {
-                switchToFavourites = true;
-                setSelectedIndexButton("1");
-                Toast.show({
-                  type: "success",
-                  position: "bottom",
-                  text1: `Tocaste favoritos index: ${selectedIndexButton}`,
-                });
-              }}
-              textColor={selectedIndexButton === "1" ? "#fff" : colors.primary}
             >
-              Mis favoritos
-            </Button>
-          </View>
-        )}
+              <Button
+                onPress={() => {
+                  setSelected(item);
+                  setSwitchToFavouritesTab(tabs[item].includes("favoritos"));
+                }}
+                textColor={selected === item ? colors.white : colors.primary}
+              >
+                {tabs[item]}
+              </Button>
+            </View>
+          );
+        })}
       </Row>
-      <Row>
-        {!switchToFavourites && (
-          <PublicationListScreen publicationList={publicationList} />
-        )}
+      {!switchToFavouritesTab && (
+        <PublicationListScreen publicationList={publicationList} />
+      )}
 
-        {switchToFavourites && (
-          <PublicationListScreen publicationList={publicationList} />
-        )}
-      </Row>
+      {switchToFavouritesTab && (
+        <PublicationListScreen publicationList={favoritesList} />
+      )}
     </View>
   );
 };
