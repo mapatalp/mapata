@@ -7,8 +7,7 @@ import {
   Text,
   Column,
 } from "../../components";
-import { Card, Title, Paragraph } from "react-native-paper";
-
+import { Card } from "react-native-paper";
 import { ProfileTabsScreen } from "./ProfileTabsScreen";
 
 var profile = {
@@ -23,7 +22,7 @@ var profile = {
     "🐾❤️Adoptá con el corazón\n\n🐶😺Más de 400 animales dependen de tu colaboración\n\n👇🏿¿Nos Ayudás?👇",
 };
 
-const ProfileScreen = () => {
+const ProfileScreen = (props) => {
   let isRefugio = true;
   let isSelf = true;
   return (
@@ -78,6 +77,7 @@ const ProfileScreen = () => {
           return <SocialButton socialUrl={item} />;
         })}
       </Row>
+
       <ProfileTabsScreen isSelf={isSelf} />
     </View>
   );

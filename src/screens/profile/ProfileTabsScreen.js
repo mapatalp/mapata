@@ -1,7 +1,10 @@
-import React from "react";
-import { Button, useTheme } from "react-native-paper";
-import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+import React, { useState } from "react";
+import { useTheme } from "react-native-paper";
+import { View, Dimensions } from "react-native";
 import PublicationListScreen from "./PublicationListScreen";
+import { Row, Button } from "../../components";
+import Toast from "react-native-toast-message";
+import { ColorSpace } from "react-native-reanimated";
 
 var publicationList = [];
 
@@ -16,40 +19,99 @@ for (var i = 0; i < 3; i++) {
 
 //uso la misma lista para favoritos y publicaciones para mockear nada mas
 const MyPublications = (props) => (
-  <PublicationListScreen id="0" publicationList={publicationList} />
+  <PublicationListScreen publicationList={publicationList} />
 );
 
 const MyFavourites = (props) => (
-  <PublicationListScreen id="1" publicationList={publicationList} />
+  <PublicationListScreen publicationList={publicationList} />
 );
 
 const RenderTabs = (props) => {
   var isSelf = props.isSelf; // TODO aplicar validacion
   const { colors } = useTheme();
-  const Tab = createMaterialTopTabNavigator();
+  //tabBarActiveTintColor: colors.primary,
+  //tabBarInactiveTintColor: "#000",
+  //fontSize: 14,
+  //  tabBarIndicatorStyle: { backgroundColor: colors.primary },
+  var switchToFavourites = false;
+  const [selectedIndexButton, setSelectedIndexButton] = useState("0");
 
   return (
-    <Tab.Navigator
-      screenOptions={{
-        tabBarActiveTintColor: colors.primary,
-        tabBarInactiveTintColor: "#000",
-        tabBarLabelStyle: { fontSize: 14, textTransform: "none" },
-        tabBarIndicatorStyle: { backgroundColor: colors.primary },
-      }}
-      style={{ marginTop: 20 }}
-      onPressed={() => {
-        Toast.show({
-          type: "error",
-          position: "bottom",
-          text1: "Error en los permisos",
-          text2: "Tienes que ir a ajustes de la app y activar la localización",
-        });
-      }}
-    >
-      <Tab.Screen name="Publicaciones" component={MyPublications} />
+    <View>
+      <Row
+        additionalStyles={{
+          width: "100%",
+          justifyContent: "center",
+          backgroundColor: "#fff",
+        }}
+      >
+        <View
+          style={{
+            flex: 1,
+            height: "100%",
+            backgroundColor:
+              selectedIndexButton === "0" ? colors.primary : "fff",
+          }}
+        >
+          <Button
+            style={{
+              alignSelf: "stretch",
+            }}
+            onPress={() => {
+              switchToFavourites = false;
+              setSelectedIndexButton("0");
+              Toast.show({
+                type: "success",
+                position: "bottom",
+                text1: `Tocaste publicaciones index: ${selectedIndexButton}`,
+              });
+            }}
+            textColor={selectedIndexButton === "0" ? "#fff" : colors.primary}
+          >
+            Mis publicaciones
+          </Button>
+        </View>
+        {isSelf && (
+          <View
+            style={{
+              flex: 1,
+              height: "100%",
+              backgroundColor:
+                selectedIndexButton === "1" ? colors.primary : "fff",
+            }}
+          >
+            <Button
+              additionalStyles={{
+                alignSelf: "stretch",
+                height: "100%",
+                textAllCaps: false,
+              }}
+              onPress={() => {
+                switchToFavourites = true;
+                setSelectedIndexButton("1");
+                Toast.show({
+                  type: "success",
+                  position: "bottom",
+                  text1: `Tocaste favoritos index: ${selectedIndexButton}`,
+                });
+              }}
+              textColor={selectedIndexButton === "1" ? "#fff" : colors.primary}
+            >
+              Mis favoritos
+            </Button>
+          </View>
+        )}
+      </Row>
+      <Row>
+        {!switchToFavourites && (
+          <PublicationListScreen publicationList={publicationList} />
+        )}
 
-      {isSelf && <Tab.Screen name="Favoritos" component={MyFavourites} />}
-    </Tab.Navigator>
+        {switchToFavourites && (
+          <PublicationListScreen publicationList={publicationList} />
+        )}
+      </Row>
+    </View>
   );
 };
 
