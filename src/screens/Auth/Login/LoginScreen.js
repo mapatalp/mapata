@@ -1,12 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import Toast from "react-native-toast-message";
+import { View } from "react-native";
 import { useFormik } from "formik";
 import * as WebBrowser from "expo-web-browser";
 import * as Google from "expo-auth-session/providers/google";
 
-import { Button, Loading, TextInput, Text } from "../../../components";
+import {
+  Button,
+  Loading,
+  TextInput,
+  Text,
+  Row,
+  ScreenWithInputs,
+} from "../../../components";
+import { LogoMapata } from "../../../components/Svg";
 
 import ROUTES from "../../../constants/routes";
 import { initialValues, validationSchema } from "./LoginScreen.data";
@@ -15,9 +22,6 @@ import useAuth from "../../../customHooks/useAuth";
 WebBrowser.maybeCompleteAuthSession();
 const LoginScreen = () => {
   const [loading, setLoading] = useState(false);
-  const [password, setPassword] = useState("");
-  const [email, setEmail] = useState("");
-
   const { navigate } = useNavigation();
 
   const [request, response, promptAsync] = Google.useIdTokenAuthRequest({
@@ -30,64 +34,62 @@ const LoginScreen = () => {
     handleResponse({ response, method: "google" });
   }, [request]);
 
-  const { handleSubmit, isSubmitting, values, errors, handleChange } =
-    useFormik({
-      initialValues: initialValues(),
-      validationSchema: validationSchema(),
-      validateOnChange: true,
-      onSubmit: async (values) => {
-        await loginWithEmailAndPassword({
-          email: values.email,
-          password: values.password,
-        }).then(() => navigate(ROUTES.STACK.HOME));
-      },
-    });
+  const {
+    handleSubmit,
+    isSubmitting,
+    values,
+    setFieldValue,
+    errors,
+    handleChange,
+  } = useFormik({
+    initialValues: initialValues(),
+    validationSchema: validationSchema(),
+    validateOnChange: true,
+    onSubmit: async (values) => {
+      await loginWithEmailAndPassword({
+        email: values.email,
+        password: values.password,
+      }).then(() => navigate(ROUTES.STACK.HOME));
+    },
+  });
 
   return (
     <>
       {loading && <Loading show />}
-      <View
-        style={{
-          width: "100%",
-          height: "100%",
-          justifyContent: "center",
-          alignContent: "center",
-        }}
-      >
-        <Text style={{ alignSelf: "center" }}>Login screen</Text>
-        {/** Mapata logo image */}
-
-        <Button
-          disabled={!request}
-          onPress={() => {
-            promptAsync();
-          }}
-        >
-          Login con Google
-        </Button>
-
-        <TextInput
-          value={values.email}
-          error={errors.email}
-          onChangeText={handleChange}
-        />
-        <TextInput
-          value={values.password}
-          error={errors.password}
-          onChangeText={handleChange}
-        />
-
-        <Button onPress={handleSubmit} disabled={isSubmitting}>
-          Submit Email & Pw
-        </Button>
-
-        <Button onPress={() => navigate(ROUTES.SCREEN.REGISTER)}>
-          Go to Register
-        </Button>
-        {/* <Button onPress={() => navigate(ROUTES.SCREEN.REGISTER)}>
-         Te olvidaste la password
-        </Button> */}
-      </View>
+      <ScreenWithInputs>
+        <View>
+          <Row justifyContent="center">
+            <LogoMapata />
+          </Row>
+          <Button
+            disabled={!request}
+            onPress={() => {
+              promptAsync();
+            }}
+          >
+            Login con Google
+          </Button>
+          <TextInput
+            label={"Email"}
+            value={values.email}
+            error={errors.email}
+            returnKeyType={"next"}
+            onChangeText={(email) => setFieldValue("email", email)}
+          />
+          <TextInput
+            label={"Contraseña"}
+            value={values.password}
+            error={errors.password}
+            onChangeText={(password) => setFieldValue("password", password)}
+          />
+          <Button onPress={handleSubmit} disabled={isSubmitting}>
+            Continuar
+          </Button>
+          <Button onPress={() => navigate(ROUTES.SCREEN.REGISTER)}>
+            Go to Register
+          </Button>
+        </View>
+      </ScreenWithInputs>
     </>
   );
 };
