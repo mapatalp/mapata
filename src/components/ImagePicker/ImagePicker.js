@@ -63,7 +63,7 @@ export default function ImagePickerExample() {
           >
             <Button
               style={{
-                borderBottomColor: "black",
+                borderBottomColor: colors.black,
                 borderWidth: 1,
                 borderRadius: 0,
                 marginBottom: 5,
@@ -75,17 +75,17 @@ export default function ImagePickerExample() {
             </Button>
             <Button
               style={{
-                borderBottomColor: "black",
+                borderBottomColor: colors.black,
                 borderWidth: 1,
                 borderRadius: 0,
                 marginBottom: 5,
               }}
-              textColor={"black"}
+              textColor={colors.black}
               onPress={pickImageCamera}
             >
               Camara
             </Button>
-            <Button onPress={hideModal} textColor={"black"}>
+            <Button onPress={hideModal} textColor={colors.black}>
               Cerrar
             </Button>
           </Modal>
