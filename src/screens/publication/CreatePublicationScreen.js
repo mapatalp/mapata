@@ -24,26 +24,44 @@ import { color } from "react-native-reanimated";
 
 const CreatePublicationScreen = () => {
   const [showModalMap, setShowModalMap] = useState(false);
+  const [imageSelected, setImageSelected] = useState();
   const { colors } = useTheme();
 
-  const { values, errors, setFieldValue, isSubmitting, handleSubmit } =
-    useFormik({
-      initialValues: initialValues(),
-      validationSchema: validationSchema(),
-      validateOnChange: true,
-      onSubmit: async (values) => {
-        try {
-          await createPublication(values);
-        } catch (error) {
-          Toast.show({
-            type: "error",
-            position: "bottom",
-            text1: "Complete los campos obligatorios",
-          });
-        }
-      },
-    });
+  const {
+    values,
+    errors,
+    setFieldValue,
+    isSubmitting,
+    handleSubmit,
+    validateForm,
+  } = useFormik({
+    initialValues: initialValues(),
+    validationSchema: validationSchema(),
+    validateOnChange: true,
+    onSubmit: async (values) => {
+      try {
+        await createPublication(values);
+      } catch (error) {}
+    },
+  });
 
+  const submitForm = async () => {
+    let validate = await validateForm();
+    if (Object.keys(validate).length === 0) {
+      handleSubmit;
+    } else if (validate.image) {
+      Toast.show({
+        type: "error",
+        position: "bottom",
+        text1: "Debe subir una imagen",
+      });
+    } else
+      Toast.show({
+        type: "error",
+        position: "bottom",
+        text1: "Debe completar los campos obligatorios",
+      });
+  };
   const [location, setLocation] = useState({
     latitude: 0.001,
     longitude: 0.001,
@@ -100,29 +118,6 @@ const CreatePublicationScreen = () => {
         >
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
-              <Button
-                style={{
-                  borderBottomColor: colors.black,
-                  borderWidth: 1,
-                  borderRadius: 0,
-                  width: "100%",
-                }}
-                textColor={colors.black}
-                onPress={saveLocation}
-              >
-                Guardar
-              </Button>
-              <Button
-                style={{
-                  borderWidth: 1,
-                  borderRadius: 0,
-                }}
-                textColor={colors.black}
-                onPress={() => setShowModalMap(false)}
-              >
-                Cerrar
-              </Button>
-
               <MapView
                 initialRegion={location}
                 showsUserLocation={true}
@@ -133,20 +128,35 @@ const CreatePublicationScreen = () => {
 
               <Row>
                 <Column>
-                  <Pressable
-                    style={[styles.button, styles.buttonOpen]}
-                    onPress={() => setModalVisible(true)}
+                  <Button
+                    style={{
+                      borderWidth: 1,
+                      width: 100,
+                      borderColor: colors.primary,
+                      marginRight: 10,
+                      marginTop: 20,
+                    }}
+                    textColor={colors.white}
+                    buttonColor={colors.primary}
+                    onPress={saveLocation}
                   >
-                    <Text style={styles.textStyle}>Show Modal</Text>
-                  </Pressable>
+                    Guardar
+                  </Button>
                 </Column>
                 <Column>
-                  <Pressable
-                    style={[styles.button, styles.buttonOpen]}
-                    onPress={() => setModalVisible(true)}
+                  <Button
+                    style={{
+                      borderWidth: 1,
+                      width: 100,
+                      borderColor: colors.grey,
+                      marginTop: 20,
+                    }}
+                    textColor={colors.white}
+                    buttonColor={colors.grey}
+                    onPress={() => setShowModalMap(false)}
                   >
-                    <Text style={styles.textStyle}>Show Modal</Text>
-                  </Pressable>
+                    Cerrar
+                  </Button>
                 </Column>
               </Row>
             </View>
@@ -159,7 +169,7 @@ const CreatePublicationScreen = () => {
   return (
     <ScreenWithInputs>
       <Row>
-        <ImagePicker />
+        <ImagePicker setImageSelected={setImageSelected} />
       </Row>
       <Row>
         <Column additionalStyles={{ width: "100%" }}>
@@ -258,7 +268,7 @@ const CreatePublicationScreen = () => {
           borderRadius: 10,
           marginTop: 10,
         }}
-        onPress={handleSubmit}
+        onPress={submitForm}
         disabled={isSubmitting}
         textColor={colors.white}
       >
@@ -299,6 +309,5 @@ const styles = StyleSheet.create({
     padding: 10,
     elevation: 2,
   },
- 
 });
 export default CreatePublicationScreen;

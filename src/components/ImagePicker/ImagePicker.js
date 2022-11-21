@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Image, View, Pressable } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import { Portal, Provider, Modal, useTheme } from "react-native-paper";
@@ -6,7 +6,7 @@ import Button from "../../components/Button/Button";
 
 import useStorage from "../../customHooks/useStorage";
 
-export default function ImagePickerExample() {
+export default function ImagePickerExample(setImageSelected) {
   const [image, setImage] = useState({
     uri: "",
     default: require("./ImageDefault.png"),
@@ -18,6 +18,12 @@ export default function ImagePickerExample() {
   const hideModal = () => setVisible(false);
   const containerStyle = { backgroundColor: "white", padding: 20 };
   const { colors } = useTheme();
+
+  useEffect(() => {
+    if (image.uri) {
+      setImageSelected(image.uri);
+    }
+  }, [image]);
 
   const pickImageGallery = async () => {
     // No permissions request is necessary for launching the image library
