@@ -9,8 +9,6 @@ import {
 } from "../../components";
 import { Card } from "react-native-paper";
 import { ProfileTabsScreen } from "./ProfileTabsScreen";
-import Appu from "./Appu";
-import { ScrollView } from "react-native-gesture-handler";
 
 var profile = {
   name: "Mapata L.P.",
@@ -25,7 +23,7 @@ var profile = {
 };
 
 const ProfileScreen = (props) => {
-  let isRefugio = true;
+  let isRefugio = false;
   let isSelf = true;
   return (
     <View style={{ height: "100%", width: "100%" }}>

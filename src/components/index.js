@@ -10,6 +10,7 @@ import UserProfilePic from "./Shapes/UserProfilePic";
 import PublicationCard from "./Cards/PublicationCard";
 import SocialButton from "./Button/SocialButton";
 import Text from "./Text/Text";
+import PublicationReel from "./Cards/PublicationReel";
 
 export {
   AppHeader,
@@ -24,4 +25,5 @@ export {
   PublicationCard,
   SocialButton,
   Text,
+  PublicationReel,
 };

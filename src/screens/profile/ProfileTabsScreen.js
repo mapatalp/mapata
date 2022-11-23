@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useTheme } from "react-native-paper";
 import { View } from "react-native";
 import PublicationListScreen from "./PublicationListScreen";
-import { Row, Button, Column } from "../../components";
+import { Row, Button } from "../../components";
 
 var publicationList = [];
 var favoritesList = [];

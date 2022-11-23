@@ -11,10 +11,12 @@ import ProfileScreen from "../screens/profile/ProfileScreen";
 import CreatePublicationScreen from "../screens/publication/CreatePublicationScreen";
 import ROUTES from "../constants/routes";
 import { LoginScreen, RegisterScreen } from "../screens/Auth";
+import ReelsScreen from "../screens/ReelsScreen";
 
 const Tab = createBottomTabNavigator();
 const HomeStackNavigator = createStackNavigator();
 const AuthenticationStackNavigator = createStackNavigator();
+const ReelsStackNavigator = createStackNavigator();
 const ProfileStackNavigator = createStackNavigator();
 
 function HomeStack() {
@@ -36,6 +38,34 @@ function HomeStack() {
         canGoBack
       />
     </HomeStackNavigator.Navigator>
+  );
+}
+
+function ReelsStack() {
+  return (
+    <ReelsStackNavigator.Navigator initialRouteName={ROUTES.SCREEN.REELS}>
+      <ReelsStackNavigator.Screen
+        name={ROUTES.SCREEN.REELS}
+        component={ReelsScreen}
+        options={{
+          header: () => <AppHeader title={"Mapata"} />,
+        }}
+      />
+    </ReelsStackNavigator.Navigator>
+  );
+}
+
+function ProfileStack() {
+  return (
+    <ProfileStackNavigator.Navigator initialRouteName={ROUTES.SCREEN.PROFILE}>
+      <ProfileStackNavigator.Screen
+        name={ROUTES.SCREEN.PROFILE}
+        component={ProfileScreen}
+        options={{
+          header: () => <AppHeader title={"Mapata"} />,
+        }}
+      />
+    </ProfileStackNavigator.Navigator>
   );
 }
 
@@ -62,20 +92,6 @@ function AuthenticationStack() {
   );
 }
 
-function ProfileStack() {
-  return (
-    <ProfileStackNavigator.Navigator initialRouteName={ROUTES.SCREEN.PROFILE}>
-      <ProfileStackNavigator.Screen
-        name={ROUTES.SCREEN.PROFILE}
-        component={ProfileScreen}
-        options={{
-          header: () => <AppHeader title={"Mapata"} />,
-        }}
-      />
-    </ProfileStackNavigator.Navigator>
-  );
-}
-
 function AuthenticatedTabs() {
   const { colors } = useTheme();
 
@@ -94,6 +110,20 @@ function AuthenticatedTabs() {
           tabBarLabel: "Mapa",
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="home" size={30} color={color} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name={ROUTES.STACK.REELS}
+        component={ReelsStack}
+        options={{
+          tabBarLabel: "Reels",
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons
+              name="filmstrip-box"
+              size={30}
+              color={color}
+            />
           ),
         }}
       />
