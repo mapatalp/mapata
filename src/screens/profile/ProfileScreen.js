@@ -22,7 +22,7 @@ var profile = {
     "🐾❤️Adoptá con el corazón\n\n🐶😺Más de 400 animales dependen de tu colaboración\n\n👇🏿¿Nos Ayudás?👇",
 };
 
-const ProfileScreen = (props) => {
+const ProfileScreen = () => {
   let isRefugio = false;
   let isSelf = true;
   return (

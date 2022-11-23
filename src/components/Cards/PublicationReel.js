@@ -4,7 +4,12 @@ import { Text, Row } from "../../components";
 import { Card, useTheme } from "react-native-paper";
 
 const styles = StyleSheet.create({
-  textStyle: {
+  title: {
+    fontSize: 24,
+    color: "black",
+    fontWeight: "bold",
+  },
+  subtitle: {
     flex: 1,
     fontSize: 16,
     color: "gray",
@@ -16,11 +21,10 @@ const styles = StyleSheet.create({
 /**
  * @param {import("react-native-paper").PublicationReelProps} props
  */
-const PublicationReel = (props) => {
+const PublicationReel = ({ publication }) => {
   const { colors } = useTheme();
   let borderRadius = 8;
   let iconSize = 30;
-  let publication = props.publication;
   console.log(publication);
   return (
     <TouchableOpacity activeOpacity={0.85}>
@@ -36,18 +40,10 @@ const PublicationReel = (props) => {
         />
         <Row>
           <View style={{ margin: 15, flex: 1 }}>
-            <Text
-              style={{
-                fontSize: 24,
-                color: "black",
-                fontWeight: "bold",
-              }}
-            >
-              {publication.title}
-            </Text>
+            <Text style={styles.title}>{publication.title}</Text>
             <Row>
-              <Text style={styles.textStyle}>• {publication.animalType}</Text>
-              <Text style={styles.textStyle}>
+              <Text style={styles.subtitle}>• {publication.animalType}</Text>
+              <Text style={styles.subtitle}>
                 • {publication.publicationState}
               </Text>
             </Row>

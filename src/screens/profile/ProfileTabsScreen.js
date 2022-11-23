@@ -3,33 +3,17 @@ import { useTheme } from "react-native-paper";
 import { View } from "react-native";
 import PublicationListScreen from "./PublicationListScreen";
 import { Row, Button } from "../../components";
+import {
+  getMockedPublicationList,
+  getMockedFavoritesList,
+} from "./ProfileTabsScreenData";
 
-var publicationList = [];
-var favoritesList = [];
-
-for (var i = 0; i < 4; i++) {
-  publicationList.push({
-    title: `Manucha ${i + 1}`,
-    imageUrl: "https://picsum.photos/700",
-    date: "12/02/2022",
-    description: `Miau miau ${i + 1}`,
-  });
-  favoritesList.push({
-    title: `Favsss ${i + 1}`,
-    imageUrl: `https://picsum.photos/id/23${i + 1}/200/300`,
-    date: "12/02/2022",
-    description: `Miau miau ${i + 1}`,
-  });
-}
-
-const RenderTabs = (props) => {
-  var isSelf = props.isSelf; // TODO aplicar validacion
+// TODO aplicar validacion al isSelf
+const RenderTabs = ({ isSelf }) => {
   const { colors } = useTheme();
   const [switchToFavouritesTab, setSwitchToFavouritesTab] = useState(false);
   const [selected, setSelected] = useState(0);
-  let tabs = isSelf
-    ? ["Mis publicaciones", "Mis favoritos"]
-    : ["Mis publicaciones"];
+  let tabs = isSelf ? ["Publicaciones", "Mis favoritos"] : ["Publicaciones"];
 
   return (
     <View>
@@ -53,7 +37,7 @@ const RenderTabs = (props) => {
               <Button
                 onPress={() => {
                   setSelected(item);
-                  setSwitchToFavouritesTab(tabs[item].includes("favoritos"));
+                  setSwitchToFavouritesTab(isSelf && item === 1);
                 }}
                 textColor={selected === item ? colors.white : colors.primary}
               >
@@ -64,16 +48,16 @@ const RenderTabs = (props) => {
         })}
       </Row>
       {!switchToFavouritesTab && (
-        <PublicationListScreen publicationList={publicationList} />
+        <PublicationListScreen publicationList={getMockedPublicationList()} />
       )}
 
       {switchToFavouritesTab && (
-        <PublicationListScreen publicationList={favoritesList} />
+        <PublicationListScreen publicationList={getMockedFavoritesList()} />
       )}
     </View>
   );
 };
 
-export const ProfileTabsScreen = (props) => {
-  return <RenderTabs isSelf={props.isSelf} />;
+export const ProfileTabsScreen = ({ isSelf }) => {
+  return <RenderTabs isSelf={isSelf} />;
 };

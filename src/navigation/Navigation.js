@@ -11,7 +11,7 @@ import ProfileScreen from "../screens/profile/ProfileScreen";
 import CreatePublicationScreen from "../screens/publication/CreatePublicationScreen";
 import ROUTES from "../constants/routes";
 import { LoginScreen, RegisterScreen } from "../screens/Auth";
-import ReelsScreen from "../screens/ReelsScreen";
+import ReelsScreen from "../screens/reels/ReelsScreen";
 
 const Tab = createBottomTabNavigator();
 const HomeStackNavigator = createStackNavigator();
