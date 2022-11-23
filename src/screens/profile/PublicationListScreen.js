@@ -3,8 +3,7 @@ import { View } from "react-native"; //por que verga tengo que importarlo de aca
 import { PublicationCard } from "../../components";
 import { ScrollView } from "react-native-gesture-handler";
 
-const PublicationListScreen = (props) => {
-  var publicationList = props.publicationList;
+const PublicationListScreen = ({ publicationList }) => {
   //TODO ver el tema del tamaño del scroll, el bottom navigation pisa el scroll al superar los 225 en mi cel
   return (
     <View style={{ width: "100%", padding: 10 }}>

@@ -1,15 +1,9 @@
 import React from "react";
 import { View } from "react-native"; //por que verga tengo que importarlo de aca si en el login screen lo hace desde components
-import {
-  UserProfilePic,
-  Row,
-  SocialButton,
-  Text,
-  Column,
-} from "../../components";
-import { Card } from "react-native-paper";
+import { UserProfilePic, Row, SocialButton, Text } from "../../components";
 import { ProfileTabsScreen } from "./ProfileTabsScreen";
 import { getMockedProfile } from "./ProfileScreenData";
+import RefugioDescription from "../../components/Cards/RefugioDescription";
 
 const ProfileScreen = () => {
   let isRefugio = false;
@@ -18,13 +12,7 @@ const ProfileScreen = () => {
   return (
     <View style={{ height: "100%", width: "100%" }}>
       <Row additionalStyles={{ marginTop: 25 }}>
-        {isRefugio ? (
-          <View>
-            <Text>TODO Refugio Carousel</Text>
-          </View>
-        ) : (
-          <UserProfilePic />
-        )}
+        {isRefugio ? <Text>TODO Refugio Carousel</Text> : <UserProfilePic />}
       </Row>
       <Text
         style={{
@@ -36,32 +24,7 @@ const ProfileScreen = () => {
       >
         {profile.name}
       </Text>
-      {isRefugio && (
-        <Column>
-          <Text
-            style={{
-              marginTop: 10,
-              marginHorizontal: 20,
-              fontWeight: "bold",
-              fontSize: 15,
-              color: "#777777",
-            }}
-          >
-            Descripción
-          </Text>
-          <Card
-            style={{
-              marginTop: 10,
-              marginHorizontal: 15,
-              backgroundColor: "#eeeeee",
-              paddingVertical: 10,
-            }}
-          >
-            <Text style={{ marginHorizontal: 20 }}>{profile.description}</Text>
-          </Card>
-        </Column>
-      )}
-
+      {isRefugio && <RefugioDescription text={profile.description} />}
       <Row
         additionalStyles={{
           marginTop: 20,

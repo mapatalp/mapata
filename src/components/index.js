@@ -11,6 +11,7 @@ import PublicationCard from "./Cards/PublicationCard";
 import SocialButton from "./Button/SocialButton";
 import Text from "./Text/Text";
 import PublicationReel from "./Cards/PublicationReel";
+import RefugioDescription from "./Cards/RefugioDescription";
 
 export {
   AppHeader,
@@ -26,4 +27,5 @@ export {
   SocialButton,
   Text,
   PublicationReel,
+  RefugioDescription,
 };
