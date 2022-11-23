@@ -9,22 +9,12 @@ import {
 } from "../../components";
 import { Card } from "react-native-paper";
 import { ProfileTabsScreen } from "./ProfileTabsScreen";
-
-var profile = {
-  name: "Mapata L.P.",
-  socialMediaList: [
-    "https://www.facebook.com/rescataditos.laplata.9/",
-    "https://www.instagram.com/rescataditoslaplata/?hl=en",
-    "https://goo.gl/maps/fSMVi1CPpA9cMjg16",
-    "+5401136133363",
-  ],
-  description:
-    "🐾❤️Adoptá con el corazón\n\n🐶😺Más de 400 animales dependen de tu colaboración\n\n👇🏿¿Nos Ayudás?👇",
-};
+import { getMockedProfile } from "./ProfileScreenData";
 
 const ProfileScreen = () => {
   let isRefugio = false;
   let isSelf = true;
+  let profile = getMockedProfile();
   return (
     <View style={{ height: "100%", width: "100%" }}>
       <Row additionalStyles={{ marginTop: 25 }}>
