@@ -19,6 +19,15 @@
     "assetBundlePatterns": [
       "**/*"
     ],
+    "plugins": [
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Permite que Mapata tenga acceso a tus fotos",
+          "cameraPermission": "Permite que Mapata tenga acceso a tu camara"
+        }
+      ]
+    ],
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.mapata.mapata",

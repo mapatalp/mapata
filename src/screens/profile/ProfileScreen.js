@@ -33,7 +33,7 @@ const ProfileScreen = () => {
         }}
       >
         {profile.socialMediaList.map((item, index) => {
-          return <SocialButton socialUrl={item} />;
+          return <SocialButton key={index.toString()} socialUrl={item} />;
         })}
       </Row>
       <ProfileTabsScreen isSelf={isSelf} />

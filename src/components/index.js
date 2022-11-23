@@ -12,6 +12,7 @@ import SocialButton from "./Button/SocialButton";
 import Text from "./Text/Text";
 import PublicationReel from "./Cards/PublicationReel";
 import RefugioDescription from "./Cards/RefugioDescription";
+import ImagePicker from "./ImagePicker/ImagePicker";
 
 export {
   AppHeader,
@@ -28,4 +29,5 @@ export {
   Text,
   PublicationReel,
   RefugioDescription,
+  ImagePicker,
 };
