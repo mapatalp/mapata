@@ -1,10 +1,8 @@
 import React from "react";
-import { Button } from "../../components";
+import Button from "../../components/Button/Button";
 import { Dialog, Portal } from "react-native-paper";
 import { View } from "react-native";
-/**
- * @param {import("react-native-paper").PublicationActionsDialogProps} props
- */
+
 const PublicationActionsDialog = ({ visible, hideDialog, colors }) => {
   return (
     <View>

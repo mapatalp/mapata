@@ -14,7 +14,7 @@ const screenHeight = Dimensions.get("screen").height - 60;
 const ScreenWithInputs = ({ children, style, ...scrollViewProps }) => {
   return (
     <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" && "padding"}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
       keyboardVerticalOffset={Platform.OS === "ios" ? 45 : 0}
     >
       <ScrollView

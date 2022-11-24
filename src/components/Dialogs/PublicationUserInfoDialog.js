@@ -1,8 +1,11 @@
 import React from "react";
-import { Button } from "../../components";
 import { Dialog, Portal } from "react-native-paper";
 import { View } from "react-native";
-import { SocialButton, Row } from "../../components";
+
+import Button from "../../components/Button/Button";
+import SocialButton from "../../components/Button/SocialButton";
+import Row from "../../components/Grid/Row";
+
 /**
  * @param {import("react-native-paper").PublicationUserInfoDialogProps} props
  */

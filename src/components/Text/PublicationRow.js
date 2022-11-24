@@ -1,5 +1,6 @@
 import { View } from "react-native";
-import { Text, Row } from "..";
+import Text from "../Text/Text";
+import Row from "../Grid/Row";
 
 /**
  * @param {import("react-native-paper").PublicationRowProps} props

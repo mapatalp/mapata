@@ -15,7 +15,7 @@ export function getMockedPublication(i = 0) {
     imageUrl: `https://placekitten.com/${i + 3}${i + 2}${i + 3}/${i + 3}${
       i + 2
     }${i + 3}`,
-    animalType: getValidConstant(i, CONSTANTS.ANIMAL_TYPE),
+    animal: getValidConstant(i, CONSTANTS.ANIMAL_TYPE),
     gender: getValidConstant(i, CONSTANTS.ANIMAL_GENDER),
     age: getValidConstant(i, CONSTANTS.ANIMAL_AGE),
     state: getValidConstant(i, CONSTANTS.PUBLICATION_STATES),
@@ -30,18 +30,16 @@ export function filterPublications(publication, searchQuery) {
   searchQuery = searchQuery.toLowerCase();
   return (
     publication.title.toLowerCase().includes(searchQuery) ||
-    parseAnimalType(publication.animalType)
-      .toLowerCase()
-      .includes(searchQuery) ||
+    parseAnimalType(publication.animal).toLowerCase().includes(searchQuery) ||
     latinize(parsePublicationState(publication.state).toLowerCase()).includes(
       searchQuery
     )
   );
 }
 
-export function parseAnimalType(animalType) {
+export function parseAnimalType(animal) {
   var text = "";
-  switch (animalType) {
+  switch (animal) {
     case CONSTANTS.ANIMAL_TYPE.GATO:
       text = "Gato";
       break;

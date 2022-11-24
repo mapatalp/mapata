@@ -1,18 +1,22 @@
 import React, { useState } from "react";
-import { View } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
-import { PublicationReel } from "../../components";
+import { View, ScrollView } from "react-native";
 import { Searchbar } from "react-native-paper";
-import {
-  getMockedPublicationList,
-  filterPublications,
-} from "../../utils/PublicationHelper";
+import _ from "lodash";
+
+import { PublicationReel } from "../../components";
+
+import { filterPublications } from "../../utils/PublicationHelper";
+import { store } from "../../redux";
 
 const ReelsScreen = () => {
   const [searchQuery, setSearchQuery] = useState("");
+
   const onChangeSearch = (query) => setSearchQuery(query);
 
-  var publicationList = getMockedPublicationList();
+  let { publication } = store.getState();
+
+  const publications = _.cloneDeep(publication.data);
+
   return (
     <View style={{ margin: 15, marginBottom: 60 }}>
       <Searchbar
@@ -21,15 +25,16 @@ const ReelsScreen = () => {
         value={searchQuery}
         style={{ marginBottom: 15 }}
       />
-      <ScrollView>
-        {publicationList
-          .sort((a, b) => Date.parse(b.date) - Date.parse(a.date))
-          .filter((publication) => filterPublications(publication, searchQuery))
-          .map((item, index) => {
-            return (
-              <PublicationReel key={"key-reel-" + index} publication={item} />
-            );
-          })}
+      <ScrollView showsVerticalScrollIndicator={false}>
+        {publications &&
+          publications
+            .sort((a, b) => Date.parse(b.date) - Date.parse(a.date))
+            .filter((p) => filterPublications(p, searchQuery))
+            .map((item, index) => {
+              return (
+                <PublicationReel key={"key-reel-" + index} publication={item} />
+              );
+            })}
       </ScrollView>
     </View>
   );

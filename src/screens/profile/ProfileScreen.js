@@ -6,12 +6,13 @@ import { getMockedProfile } from "../../utils/ProfileHelper";
 import DescriptionCard from "../../components/Cards/DescriptionCard";
 import { Carousel } from "../../components";
 import { ScrollView } from "react-native-gesture-handler";
+import { store } from "../../redux";
 
 const ProfileScreen = () => {
-  let isRefugio = true;
+  let isRefugio = false;
   let isSelf = true;
   let profile = getMockedProfile();
-
+  const { user } = store;
   const [image, setImage] = useState();
   const [dataCarousel, setDataCarousel] = useState([
     "https://unoarrecifes.com/wp-content/uploads/2015/07/Refugio-Municipal-de-Animales-Tana.jpg",
@@ -40,6 +41,8 @@ const ProfileScreen = () => {
     }
   }, [image]);
 
+  if (!user) return null;
+
   return (
     <View style={{ height: "100%", width: "100%" }}>
       <ScrollView>
@@ -58,7 +61,7 @@ const ProfileScreen = () => {
             fontSize: 20,
           }}
         >
-          {profile.name}
+          {user.data.usename}
         </Text>
         {isRefugio && <DescriptionCard text={profile.description} />}
         <Row

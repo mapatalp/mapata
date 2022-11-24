@@ -51,7 +51,11 @@ const RegisterScreen = () => {
             await createUser({
               email,
               username: email,
+<<<<<<< HEAD
              uid,
+=======
+              uid,
+>>>>>>> b2911a3071b998a573d7befc977c502d253bc866
             });
           } else {
             await getUserByUID(uid);
