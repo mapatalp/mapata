@@ -329,7 +329,6 @@ const CreatePublicationScreen = ({ route, navigation }) => {
         onPress={() => {
           setShowModalMap(true);
         }}
-        disabled={isSubmitting}
         textColor={colors.white}
       >
         Elegir ubicación
@@ -343,7 +342,6 @@ const CreatePublicationScreen = ({ route, navigation }) => {
           marginTop: 10,
         }}
         onPress={submitForm}
-        disabled={isSubmitting}
         textColor={colors.white}
       >
         {isEditing ? "Guardar publicación" : "Crear publicación"}

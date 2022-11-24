@@ -49,6 +49,7 @@ const ViewPublicationScreen = ({ route, navigation }) => {
         <PublicationDatosCard publication={publication} />
         <Button
           style={{
+            marginTop: 10,
             backgroundColor: colors.white,
             borderColor: colors.primary,
             borderRadius: 10,
@@ -58,7 +59,7 @@ const ViewPublicationScreen = ({ route, navigation }) => {
           }}
           labelStyle={{ color: colors.primary }}
           onPress={() =>
-            publication.state === CONSTANTS.PUBLICATION_STATES.TRANSITO
+            publication.state === "En tránsito"
               ? setContactVisible(true)
               : setActionsVisible(true)
           }

@@ -37,6 +37,15 @@ export function filterPublications(publication, searchQuery) {
   );
 }
 
+export function filterPublicationsNoParser(publication, searchQuery) {
+  searchQuery = searchQuery.toLowerCase();
+  return (
+    publication.title.toLowerCase().includes(searchQuery) ||
+    publication.animal.toLowerCase().includes(searchQuery) ||
+    latinize(publication.state.toLowerCase()).includes(searchQuery)
+  );
+}
+
 export function parseAnimalType(animal) {
   var text = "";
   switch (animal) {
@@ -108,7 +117,8 @@ export function parsePublicationState(publicationState) {
 }
 
 export function getButtonTextByPublicationState(publicationState) {
-  return publicationState === CONSTANTS.PUBLICATION_STATES.TRANSITO
+  // return publicationState === CONSTANTS.PUBLICATION_STATES.TRANSITO
+  return publicationState === "En tránsito"
     ? "Lo quiero adoptar"
     : "Lo encontré";
 }
