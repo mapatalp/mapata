@@ -99,7 +99,7 @@ const RegisterScreen = () => {
           </Row>
           <Row justifyContent="center">
             <Text
-              onPress={() => console.log("flujo registro de refugios")}
+              onPress={() => {}}
               numberOfLines={1}
               style={{ color: "#005390" }}
               lineBreakMode={"tail"}

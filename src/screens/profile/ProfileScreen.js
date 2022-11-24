@@ -14,12 +14,13 @@ import { store } from "../../redux";
 import { useTheme } from "react-native-paper";
 
 const ProfileScreen = () => {
-  let isRefugio = false;
   let isSelf = true;
   let profile = getMockedProfile();
   const { user } = store.getState();
   const { colors } = useTheme();
   const [image, setImage] = useState();
+  const [isRefugio, setIsRefugio] = useState(false);
+
   const [dataCarousel, setDataCarousel] = useState([
     "https://unoarrecifes.com/wp-content/uploads/2015/07/Refugio-Municipal-de-Animales-Tana.jpg",
     "https://www.importancia.org/wp-content/uploads/social-de-los/Refugio-Animales-ABANDONO-CACHORROS.jpg",
@@ -33,6 +34,12 @@ const ProfileScreen = () => {
       setDataCarousel(dataCarousel.filter((item) => item !== "uploadData"));
     }
   }, []);
+
+  useEffect(() => {
+    if (user.data) {
+      setIsRefugio(!!user.data.isRefugio);
+    }
+  }, [user]);
 
   useEffect(() => {
     if (image) {

@@ -77,7 +77,7 @@ const HomeScreen = () => {
 
     const publicationsRef = ref(db, "/publications");
 
-    const unsubscribe = onValue(publicationsRef, (snapshot) => {
+    onValue(publicationsRef, (snapshot) => {
       const data = Object.values(snapshot.val());
       setPublications(data);
       dispatch(setAllPublications(data));
@@ -88,23 +88,14 @@ const HomeScreen = () => {
           userLoggedPublications.push(item);
         }
       });
-
       dispatch(setLoggedUserPublications(userLoggedPublications));
     });
 
     prepare();
-
-    return () => {
-      unsubscribe();
-    };
   }, []);
 
   const handleMarkerPress = (publication) => {
     navigate(ROUTES.SCREEN.VIEW_PUBLICATION, { publication });
-    console.log(
-      "🚀 ~ file: HomeScreen.js ~ line 103 ~ handleMarkerPress ~ publication",
-      publication
-    );
   };
 
   return (

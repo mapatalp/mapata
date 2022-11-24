@@ -16,6 +16,12 @@ const userSlice = createSlice({
     addPublication: (state, { payload }) => {
       state.ownPublications.unshift(payload);
     },
+    updatePublication: (state, { payload }) => {
+      state.ownPublications = state.ownPublications.filter(
+        (publication) => publication.id === payload.id
+      );
+      state.ownPublications.unshift(payload);
+    },
     setPublications: (state, { payload }) => {
       state.ownPublications = payload;
     },
@@ -32,6 +38,6 @@ const userSlice = createSlice({
 
 const { actions, reducer } = userSlice;
 
-export const { setUser, clear, addFavorite, addPublication, setPublications } =
+export const { setUser, clear, addFavorite, addPublication, setPublications, updatePublication } =
   actions;
 export default reducer;

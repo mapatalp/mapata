@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { View, Image, ScrollView } from "react-native";
+import React, { useState, useEffect } from "react";
+import { View, Image, ScrollView, Text } from "react-native";
 import { useTheme } from "react-native-paper";
 
 import { getButtonTextByPublicationState } from "../../utils/PublicationHelper";
@@ -14,9 +14,12 @@ import {
 
 import { getMockedProfile } from "../../utils/ProfileHelper";
 import CONSTANTS from "../../constants/constants";
+import { store } from "../../redux";
+import ROUTES from "../../constants/routes";
 
-const ViewPublicationScreen = ({ route }) => {
+const ViewPublicationScreen = ({ route, navigation }) => {
   const { publication } = route.params;
+  const { user } = store.getState();
   const { colors } = useTheme();
   let profile = getMockedProfile();
   let buttonText = getButtonTextByPublicationState(publication.state);
@@ -49,6 +52,8 @@ const ViewPublicationScreen = ({ route }) => {
             marginTop: 10,
             backgroundColor: colors.white,
             borderColor: colors.primary,
+            borderRadius: 10,
+            marginTop: 20,
             borderWidth: 1,
             opacity: 0.9,
           }}
@@ -61,6 +66,24 @@ const ViewPublicationScreen = ({ route }) => {
         >
           {buttonText}
         </Button>
+        {user.data.id === publication.userId && (
+          <Button
+            style={{
+              marginBottom: 150,
+              backgroundColor: colors.primary,
+              borderRadius: 10,
+              marginTop: 10,
+            }}
+            onPress={() => {
+              navigation.navigate(ROUTES.SCREEN.CREATE_PUBLICATION, {
+                publication,
+              });
+            }}
+            textColor={colors.white}
+          >
+            Editar publicación
+          </Button>
+        )}
       </ScrollView>
     </View>
   );
