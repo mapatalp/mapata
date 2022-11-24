@@ -99,6 +99,13 @@ const HomeScreen = () => {
     };
   }, []);
 
+  const handleMarkerPress = (publication) => {
+    console.log(
+      "🚀 ~ file: HomeScreen.js ~ line 103 ~ handleMarkerPress ~ publication",
+      publication
+    );
+  };
+
   return (
     <View style={{ height: "100%", width: "100%" }}>
       {loading ? (
@@ -112,6 +119,7 @@ const HomeScreen = () => {
           showsUserLocation={true}
           showsBuildings={false}
           showsMyLocationButton
+          moveOnMarkerPress={true}
         >
           {publications &&
             publications.length > 0 &&
@@ -119,6 +127,7 @@ const HomeScreen = () => {
               <Marker
                 key={`key-marker-${publication.title}-${ix}`}
                 coordinate={publication.location}
+                onPress={() => handleMarkerPress(publication)}
               >
                 <View>
                   <PawMarker width={35} height={35} />
