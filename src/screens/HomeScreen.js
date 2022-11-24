@@ -69,7 +69,6 @@ const HomeScreen = () => {
     setLoading(false);
   };
 
-  useEffect(() => console.log(user), [user]);
 
   useEffect(() => {
     const prepare = async () => {

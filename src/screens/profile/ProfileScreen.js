@@ -1,7 +1,5 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { View, ScrollView } from "react-native";
-import { UserProfilePic, Row, SocialButton, Text } from "../../components";
-
 import {
   UserProfilePic,
   Row,
@@ -9,6 +7,7 @@ import {
   Text,
   Carousel,
 } from "../../components";
+
 import { ProfileTabsScreen } from "./ProfileTabsScreen";
 import { getMockedProfile } from "../../utils/ProfileHelper";
 import DescriptionCard from "../../components/Cards/DescriptionCard";
@@ -19,7 +18,8 @@ const ProfileScreen = () => {
   let isRefugio = false;
   let isSelf = true;
   let profile = getMockedProfile();
-  const { user } = store;
+  const { user } = store.getState();
+  const { colors } = useTheme();
   const [image, setImage] = useState();
   const [dataCarousel, setDataCarousel] = useState([
     "https://unoarrecifes.com/wp-content/uploads/2015/07/Refugio-Municipal-de-Animales-Tana.jpg",
