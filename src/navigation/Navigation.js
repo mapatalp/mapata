@@ -228,10 +228,6 @@ export default function Navigation({ onReady }) {
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
-      console.log(
-        "🚀 ~ file: Navigation.js ~ line 227 ~ onAuthStateChanged ~ user",
-        user
-      );
       setUserLoggedIn(user ? true : false);
     });
   }, []);
