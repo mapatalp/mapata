@@ -6,7 +6,7 @@ import { Row, Button } from "../../components";
 import {
   getMockedPublicationList,
   getMockedFavoritesList,
-} from "./ProfileTabsScreenData";
+} from "../../utils/PublicationHelper";
 
 // TODO aplicar validacion al isSelf
 const RenderTabs = ({ isSelf }) => {
