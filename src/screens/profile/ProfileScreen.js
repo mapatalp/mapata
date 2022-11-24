@@ -1,6 +1,5 @@
-import React, { useMemo } from "react";
-import { View, ScrollView } from "react-native";
-
+import React, { useState, useEffect, useMemo } from "react";
+import { ScrollView } from "react-native";
 import {
   UserProfilePic,
   Row,
@@ -20,16 +19,45 @@ const ProfileScreen = () => {
   let profile = getMockedProfile();
   const { user } = store.getState();
   const { colors } = useTheme();
-  console.log(
-    "🚀 ~ file: ProfileScreen.js ~ line 16 ~ ProfileScreen ~ user",
-    user
-  );
+  const [image, setImage] = useState();
+  const [dataCarousel, setDataCarousel] = useState([
+    "https://unoarrecifes.com/wp-content/uploads/2015/07/Refugio-Municipal-de-Animales-Tana.jpg",
+    "https://www.importancia.org/wp-content/uploads/social-de-los/Refugio-Animales-ABANDONO-CACHORROS.jpg",
+    "https://i.ytimg.com/vi/X7N_Ow8RP18/maxresdefault.jpg",
+  ]);
+
+  useEffect(() => {
+    if (dataCarousel.length < 5 && !dataCarousel.includes("uploadData")) {
+      setDataCarousel([...dataCarousel, "uploadData"]);
+    } else {
+      setDataCarousel(dataCarousel.filter((item) => item !== "uploadData"));
+    }
+  }, []);
+
+  useEffect(() => {
+    if (image) {
+      if (dataCarousel.length === 5) {
+        let newDataCarousel = dataCarousel.filter(
+          (item) => item !== "uploadData"
+        );
+        setDataCarousel([...newDataCarousel, image]);
+      } else {
+        setDataCarousel([...dataCarousel, image]);
+      }
+    }
+  }, [image]);
 
   const username = useMemo(() => user?.data?.username, [user]);
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
-      <Row>{isRefugio ? <Carousel /> : <UserProfilePic />}</Row>
+      <Row>
+        {isRefugio ? (
+          <Carousel data={dataCarousel} isSelf={isSelf} setImage={setImage} />
+        ) : (
+          <UserProfilePic />
+        )}
+      </Row>
 
       <Row justifyContent="center">
         <Text

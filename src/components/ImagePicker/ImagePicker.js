@@ -7,7 +7,7 @@ import Button from "../../components/Button/Button";
 import useStorage from "../../customHooks/useStorage";
 import Loading from "../Loading/Loading";
 
-const ImagePicker = ({ setFieldValue }) => {
+const ImagePicker = ({ setFieldValue, fromPerfil }) => {
   const [image, setImage] = useState({
     uri: "",
     default: require("./ImageDefault.png"),
@@ -59,7 +59,9 @@ const ImagePicker = ({ setFieldValue }) => {
         >
           <Pressable onPress={showModal} style={{ width: "100%", height: 300 }}>
             <Image
-              source={!!image.uri ? { uri: image.uri } : image.default}
+              source={
+                !!image.uri && !fromPerfil ? { uri: image.uri } : image.default
+              }
               style={{ width: "100%", height: 300 }}
             />
           </Pressable>

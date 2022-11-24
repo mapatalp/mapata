@@ -27,6 +27,7 @@ const createUser = async (user) => {
       id: newUserKey,
     })
   );
+
 };
 
 const getUserByUID = async (uid) => {
@@ -38,6 +39,7 @@ const getUserByUID = async (uid) => {
 
   // lo guardo en el store
   store.dispatch(setUser(user));
+
 };
 
 export { createUser, logOut, getUserByUID };

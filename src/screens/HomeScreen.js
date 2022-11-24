@@ -9,6 +9,7 @@ import { useDispatch } from "react-redux";
 import { ref, onValue } from "firebase/database";
 
 import { setAllPublications } from "../redux/slice/publication";
+import { setPublications as setLoggedUserPublications } from "../redux/slice/user";
 import { Loading } from "../components";
 import ROUTES from "../constants/routes";
 import { store } from "../redux";
@@ -42,8 +43,6 @@ const HomeScreen = () => {
     longitudeDelta: 0.001,
   });
 
-  useEffect(() => console.log(user.data), [user]);
-
   const getLocation = async () => {
     const { status } = await Location.requestForegroundPermissionsAsync();
 
@@ -70,6 +69,7 @@ const HomeScreen = () => {
     setLoading(false);
   };
 
+
   useEffect(() => {
     const prepare = async () => {
       await getLocation();
@@ -81,6 +81,15 @@ const HomeScreen = () => {
       const data = Object.values(snapshot.val());
       setPublications(data);
       dispatch(setAllPublications(data));
+
+      let userLoggedPublications = [];
+      data.map((item) => {
+        if (item.userId === user.data.id) {
+          userLoggedPublications.push(item);
+        }
+      });
+
+      dispatch(setLoggedUserPublications(userLoggedPublications));
     });
 
     prepare();
