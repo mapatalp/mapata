@@ -32,10 +32,12 @@ const createUser = async (user) => {
 const getUserByUID = async (uid) => {
   // me traigo todos los usuarios
   const users = await get(ref(db, "/users"));
+  console.log("🚀 ~ file: user.js ~ line 35 ~ getUserByUID ~ users", users);
 
   // filtro por uid
-  const user = Object.values(users.val()).find((user) => user.uid === uid);
-
+  const user = Object.values(users.val()).find((u) => u.uid === uid);
+  
+  console.log("🚀 ~ file: user.js ~ line 38 ~ getUserByUID ~ user", user);
   // lo guardo en el store
   store.dispatch(setUser(user));
 };

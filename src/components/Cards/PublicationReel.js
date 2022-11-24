@@ -63,12 +63,8 @@ const PublicationReel = ({ publication }) => {
           <View style={{ margin: 15, flex: 1 }}>
             <Text style={styles.title}>{publication.title}</Text>
             <Row>
-              <Text style={styles.subtitle}>
-                • {parseAnimalType(publication.animal)}
-              </Text>
-              <Text style={styles.subtitle}>
-                • {parsePublicationState(publication.state)}
-              </Text>
+              <Text style={styles.subtitle}>• {publication.animal}</Text>
+              <Text style={styles.subtitle}>• {publication.state}</Text>
             </Row>
           </View>
           <Image
