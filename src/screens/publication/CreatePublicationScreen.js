@@ -16,15 +16,19 @@ import {
   Button,
 } from "../../components";
 import * as Location from "expo-location";
-import { createPublication } from "../../firebase/methods/publication";
+import {
+  createPublication,
+  editPublication,
+} from "../../firebase/methods/publication";
 import { useTheme } from "react-native-paper";
 import MapView, { Marker } from "react-native-maps";
 import Toast from "react-native-toast-message";
 import ROUTES from "../../constants/routes";
 import { store } from "../../redux";
 
-const CreatePublicationScreen = ({ navigation }) => {
+const CreatePublicationScreen = ({ route, navigation }) => {
   const [showModalMap, setShowModalMap] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
   const { colors } = useTheme();
   const { user } = store.getState();
 
@@ -41,11 +45,15 @@ const CreatePublicationScreen = ({ navigation }) => {
     validateOnChange: true,
     onSubmit: async (values) => {
       try {
-        await createPublication(values, user.data.id);
+        (await isEditing)
+          ? editPublication(values, user.data.id)
+          : createPublication(values, user.data.id);
         Toast.show({
           type: "success",
           position: "bottom",
-          text1: "Publicación creada con éxito",
+          text1: isEditing
+            ? "Publicación actualizada con éxito"
+            : "Publicación creada con éxito",
         });
         setTimeout(() => {
           navigation.navigate(ROUTES.SCREEN.HOME);
@@ -64,7 +72,43 @@ const CreatePublicationScreen = ({ navigation }) => {
     latitude: 0.001,
     longitude: 0.001,
   });
-  
+
+  const setActualLocation = async () => {
+    let locationTemp = await Location.getCurrentPositionAsync({});
+    setLocation({
+      latitude: locationTemp.coords.latitude,
+      longitude: locationTemp.coords.longitude,
+    });
+    return location;
+  };
+
+  useEffect(() => {
+    if (route.params?.publication && Object.keys(route.params?.publication).length > 0) {
+      let publi = route.params?.publication;
+      setIsEditing(true);
+
+      //Seteo la info de la publicación
+      setLocation({
+        latitude: publi.location.latitude,
+        longitude: publi.location.longitude,
+      });
+      setFieldValue("location", {
+        latitude: publi.location.latitude,
+        longitude: publi.location.longitude,
+      });
+      setFieldValue("image", publi.image);
+      setFieldValue("id", publi.id);
+      setFieldValue("title", publi.title);
+      setFieldValue("gender", publi.gender);
+      setFieldValue("age", publi.age);
+      setFieldValue("state", publi.state);
+      setFieldValue("animal", publi.animal);
+      setFieldValue("description", publi.description);
+    } else {
+      setActualLocation();
+    }
+  }, [route.params]);
+
   useEffect(() => {
     (async () => {
       const { status } = await Location.requestForegroundPermissionsAsync();
@@ -77,13 +121,6 @@ const CreatePublicationScreen = ({ navigation }) => {
         });
         return;
       }
-
-      const locationTemp = await Location.getCurrentPositionAsync({});
-
-      setLocation({
-        latitude: locationTemp.coords.latitude,
-        longitude: locationTemp.coords.longitude,
-      });
     })();
   }, []);
 
@@ -198,7 +235,12 @@ const CreatePublicationScreen = ({ navigation }) => {
   return (
     <ScreenWithInputs>
       <Row>
-        <ImagePicker setFieldValue={(url) => setFieldValue("image", url)} />
+        <ImagePicker
+          setFieldValue={(url) => setFieldValue("image", url)}
+          defaultImage={
+            route.params?.publication && route.params?.publication.image
+          }
+        />
       </Row>
       <Row>
         <Column additionalStyles={{ width: "100%" }}>
@@ -217,6 +259,7 @@ const CreatePublicationScreen = ({ navigation }) => {
             setFieldValue("gender", selectedItem);
           }}
           value={values.gender}
+          defaultValue={values.gender}
           defaultButtonText="Sexo"
           error={!!errors.gender}
         />
@@ -229,6 +272,7 @@ const CreatePublicationScreen = ({ navigation }) => {
             setFieldValue("age", selectedItem);
           }}
           value={values.age}
+          defaultValue={values.age}
           defaultButtonText="Edad"
           error={!!errors.age}
         />
@@ -241,6 +285,7 @@ const CreatePublicationScreen = ({ navigation }) => {
             setFieldValue("state", selectedItem);
           }}
           value={values.state}
+          defaultValue={values.state}
           defaultButtonText="Estado"
           error={!!errors.state}
         />
@@ -301,7 +346,7 @@ const CreatePublicationScreen = ({ navigation }) => {
         disabled={isSubmitting}
         textColor={colors.white}
       >
-        Crear publicación
+        {isEditing ? "Guardar publicación" : "Crear publicación"}
       </Button>
 
       {/**Este es el modal del maopa para elgir la ubicación*/}

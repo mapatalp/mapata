@@ -5,6 +5,7 @@ import { useNavigation } from "@react-navigation/native";
 import { PublicationCard, Row, Text } from "../../components";
 
 import ROUTES from "../../constants/routes";
+import { useEffect } from "react";
 
 const PublicationListScreen = ({ publicationList, favorites = false }) => {
   const { navigate } = useNavigation();

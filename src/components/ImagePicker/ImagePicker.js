@@ -7,7 +7,7 @@ import Button from "../../components/Button/Button";
 import useStorage from "../../customHooks/useStorage";
 import Loading from "../Loading/Loading";
 
-const ImagePicker = ({ setFieldValue, fromPerfil }) => {
+const ImagePicker = ({ setFieldValue, fromPerfil, defaultImage }) => {
   const [image, setImage] = useState({
     uri: "",
     default: require("./ImageDefault.png"),
@@ -20,6 +20,11 @@ const ImagePicker = ({ setFieldValue, fromPerfil }) => {
   const containerStyle = { backgroundColor: "white", padding: 20 };
   const { colors } = useTheme();
 
+  useEffect(() => {
+    if (defaultImage) {
+      setImage({ ...image, uri: defaultImage });
+    }
+  }, [defaultImage]);
   useEffect(() => {
     if (image.uri) {
       setFieldValue(image.uri);

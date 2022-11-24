@@ -43,6 +43,7 @@ const HomeScreen = () => {
     longitudeDelta: 0.001,
   });
 
+
   const getLocation = async () => {
     const { status } = await Location.requestForegroundPermissionsAsync();
 
@@ -68,7 +69,6 @@ const HomeScreen = () => {
     });
     setLoading(false);
   };
-
 
   useEffect(() => {
     const prepare = async () => {
