@@ -14,6 +14,7 @@ import PublicationReel from "./Cards/PublicationReel";
 import RefugioDescription from "./Cards/RefugioDescription";
 import ImagePicker from "./ImagePicker/ImagePicker";
 import Divider from "./Auth/Divider";
+import Carousel from "./Carousel/Carousel";
 
 export {
   AppHeader,
@@ -31,6 +32,6 @@ export {
   PublicationReel,
   RefugioDescription,
   ImagePicker,
-  Text,
   Divider,
+  Carousel
 };

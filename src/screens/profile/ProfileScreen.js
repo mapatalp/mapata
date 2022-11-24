@@ -4,16 +4,15 @@ import { UserProfilePic, Row, SocialButton, Text } from "../../components";
 import { ProfileTabsScreen } from "./ProfileTabsScreen";
 import { getMockedProfile } from "./ProfileScreenData";
 import RefugioDescription from "../../components/Cards/RefugioDescription";
+import { Carousel } from "../../components";
 
 const ProfileScreen = () => {
-  let isRefugio = false;
+  let isRefugio = true;
   let isSelf = true;
   let profile = getMockedProfile();
   return (
     <View style={{ height: "100%", width: "100%" }}>
-      <Row additionalStyles={{ marginTop: 25 }}>
-        {isRefugio ? <Text>TODO Refugio Carousel</Text> : <UserProfilePic />}
-      </Row>
+      <Row>{isRefugio ? <Carousel /> : <UserProfilePic />}</Row>
       <Text
         style={{
           alignSelf: "center",

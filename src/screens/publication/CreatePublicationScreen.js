@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Modal, StyleSheet, Text, Pressable } from "react-native";
+import { View, Modal, StyleSheet } from "react-native";
 import { useFormik } from "formik";
 import {
   initialValues,
