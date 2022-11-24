@@ -19,6 +19,7 @@ const ScreenWithInputs = ({ children, style, ...scrollViewProps }) => {
     >
       <ScrollView
         keyboardShouldPersistTaps="handled"
+        automaticallyAdjustKeyboardInsets={true}
         style={[{ padding: 30, minHeight: screenHeight }, style]}
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}

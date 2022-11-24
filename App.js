@@ -4,10 +4,12 @@ import "react-native-gesture-handler";
 import React, { useCallback, useEffect, useState } from "react";
 import * as SplashScreen from "expo-splash-screen";
 import { Provider as PaperProvider } from "react-native-paper";
+import { Provider as ReduxProvider } from "react-redux";
 import Toast from "react-native-toast-message";
 
 import Navigation from "./src/navigation/Navigation";
 import { theme } from "./src/ui";
+import { store } from "./src/redux";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -41,9 +43,11 @@ export default function App() {
   }
 
   return (
-    <PaperProvider theme={theme}>
-      <Navigation onReady={onReady} />
-      <Toast />
-    </PaperProvider>
+    <ReduxProvider store={store}>
+      <PaperProvider theme={theme}>
+        <Navigation onReady={onReady} />
+        <Toast />
+      </PaperProvider>
+    </ReduxProvider>
   );
 }

@@ -20,12 +20,12 @@ import { initialValues, validationSchema } from "./PasswordScreen.data";
 import useAuth from "../../../customHooks/useAuth";
 
 const PasswordScreen = ({ route }) => {
+  const { loginWithEmailAndPassword } = useAuth();
   const [loading, setLoading] = useState(false);
   const { navigate } = useNavigation();
   const { colors } = useTheme();
-  const { email } = route.params;
 
-  const { loginWithEmailAndPassword } = useAuth();
+  const { email } = route.params;
 
   const { handleSubmit, isSubmitting, values, setFieldValue, errors } =
     useFormik({
@@ -38,8 +38,12 @@ const PasswordScreen = ({ route }) => {
           email,
           password: values.password,
         })
-          .then(() => {
-            navigate(ROUTES.STACK.HOME);
+          .then(async (data) => {
+            const {
+              user: { uid },
+            } = data;
+
+            await getUserByUID(uid);
           })
           .catch(showError)
           .finally(() => {

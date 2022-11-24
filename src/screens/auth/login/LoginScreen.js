@@ -20,7 +20,7 @@ import { LogoMapata } from "../../../components/Svg";
 import ROUTES from "../../../constants/routes";
 import { initialValues, validationSchema } from "./LoginScreen.data";
 import useAuth from "../../../customHooks/useAuth";
-import { createUser } from "../../../firebase/methods/user";
+import { createUser, getUserByUID } from "../../../firebase/methods/user";
 
 WebBrowser.maybeCompleteAuthSession();
 const LoginScreen = () => {
@@ -42,12 +42,19 @@ const LoginScreen = () => {
         await googleAuthentication({
           id_token: response.params.id_token,
         }).then(async (googleData) => {
-          const { isNewUser, email } = googleData?._tokenResponse;
+          const {
+            user: { uid },
+            _tokenResponse: { isNewUser, email },
+          } = googleData;
+
           if (isNewUser) {
             await createUser({
               email,
               username: email,
+              uid,
             });
+          } else {
+            await getUserByUID(uid);
           }
         });
       }

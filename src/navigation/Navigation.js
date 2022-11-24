@@ -6,7 +6,7 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "../firebase/config"
+import { auth } from "../firebase";
 
 //screens
 import HomeScreen from "../screens/HomeScreen";
@@ -20,7 +20,6 @@ import {
   RegisterPasswordScreen,
 } from "../screens/auth";
 
-;
 import { AppHeader } from "../components";
 import DrawerContent from "./Drawer/DrawerContent";
 

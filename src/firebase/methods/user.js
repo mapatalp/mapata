@@ -1,11 +1,43 @@
 import { signOut } from "firebase/auth";
-import { ref, push } from "firebase/database";
-import { db, auth } from "../config";
+import { ref, push, child, get, update } from "firebase/database";
 
-const logOut = async () => await signOut(auth);
+import { store } from "../../redux";
+import { setUser, clear } from "../../redux/slice/user";
+import { db, auth } from "..";
 
-const createUser = async (user) => {
-  push(ref(db, "/users"), user);
+const logOut = async () => {
+  await signOut(auth);
+  store.dispatch(clear());
 };
 
-export { createUser, logOut };
+const createUser = async (user) => {
+  // genero la clave
+  const newUserKey = push(child(ref(db), "/users")).key;
+
+  // mando los datos a firebase
+  await update(ref(db, "/users/" + newUserKey), {
+    ...user,
+    id: newUserKey,
+  });
+
+  // lo guardo en el store
+  store.dispatch(
+    setUser({
+      ...user,
+      id: newUserKey,
+    })
+  );
+};
+
+const getUserByUID = async (uid) => {
+  // me traigo todos los usuarios
+  const users = await get(ref(db, "/users"));
+
+  // filtro por uid
+  const user = Object.values(users.val()).find((user) => user.uid === uid);
+
+  // lo guardo en el store
+  store.dispatch(setUser(user));
+};
+
+export { createUser, logOut, getUserByUID };
