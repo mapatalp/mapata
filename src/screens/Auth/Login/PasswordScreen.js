@@ -56,6 +56,8 @@ const PasswordScreen = ({ route }) => {
       text2:
         error.code === "auth/wrong-password"
           ? "Contraseña incorrecta"
+          : error.code === "auth/user-not-found"
+          ? "Ese email no está registrado"
           : "Ocurrió un error al iniciar sesión",
     });
   };
