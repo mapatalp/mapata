@@ -11,6 +11,7 @@ const ROUTES = {
     LOGIN: "LoginScreen",
     REGISTER: "RegisterScreen",
     CREATE_PUBLICATION: "CreatePublicationScreen",
+    VIEW_PUBLICATION: "ViewPublicationScreen",
   },
   TAB: {
     HOME: "HomeTab",

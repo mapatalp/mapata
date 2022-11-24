@@ -2,8 +2,8 @@ import React from "react";
 import { View } from "react-native"; //por que verga tengo que importarlo de aca si en el login screen lo hace desde components
 import { UserProfilePic, Row, SocialButton, Text } from "../../components";
 import { ProfileTabsScreen } from "./ProfileTabsScreen";
-import { getMockedProfile } from "./ProfileScreenData";
-import RefugioDescription from "../../components/Cards/RefugioDescription";
+import { getMockedProfile } from "../../utils/ProfileHelper";
+import DescriptionCard from "../../components/Cards/DescriptionCard";
 
 const ProfileScreen = () => {
   let isRefugio = false;
@@ -24,7 +24,7 @@ const ProfileScreen = () => {
       >
         {profile.name}
       </Text>
-      {isRefugio && <RefugioDescription text={profile.description} />}
+      {isRefugio && <DescriptionCard text={profile.description} />}
       <Row
         additionalStyles={{
           marginTop: 20,

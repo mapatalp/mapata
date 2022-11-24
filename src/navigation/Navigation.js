@@ -1,9 +1,9 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { NavigationContainer, useTheme } from "@react-navigation/native";
+import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-
+import { useTheme } from "react-native-paper";
 //screens
 import { AppHeader } from "../components";
 import HomeScreen from "../screens/HomeScreen";
@@ -12,6 +12,7 @@ import CreatePublicationScreen from "../screens/publication/CreatePublicationScr
 import ROUTES from "../constants/routes";
 import { LoginScreen, RegisterScreen } from "../screens/Auth";
 import ReelsScreen from "../screens/reels/ReelsScreen";
+import ViewPublicationScreen from "../screens/publication/ViewPublicationScreen";
 
 const Tab = createBottomTabNavigator();
 const HomeStackNavigator = createStackNavigator();
@@ -51,6 +52,13 @@ function ReelsStack() {
           header: () => <AppHeader title={"Mapata"} />,
         }}
       />
+      <ReelsStackNavigator.Screen
+        name={ROUTES.SCREEN.VIEW_PUBLICATION}
+        component={ViewPublicationScreen}
+        options={{
+          header: () => <AppHeader title={"Mapata"} />,
+        }}
+      />
     </ReelsStackNavigator.Navigator>
   );
 }
@@ -61,6 +69,13 @@ function ProfileStack() {
       <ProfileStackNavigator.Screen
         name={ROUTES.SCREEN.PROFILE}
         component={ProfileScreen}
+        options={{
+          header: () => <AppHeader title={"Mapata"} />,
+        }}
+      />
+      <ReelsStackNavigator.Screen
+        name={ROUTES.SCREEN.VIEW_PUBLICATION}
+        component={ViewPublicationScreen}
         options={{
           header: () => <AppHeader title={"Mapata"} />,
         }}
@@ -117,13 +132,9 @@ function AuthenticatedTabs() {
         name={ROUTES.STACK.REELS}
         component={ReelsStack}
         options={{
-          tabBarLabel: "Reels",
+          tabBarLabel: "Publicaciones",
           tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons
-              name="filmstrip-box"
-              size={30}
-              color={color}
-            />
+            <MaterialCommunityIcons name="view-list" size={30} color={color} />
           ),
         }}
       />

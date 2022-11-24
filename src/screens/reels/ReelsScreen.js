@@ -6,14 +6,13 @@ import { Searchbar } from "react-native-paper";
 import {
   getMockedPublicationList,
   filterPublications,
-} from "./ReelsScreenData";
+} from "../../utils/PublicationHelper";
 
 const ReelsScreen = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const onChangeSearch = (query) => setSearchQuery(query);
 
   var publicationList = getMockedPublicationList();
-
   return (
     <View style={{ margin: 15, marginBottom: 60 }}>
       <Searchbar
@@ -24,6 +23,7 @@ const ReelsScreen = () => {
       />
       <ScrollView>
         {publicationList
+          .sort((a, b) => Date.parse(b.date) - Date.parse(a.date))
           .filter((publication) => filterPublications(publication, searchQuery))
           .map((item, index) => {
             return <PublicationReel publication={item} />;

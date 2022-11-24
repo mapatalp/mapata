@@ -1,6 +1,9 @@
-import { Text, Column } from "../../components";
+import { Text, Column } from "..";
 import { Card } from "react-native-paper";
 
+/**
+ * @param {import("react-native-paper").RefugioDescriptionProps} props
+ */
 const RefugioDescription = ({ text }) => {
   return (
     <Column>
