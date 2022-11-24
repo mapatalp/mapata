@@ -1,18 +1,30 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer, useTheme } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
+import { createDrawerNavigator } from "@react-navigation/drawer";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
+import { onAuthStateChanged } from "firebase/auth";
+
 //screens
-import { AppHeader } from "../components";
 import HomeScreen from "../screens/HomeScreen";
 import ProfileScreen from "../screens/ProfileScreen";
 import CreatePublicationScreen from "../screens/publication/CreatePublicationScreen";
+import {
+  LoginScreen,
+  RegisterScreen,
+  LoginPasswordScreen,
+  RegisterPasswordScreen,
+} from "../screens/auth";
+
+import { auth } from "../firebase/config";
+import { AppHeader } from "../components";
 import ROUTES from "../constants/routes";
-import { LoginScreen, RegisterScreen } from "../screens/Auth";
+import DrawerContent from "./Drawer/DrawerContent";
 
 const Tab = createBottomTabNavigator();
+const MainStackNavigator = createStackNavigator();
 const HomeStackNavigator = createStackNavigator();
 const AuthenticationStackNavigator = createStackNavigator();
 
@@ -51,8 +63,22 @@ function AuthenticationStack() {
         }}
       />
       <AuthenticationStackNavigator.Screen
+        name={ROUTES.SCREEN.LOGIN_PASSWORD}
+        component={LoginPasswordScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <AuthenticationStackNavigator.Screen
         name={ROUTES.SCREEN.REGISTER}
         component={RegisterScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <AuthenticationStackNavigator.Screen
+        name={ROUTES.SCREEN.REGISTER_PASSWORD}
+        component={RegisterPasswordScreen}
         options={{
           headerShown: false,
         }}
@@ -96,11 +122,54 @@ function AuthenticatedTabs() {
   );
 }
 
+function AuthenticatedWithDrawer() {
+  const Drawer = createDrawerNavigator();
+
+  return (
+    <Drawer.Navigator drawerContent={() => <DrawerContent />}>
+      <Drawer.Screen
+        name="AuthenticatedTabs"
+        component={AuthenticatedTabs}
+        options={{ headerShown: false }}
+      />
+      <Drawer.Screen
+        name="AuthenticationStack"
+        component={AuthenticationStack}
+      />
+    </Drawer.Navigator>
+  );
+}
+
+function MainStack() {
+  return (
+    <MainStackNavigator.Navigator initialRouteName={ROUTES.SCREEN.HOME}>
+      <MainStackNavigator.Screen
+        name={"Authenticated"}
+        component={AuthenticatedWithDrawer}
+        options={{ headerShown: false }}
+      />
+      <MainStackNavigator.Screen
+        name={"Auth"}
+        component={AuthenticationStack}
+        canGoBack
+        options={{ headerShown: false }}
+      />
+    </MainStackNavigator.Navigator>
+  );
+}
+
 export default function Navigation({ onReady }) {
-  const userLoggedIn = false;
+  const [userLoggedIn, setUserLoggedIn] = useState(false);
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      setUserLoggedIn(user ? true : false);
+    });
+  }, []);
+
   return (
     <NavigationContainer onReady={onReady}>
-      {userLoggedIn ? <AuthenticatedTabs /> : <AuthenticationStack />}
+      {userLoggedIn ? <MainStack /> : <AuthenticationStack />}
     </NavigationContainer>
   );
 }

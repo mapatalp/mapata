@@ -7,7 +7,9 @@ const ROUTES = {
     HOME: "HomeScreen",
     PROFILE: "ProfileScreen",
     LOGIN: "LoginScreen",
+    LOGIN_PASSWORD: "LoginPasswordScreen",
     REGISTER: "RegisterScreen",
+    REGISTER_PASSWORD: "RegisterPasswordScreen",
     CREATE_PUBLICATION: "CreatePublicationScreen",
   },
   TAB: {

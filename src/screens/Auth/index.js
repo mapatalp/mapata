@@ -1,4 +1,11 @@
-import LoginScreen from "./Login/LoginScreen";
-import RegisterScreen from "./Register/RegisterScreen";
+import LoginScreen from "./login/LoginScreen";
+import LoginPasswordScreen from "./login/PasswordScreen";
+import RegisterScreen from "./register/RegisterScreen";
+import RegisterPasswordScreen from "./register/PasswordScreen";
 
-export { LoginScreen, RegisterScreen };
+export {
+  LoginScreen,
+  LoginPasswordScreen,
+  RegisterScreen,
+  RegisterPasswordScreen,
+};

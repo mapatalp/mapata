@@ -7,6 +7,8 @@ export function initialValues() {
     state: "",
     animal: "",
     age: "",
+    description: "",
+    image: "",
   };
 }
 
@@ -17,5 +19,7 @@ export function validationSchema() {
     state: Yup.string().required("El estado es obligatorio"),
     animal: Yup.string().required("El tipo de animal es obligatorio"),
     age: Yup.string().required("La edad es obligatoria"),
+    description: Yup.string().required("La descripción es obligatoria"),
+    image: Yup.string().required("La imagen es obligatoria"),
   });
 }

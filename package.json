@@ -9,15 +9,17 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@react-native-async-storage/async-storage": "~1.17.3",
     "@react-navigation/bottom-tabs": "^6.4.0",
     "@react-navigation/drawer": "^6.5.0",
     "@react-navigation/native": "^6.0.13",
     "@react-navigation/stack": "^6.3.3",
     "@reduxjs/toolkit": "^1.8.6",
     "expo": "~46.0.16",
-    "expo-application": "^5.0.1",
+    "expo-application": "~4.2.2",
     "expo-auth-session": "3.7.1",
     "expo-cli": "^6.0.6",
+    "expo-image-picker": "~13.3.1",
     "expo-location": "~14.3.0",
     "expo-random": "~12.3.0",
     "expo-splash-screen": "~0.16.2",
@@ -39,6 +41,7 @@
     "react-native-select-dropdown": "^3.0.3",
     "react-native-svg": "12.3.0",
     "react-native-toast-message": "^2.1.5",
+    "react-native-uuid": "^2.0.1",
     "react-redux": "^8.0.4",
     "yup": "^0.32.11"
   },

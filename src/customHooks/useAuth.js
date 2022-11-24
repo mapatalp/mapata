@@ -7,19 +7,9 @@ import {
 } from "firebase/auth";
 
 const useAuth = () => {
-  const handleResponse = async ({ response, method }) => {
-    if (response?.type === "success") {
-      if (method === "google") {
-        await googleAuthentication({
-          id_token: response.params.id_token,
-        });
-      }
-    }
-  };
-
   const googleAuthentication = async ({ id_token }) => {
     const credential = GoogleAuthProvider.credential(id_token);
-    await signInWithCredential(auth, credential);
+    return await signInWithCredential(auth, credential);
   };
 
   const loginWithEmailAndPassword = async ({ email, password }) => {
@@ -31,7 +21,7 @@ const useAuth = () => {
   };
 
   return {
-    handleResponse,
+    googleAuthentication,
     loginWithEmailAndPassword,
     registerWithEmailAndPassword,
   };

@@ -1,7 +1,5 @@
 import React from "react";
 import { useTheme } from "react-native-paper";
-import { color } from "react-native-reanimated";
-
 import SelectDropdown from "react-native-select-dropdown";
 
 /**
@@ -17,10 +15,10 @@ const SelectInput = (props) => {
       {...props}
       buttonStyle={{
         width: "100%",
-        backgroundColor:props.error ? colors.background : "white",
+        backgroundColor: props.error ? colors.background : "white",
         marginTop: 10,
         borderRadius: 10,
-        borderWidth:  props.error ? 2 : 0,
+        borderWidth: props.error ? 2 : 0,
         borderColor: props.error ? colors.error : null,
       }}
       buttonTextStyle={{

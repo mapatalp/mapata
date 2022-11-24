@@ -1,5 +1,12 @@
 import React from "react";
-import { KeyboardAvoidingView, Platform, ScrollView } from "react-native";
+import {
+  Dimensions,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+} from "react-native";
+
+const screenHeight = Dimensions.get("screen").height - 60;
 
 /**
  * @param {import("react-native").ScrollViewProps} scrollViewProps
@@ -12,7 +19,7 @@ const ScreenWithInputs = ({ children, style, ...scrollViewProps }) => {
     >
       <ScrollView
         keyboardShouldPersistTaps="handled"
-        style={[{ padding: 30 }, style]}
+        style={[{ padding: 30, minHeight: screenHeight }, style]}
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
         {...scrollViewProps}

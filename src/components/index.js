@@ -6,6 +6,9 @@ import Column from "./Grid/Column";
 import ScreenWithInputs from "./ScreenWithInputs/ScreenWithInputs";
 import TextInput from "./Inputs/TextInput";
 import SelectInput from "./Selects/SelectInput";
+import Text from "./Text/Text";
+import ImagePicker from "./ImagePicker/ImagePicker";
+import Divider from "./Auth/Divider";
 
 export {
   AppHeader,
@@ -16,4 +19,7 @@ export {
   ScreenWithInputs,
   TextInput,
   SelectInput,
+  ImagePicker,
+  Text,
+  Divider,
 };
