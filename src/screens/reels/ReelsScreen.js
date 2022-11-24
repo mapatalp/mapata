@@ -5,7 +5,10 @@ import _ from "lodash";
 
 import { PublicationReel } from "../../components";
 
-import { filterPublications } from "../../utils/PublicationHelper";
+import {
+  filterPublications,
+  filterPublicationsNoParser,
+} from "../../utils/PublicationHelper";
 import { store } from "../../redux";
 
 const ReelsScreen = () => {
@@ -29,7 +32,7 @@ const ReelsScreen = () => {
         {publications &&
           publications
             .sort((a, b) => Date.parse(b.date) - Date.parse(a.date))
-            .filter((p) => filterPublications(p, searchQuery))
+            .filter((p) => filterPublicationsNoParser(p, searchQuery))
             .map((item, index) => {
               return (
                 <PublicationReel key={"key-reel-" + index} publication={item} />

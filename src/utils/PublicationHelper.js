@@ -37,6 +37,15 @@ export function filterPublications(publication, searchQuery) {
   );
 }
 
+export function filterPublicationsNoParser(publication, searchQuery) {
+  searchQuery = searchQuery.toLowerCase();
+  return (
+    publication.title.toLowerCase().includes(searchQuery) ||
+    publication.animal.toLowerCase().includes(searchQuery) ||
+    latinize(publication.state.toLowerCase()).includes(searchQuery)
+  );
+}
+
 export function parseAnimalType(animal) {
   var text = "";
   switch (animal) {
