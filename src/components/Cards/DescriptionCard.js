@@ -2,6 +2,9 @@ import Text from "../Text/Text";
 import Column from "../Grid/Column";
 import { Card } from "react-native-paper";
 
+/**
+ * @param {import("react-native-paper").RefugioDescriptionProps} props
+ */
 const RefugioDescription = ({ text }) => {
   return (
     <Column>

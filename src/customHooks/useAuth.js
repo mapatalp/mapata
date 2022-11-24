@@ -1,4 +1,4 @@
-import { auth } from "../firebase/config";
+import { auth } from "../firebase";
 import {
   GoogleAuthProvider,
   signInWithCredential,
@@ -13,11 +13,11 @@ const useAuth = () => {
   };
 
   const loginWithEmailAndPassword = async ({ email, password }) => {
-    await signInWithEmailAndPassword(auth, email, password);
+    return await signInWithEmailAndPassword(auth, email, password);
   };
 
   const registerWithEmailAndPassword = async ({ email, password }) => {
-    await createUserWithEmailAndPassword(auth, email, password);
+    return await createUserWithEmailAndPassword(auth, email, password);
   };
 
   return {

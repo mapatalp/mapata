@@ -39,10 +39,15 @@ const PasswordScreen = ({ route }) => {
           email,
           password: values.password,
         })
-          .then(async () => {
+          .then(async (data) => {
+            const {
+              user: { uid },
+            } = data;
+
             await createUser({
               username,
               email,
+              uid,
               password: values.password,
             });
           })

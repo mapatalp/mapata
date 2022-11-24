@@ -23,6 +23,26 @@ const CONSTANTS = {
       BASE_URL: "whatsapp://send",
     },
   },
+  ANIMAL_TYPE: {
+    GATO: 0,
+    PERRO: 1,
+    OTRO: 2,
+  },
+  PUBLICATION_STATES: {
+    TRANSITO: 0,
+    ADOPTADO: 1,
+    BUSCADO: 2,
+    CALLE: 3,
+  },
+  ANIMAL_GENDER: {
+    HEMBRA: 0,
+    MACHO: 1,
+    DESCONOCIDO: 2,
+  },
+  ANIMAL_AGE: {
+    JOVEN: 0,
+    ADULTO: 1,
+  },
 };
 
 export default CONSTANTS;

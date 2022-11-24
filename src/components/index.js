@@ -11,8 +11,12 @@ import UserProfilePic from "./Shapes/UserProfilePic";
 import PublicationCard from "./Cards/PublicationCard";
 import SocialButton from "./Button/SocialButton";
 import PublicationReel from "./Cards/PublicationReel";
-import RefugioDescription from "./Cards/RefugioDescription";
+import DescriptionCard from "./Cards/DescriptionCard";
 import ImagePicker from "./ImagePicker/ImagePicker";
+import PublicationDatosCard from "./Cards/PublicationDatosCard";
+import PublicationRow from "./Text/PublicationRow";
+import PublicationActionsDialog from "./Dialogs/PublicationActionsDialog";
+import PublicationUserInfoDialog from "./Dialogs/PublicationUserInfoDialog";
 import Divider from "./Auth/Divider";
 import Carousel from "./Carousel/Carousel";
 
@@ -30,8 +34,12 @@ export {
   SocialButton,
   Text,
   PublicationReel,
-  RefugioDescription,
+  DescriptionCard,
   ImagePicker,
+  PublicationDatosCard,
+  PublicationRow,
+  PublicationActionsDialog,
+  PublicationUserInfoDialog,
   Divider,
-  Carousel
+  Carousel,
 };

@@ -42,12 +42,19 @@ const RegisterScreen = () => {
         await googleAuthentication({
           id_token: response.params.id_token,
         }).then(async (googleData) => {
-          const { isNewUser, email } = googleData?._tokenResponse;
+          const {
+            user: { uid },
+            _tokenResponse: { isNewUser, email },
+          } = googleData;
+
           if (isNewUser) {
             await createUser({
               email,
               username: email,
+              uID: uid,
             });
+          } else {
+            await getUserByUID(uid);
           }
         });
       }
