@@ -7,7 +7,6 @@ import { FAB, useTheme } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch } from "react-redux";
 import { ref, onValue } from "firebase/database";
-
 import { setAllPublications } from "../redux/slice/publication";
 import { setPublications as setLoggedUserPublications } from "../redux/slice/user";
 import { Loading } from "../components";
@@ -101,6 +100,7 @@ const HomeScreen = () => {
   }, []);
 
   const handleMarkerPress = (publication) => {
+    navigate(ROUTES.SCREEN.VIEW_PUBLICATION, { publication });
     console.log(
       "🚀 ~ file: HomeScreen.js ~ line 103 ~ handleMarkerPress ~ publication",
       publication
@@ -128,7 +128,9 @@ const HomeScreen = () => {
               <Marker
                 key={`key-marker-${publication.title}-${ix}`}
                 coordinate={publication.location}
-                onPress={() => handleMarkerPress(publication)}
+                title={publication.title}
+                description={publication.animal}
+                onCalloutPress={() => handleMarkerPress(publication)}
               >
                 <View>
                   <PawMarker width={35} height={35} />

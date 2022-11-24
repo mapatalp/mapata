@@ -3,15 +3,12 @@ import { useTheme } from "react-native-paper";
 import { View } from "react-native";
 import PublicationListScreen from "./PublicationListScreen";
 import { Row, Button } from "../../components";
-import {
-  getMockedPublicationList,
-  getMockedFavoritesList,
-} from "../../utils/PublicationHelper";
 
-const ProfileTabsScreen = ({ isSelf, user }) => {
+const ProfileTabsScreen = ({ isSelf }) => {
   const { colors } = useTheme();
   const [switchToFavouritesTab, setSwitchToFavouritesTab] = useState(false);
   const [selected, setSelected] = useState(0);
+
   let tabs = isSelf ? ["Publicaciones", "Mis favoritos"] : ["Publicaciones"];
 
  
@@ -47,16 +44,7 @@ const ProfileTabsScreen = ({ isSelf, user }) => {
           );
         })}
       </Row>
-      {!switchToFavouritesTab && (
-        <PublicationListScreen publicationList={user.ownPublications} />
-      )}
-
-      {switchToFavouritesTab && (
-        <PublicationListScreen
-          publicationList={user.ownPublications}
-          favorites
-        />
-      )}
+      <PublicationListScreen favorites={switchToFavouritesTab} />
     </View>
   );
 };

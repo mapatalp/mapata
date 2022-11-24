@@ -52,6 +52,13 @@ function HomeStack() {
         }}
         canGoBack
       />
+      <HomeStackNavigator.Screen
+        name={ROUTES.SCREEN.VIEW_PUBLICATION}
+        component={ViewPublicationScreen}
+        options={{
+          header: () => <AppHeader title={"Mapata"} />,
+        }}
+      />
     </HomeStackNavigator.Navigator>
   );
 }
@@ -221,6 +228,10 @@ export default function Navigation({ onReady }) {
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
+      console.log(
+        "🚀 ~ file: Navigation.js ~ line 227 ~ onAuthStateChanged ~ user",
+        user
+      );
       setUserLoggedIn(user ? true : false);
     });
   }, []);
