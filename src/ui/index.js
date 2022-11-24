@@ -10,5 +10,6 @@ export const theme = {
     blue: "#1B86D7",
     google: "#4885ed",
     black: "#333",
+    grey: "#888",
   },
 };

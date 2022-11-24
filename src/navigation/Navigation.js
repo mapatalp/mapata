@@ -6,11 +6,13 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../firebase/config"
 
 //screens
 import HomeScreen from "../screens/HomeScreen";
-import ProfileScreen from "../screens/ProfileScreen";
+import ProfileScreen from "../screens/profile/ProfileScreen";
 import CreatePublicationScreen from "../screens/publication/CreatePublicationScreen";
+import ReelsScreen from "../screens/reels/ReelsScreen";
 import {
   LoginScreen,
   RegisterScreen,
@@ -18,15 +20,18 @@ import {
   RegisterPasswordScreen,
 } from "../screens/auth";
 
-import { auth } from "../firebase/config";
+;
 import { AppHeader } from "../components";
-import ROUTES from "../constants/routes";
 import DrawerContent from "./Drawer/DrawerContent";
+
+import ROUTES from "../constants/routes";
 
 const Tab = createBottomTabNavigator();
 const MainStackNavigator = createStackNavigator();
 const HomeStackNavigator = createStackNavigator();
 const AuthenticationStackNavigator = createStackNavigator();
+const ReelsStackNavigator = createStackNavigator();
+const ProfileStackNavigator = createStackNavigator();
 
 function HomeStack() {
   return (
@@ -47,6 +52,34 @@ function HomeStack() {
         canGoBack
       />
     </HomeStackNavigator.Navigator>
+  );
+}
+
+function ReelsStack() {
+  return (
+    <ReelsStackNavigator.Navigator initialRouteName={ROUTES.SCREEN.REELS}>
+      <ReelsStackNavigator.Screen
+        name={ROUTES.SCREEN.REELS}
+        component={ReelsScreen}
+        options={{
+          header: () => <AppHeader title={"Mapata"} />,
+        }}
+      />
+    </ReelsStackNavigator.Navigator>
+  );
+}
+
+function ProfileStack() {
+  return (
+    <ProfileStackNavigator.Navigator initialRouteName={ROUTES.SCREEN.PROFILE}>
+      <ProfileStackNavigator.Screen
+        name={ROUTES.SCREEN.PROFILE}
+        component={ProfileScreen}
+        options={{
+          header: () => <AppHeader title={"Mapata"} />,
+        }}
+      />
+    </ProfileStackNavigator.Navigator>
   );
 }
 
@@ -109,8 +142,22 @@ function AuthenticatedTabs() {
         }}
       />
       <Tab.Screen
+        name={ROUTES.STACK.REELS}
+        component={ReelsStack}
+        options={{
+          tabBarLabel: "Reels",
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons
+              name="filmstrip-box"
+              size={30}
+              color={color}
+            />
+          ),
+        }}
+      />
+      <Tab.Screen
         name={ROUTES.STACK.PROFILE}
-        component={ProfileScreen}
+        component={ProfileStack}
         options={{
           tabBarLabel: "Perfil",
           tabBarIcon: ({ color }) => (
