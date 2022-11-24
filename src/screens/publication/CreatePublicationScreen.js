@@ -292,7 +292,7 @@ const CreatePublicationScreen = () => {
 
       <Button
         style={{
-          marginBottom: 50,
+          marginBottom: 150,
           backgroundColor: colors.primary,
           borderRadius: 10,
           marginTop: 10,
