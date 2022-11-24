@@ -1,10 +1,16 @@
 import React, { useMemo } from "react";
-import { View, ScrollView } from "react-native"; //por que verga tengo que importarlo de aca si en el login screen lo hace desde components
-import { UserProfilePic, Row, SocialButton, Text } from "../../components";
+import { View, ScrollView } from "react-native";
+
+import {
+  UserProfilePic,
+  Row,
+  SocialButton,
+  Text,
+  Carousel,
+} from "../../components";
 import { ProfileTabsScreen } from "./ProfileTabsScreen";
 import { getMockedProfile } from "../../utils/ProfileHelper";
 import DescriptionCard from "../../components/Cards/DescriptionCard";
-import { Carousel } from "../../components";
 import { store } from "../../redux";
 import { useTheme } from "react-native-paper";
 
@@ -19,23 +25,25 @@ const ProfileScreen = () => {
     user
   );
 
-  const name = useMemo(() => user?.data?.usename, [user]);
+  const name = useMemo(() => user?.data?.username, [user]);
 
   return (
     <View style={{ height: "100%", width: "100%" }}>
       <ScrollView>
         <Row>{isRefugio ? <Carousel /> : <UserProfilePic />}</Row>
-        <Text
-          style={{
-            alignSelf: "center",
-            marginTop: 15,
-            fontWeight: "bold",
-            fontSize: 20,
-            color: colors.black,
-          }}
-        >
-          {name}
-        </Text>
+
+        <Row justifyContent="center">
+          <Text
+            style={{
+              marginTop: 15,
+              fontSize: 20,
+              color: colors.black,
+            }}
+          >
+            {name}
+          </Text>
+        </Row>
+
         {isRefugio && <DescriptionCard text={profile.description} />}
         <Row
           additionalStyles={{
