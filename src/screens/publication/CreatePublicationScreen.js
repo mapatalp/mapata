@@ -21,12 +21,12 @@ import { useTheme } from "react-native-paper";
 import MapView, { Marker } from "react-native-maps";
 import Toast from "react-native-toast-message";
 import ROUTES from "../../constants/routes";
-import { useNavigation } from "@react-navigation/native";
+import { store } from "../../redux";
 
-const CreatePublicationScreen = () => {
+const CreatePublicationScreen = ({ navigation }) => {
   const [showModalMap, setShowModalMap] = useState(false);
   const { colors } = useTheme();
-  const { navigate } = useNavigation();
+  const { user } = store.getState();
 
   const {
     values,
@@ -41,14 +41,14 @@ const CreatePublicationScreen = () => {
     validateOnChange: true,
     onSubmit: async (values) => {
       try {
-        await createPublication(values);
+        await createPublication(values, user.data.id);
         Toast.show({
           type: "success",
           position: "bottom",
           text1: "Publicación creada con éxito",
         });
         setTimeout(() => {
-          navigate(ROUTES.SCREEN.HOME);
+          navigation.navigate(ROUTES.SCREEN.HOME);
         }, 1000);
       } catch (error) {
         Toast.show({
@@ -64,7 +64,7 @@ const CreatePublicationScreen = () => {
     latitude: 0.001,
     longitude: 0.001,
   });
-
+  
   useEffect(() => {
     (async () => {
       const { status } = await Location.requestForegroundPermissionsAsync();

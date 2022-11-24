@@ -8,8 +8,7 @@ import {
   getMockedFavoritesList,
 } from "../../utils/PublicationHelper";
 
-// TODO aplicar validacion al isSelf
-const RenderTabs = ({ isSelf }) => {
+const ProfileTabsScreen = ({ isSelf, user }) => {
   const { colors } = useTheme();
   const [switchToFavouritesTab, setSwitchToFavouritesTab] = useState(false);
   const [selected, setSelected] = useState(0);
@@ -48,16 +47,17 @@ const RenderTabs = ({ isSelf }) => {
         })}
       </Row>
       {!switchToFavouritesTab && (
-        <PublicationListScreen publicationList={getMockedPublicationList()} />
+        <PublicationListScreen publicationList={user.ownPublications} />
       )}
 
       {switchToFavouritesTab && (
-        <PublicationListScreen publicationList={getMockedFavoritesList()} />
+        <PublicationListScreen
+          publicationList={user.ownPublications}
+          favorites
+        />
       )}
     </View>
   );
 };
 
-export const ProfileTabsScreen = ({ isSelf }) => {
-  return <RenderTabs isSelf={isSelf} />;
-};
+export default ProfileTabsScreen;
