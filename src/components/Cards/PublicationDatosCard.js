@@ -1,12 +1,8 @@
-import { ScrollView } from "react-native";
 import Text from "../Text/Text";
 import Column from "../Grid/Column";
 import PublicationRow from "../Text/PublicationRow";
 
-import {
-  parseAnimalType,
-  parseAnimalGender,
-} from "../../utils/PublicationHelper";
+import { parseAnimalGender } from "../../utils/PublicationHelper";
 
 const PublicationDatosCard = ({ publication }) => {
   return (

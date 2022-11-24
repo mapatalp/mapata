@@ -5,10 +5,7 @@ import _ from "lodash";
 
 import { PublicationReel } from "../../components";
 
-import {
-  filterPublications,
-  filterPublicationsNoParser,
-} from "../../utils/PublicationHelper";
+import { filterPublicationsNoParser } from "../../utils/PublicationHelper";
 import { store } from "../../redux";
 
 const ReelsScreen = () => {
