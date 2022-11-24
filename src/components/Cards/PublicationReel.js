@@ -36,24 +36,21 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
 });
-/**
- * @param {import("react-native-paper").PublicationReelProps} props
- */
+
 const PublicationReel = ({ publication }) => {
   const { colors } = useTheme();
   let borderRadius = 8;
   let iconSize = 30;
   const { navigate } = useNavigation();
+
   return (
     <TouchableOpacity
       activeOpacity={0.85}
-      onPress={() =>
-        navigate(ROUTES.SCREEN.VIEW_PUBLICATION, { publication: publication })
-      }
+      onPress={() => navigate(ROUTES.SCREEN.VIEW_PUBLICATION, { publication })}
     >
       <Card style={{ borderRadius: borderRadius, marginBottom: 15 }}>
         <Image
-          source={{ uri: publication.imageUrl }}
+          source={{ uri: publication.image }}
           style={{
             height: 220,
             width: "100%",
@@ -67,7 +64,7 @@ const PublicationReel = ({ publication }) => {
             <Text style={styles.title}>{publication.title}</Text>
             <Row>
               <Text style={styles.subtitle}>
-                • {parseAnimalType(publication.animalType)}
+                • {parseAnimalType(publication.animal)}
               </Text>
               <Text style={styles.subtitle}>
                 • {parsePublicationState(publication.state)}

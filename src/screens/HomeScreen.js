@@ -1,21 +1,28 @@
 import React, { useEffect, useState } from "react";
 import { View, StyleSheet, Dimensions } from "react-native";
-import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
+import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import * as Location from "expo-location";
 import Toast from "react-native-toast-message";
 import { FAB, useTheme } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
+import { useDispatch } from "react-redux";
+import { ref, onValue } from "firebase/database";
+
+import { setAllPublications } from "../redux/slice/publication";
 import { Loading } from "../components";
 import ROUTES from "../constants/routes";
 import { store } from "../redux";
+import { db } from "../firebase";
 
 const { width } = Dimensions.get("window");
 
 const HomeScreen = () => {
-  const { colors } = useTheme();
-  const { navigate } = useNavigation();
+  const [publications, setPublications] = useState([]);
   const [loading, setLoading] = useState(false);
+  const { navigate } = useNavigation();
   const { user } = store.getState();
+  const dispatch = useDispatch();
+  const { colors } = useTheme();
 
   const styles = StyleSheet.create({
     fab: {
@@ -37,32 +44,50 @@ const HomeScreen = () => {
 
   useEffect(() => console.log(user.data), [user]);
 
+  const getLocation = async () => {
+    const { status } = await Location.requestForegroundPermissionsAsync();
+
+    if (status !== "granted") {
+      Toast.show({
+        type: "error",
+        position: "bottom",
+        text1: "Error en los permisos",
+        text2: "Tienes que ir a ajustes de la app y activar la localización",
+      });
+      return;
+    }
+    setLoading(true);
+    const locationTemp = await Location.getCurrentPositionAsync({
+      accuracy: 4,
+    });
+
+    setLocation({
+      latitude: locationTemp.coords.latitude,
+      longitude: locationTemp.coords.longitude,
+      latitudeDelta: 0.001,
+      longitudeDelta: 0.001,
+    });
+    setLoading(false);
+  };
+
   useEffect(() => {
-    (async () => {
-      const { status } = await Location.requestForegroundPermissionsAsync();
+    const prepare = async () => {
+      await getLocation();
+    };
 
-      if (status !== "granted") {
-        Toast.show({
-          type: "error",
-          position: "bottom",
-          text1: "Error en los permisos",
-          text2: "Tienes que ir a ajustes de la app y activar la localización",
-        });
-        return;
-      }
-      setLoading(true);
-      const locationTemp = await Location.getCurrentPositionAsync({
-        accuracy: 4,
-      });
+    const publicationsRef = ref(db, "/publications");
 
-      setLocation({
-        latitude: locationTemp.coords.latitude,
-        longitude: locationTemp.coords.longitude,
-        latitudeDelta: 0.001,
-        longitudeDelta: 0.001,
-      });
-      setLoading(false);
-    })();
+    const unsubscribe = onValue(publicationsRef, (snapshot) => {
+      const data = Object.values(snapshot.val());
+      setPublications(data);
+      dispatch(setAllPublications(data));
+    });
+
+    prepare();
+
+    return () => {
+      unsubscribe();
+    };
   }, []);
 
   return (
@@ -78,7 +103,16 @@ const HomeScreen = () => {
           showsUserLocation={true}
           showsBuildings={false}
           showsMyLocationButton
-        ></MapView>
+        >
+          {publications &&
+            publications.length > 0 &&
+            publications.map((publication, ix) => (
+              <Marker
+                key={`key-marker-${publication.title}-${ix}`}
+                coordinate={publication.location}
+              />
+            ))}
+        </MapView>
       )}
 
       <FAB
