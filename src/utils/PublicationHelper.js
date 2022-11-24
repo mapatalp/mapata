@@ -117,7 +117,8 @@ export function parsePublicationState(publicationState) {
 }
 
 export function getButtonTextByPublicationState(publicationState) {
-  return publicationState === CONSTANTS.PUBLICATION_STATES.TRANSITO
+  // return publicationState === CONSTANTS.PUBLICATION_STATES.TRANSITO
+  return publicationState === "En tránsito"
     ? "Lo quiero adoptar"
     : "Lo encontré";
 }
