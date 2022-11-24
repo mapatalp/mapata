@@ -7,7 +7,11 @@ const PublicationActionsDialog = ({ visible, hideDialog, colors }) => {
   return (
     <View>
       <Portal>
-        <Dialog visible={visible} onDismiss={hideDialog}>
+        <Dialog
+          visible={visible}
+          onDismiss={hideDialog}
+          style={{ borderRadius: 30 }}
+        >
           <Dialog.Title>¿Qué desea hacer?</Dialog.Title>
           <Dialog.Content>
             <View
@@ -20,13 +24,22 @@ const PublicationActionsDialog = ({ visible, hideDialog, colors }) => {
               }}
             />
             <Button
-              labelStyle={{ color: colors.primary, fontSize: 15 }}
+              style={{
+                borderRadius: 5,
+                marginBottom: 2,
+                backgroundColor: "rgba(255,255,255,.1)",
+              }}
+              labelStyle={{ color: "#666666", fontSize: 15 }}
               onPress={() => {}}
             >
               Quiero transitar
             </Button>
             <Button
-              labelStyle={{ color: colors.primary, fontSize: 15 }}
+              style={{
+                borderRadius: 5,
+                backgroundColor: "rgba(255,255,255,.1)",
+              }}
+              labelStyle={{ color: "#30a608", fontSize: 15 }}
               onPress={() => {}}
             >
               Quiero adoptar

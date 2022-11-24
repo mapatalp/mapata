@@ -18,7 +18,11 @@ const PublicationUserInfoDialog = ({
   return (
     <View>
       <Portal>
-        <Dialog visible={visible} onDismiss={hideDialog}>
+        <Dialog
+          visible={visible}
+          onDismiss={hideDialog}
+          style={{ borderRadius: 30 }}
+        >
           <Dialog.Title>Contacto del transitante</Dialog.Title>
           <Dialog.Content>
             <View
