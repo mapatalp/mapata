@@ -52,6 +52,13 @@ function HomeStack() {
         }}
         canGoBack
       />
+      <HomeStackNavigator.Screen
+        name={ROUTES.SCREEN.VIEW_PUBLICATION}
+        component={ViewPublicationScreen}
+        options={{
+          header: () => <AppHeader title={"Mapata"} />,
+        }}
+      />
     </HomeStackNavigator.Navigator>
   );
 }
