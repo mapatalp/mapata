@@ -284,7 +284,6 @@ const CreatePublicationScreen = ({ navigation }) => {
         onPress={() => {
           setShowModalMap(true);
         }}
-        disabled={isSubmitting}
         textColor={colors.white}
       >
         Elegir ubicación
@@ -298,7 +297,6 @@ const CreatePublicationScreen = ({ navigation }) => {
           marginTop: 10,
         }}
         onPress={submitForm}
-        disabled={isSubmitting}
         textColor={colors.white}
       >
         Crear publicación

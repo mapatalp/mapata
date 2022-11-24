@@ -6,9 +6,6 @@ import Button from "../../components/Button/Button";
 import SocialButton from "../../components/Button/SocialButton";
 import Row from "../../components/Grid/Row";
 
-/**
- * @param {import("react-native-paper").PublicationUserInfoDialogProps} props
- */
 const PublicationUserInfoDialog = ({
   visible,
   hideDialog,
@@ -23,7 +20,9 @@ const PublicationUserInfoDialog = ({
           onDismiss={hideDialog}
           style={{ borderRadius: 30 }}
         >
-          <Dialog.Title>Contacto del transitante</Dialog.Title>
+          <Row justifyContent="center">
+            <Dialog.Title>Contacto del transitante</Dialog.Title>
+          </Row>
           <Dialog.Content>
             <View
               style={{
@@ -56,21 +55,23 @@ const PublicationUserInfoDialog = ({
             />
           </Dialog.Content>
           <Dialog.Actions>
-            <Button onPress={hideDialog} labelStyle={{ color: "#666" }}>
-              Cancelar
-            </Button>
-            <Button
-              onPress={hideDialog}
-              style={{
-                backgroundColor: colors.white,
-                borderColor: colors.primary,
-                borderWidth: 1,
-                opacity: 0.9,
-              }}
-              labelStyle={{ color: colors.primary }}
-            >
-              Aceptar
-            </Button>
+            <Row additionalStyles={{ width: "100%" }} justifyContent="center">
+              <Button onPress={hideDialog} labelStyle={{ color: "#666" }}>
+                Cancelar
+              </Button>
+              <Button
+                onPress={hideDialog}
+                style={{
+                  backgroundColor: colors.white,
+                  borderColor: colors.primary,
+                  borderWidth: 1,
+                  opacity: 0.9,
+                }}
+                labelStyle={{ color: colors.primary }}
+              >
+                Aceptar
+              </Button>
+            </Row>
           </Dialog.Actions>
         </Dialog>
       </Portal>

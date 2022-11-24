@@ -1,5 +1,6 @@
 import React from "react";
 import Button from "../../components/Button/Button";
+import Row from "../../components/Grid/Row";
 import { Dialog, Portal } from "react-native-paper";
 import { View } from "react-native";
 
@@ -12,7 +13,9 @@ const PublicationActionsDialog = ({ visible, hideDialog, colors }) => {
           onDismiss={hideDialog}
           style={{ borderRadius: 30 }}
         >
-          <Dialog.Title>¿Qué desea hacer?</Dialog.Title>
+          <Row justifyContent="center">
+            <Dialog.Title>¿Qué desea hacer?</Dialog.Title>
+          </Row>
           <Dialog.Content>
             <View
               style={{
@@ -55,21 +58,23 @@ const PublicationActionsDialog = ({ visible, hideDialog, colors }) => {
             />
           </Dialog.Content>
           <Dialog.Actions>
-            <Button onPress={hideDialog} labelStyle={{ color: "#666" }}>
-              Cancelar
-            </Button>
-            <Button
-              onPress={hideDialog}
-              style={{
-                backgroundColor: colors.white,
-                borderColor: colors.primary,
-                borderWidth: 1,
-                opacity: 0.9,
-              }}
-              labelStyle={{ color: colors.primary }}
-            >
-              Aceptar
-            </Button>
+            <Row additionalStyles={{ width: "100%" }} justifyContent="center">
+              <Button onPress={hideDialog} labelStyle={{ color: "#666" }}>
+                Cancelar
+              </Button>
+              <Button
+                onPress={hideDialog}
+                style={{
+                  backgroundColor: colors.white,
+                  borderColor: colors.primary,
+                  borderWidth: 1,
+                  opacity: 0.9,
+                }}
+                labelStyle={{ color: colors.primary }}
+              >
+                Aceptar
+              </Button>
+            </Row>
           </Dialog.Actions>
         </Dialog>
       </Portal>
