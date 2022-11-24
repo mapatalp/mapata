@@ -6,10 +6,10 @@ import Column from "./Grid/Column";
 import ScreenWithInputs from "./ScreenWithInputs/ScreenWithInputs";
 import TextInput from "./Inputs/TextInput";
 import SelectInput from "./Selects/SelectInput";
+import Text from "./Text/Text";
 import UserProfilePic from "./Shapes/UserProfilePic";
 import PublicationCard from "./Cards/PublicationCard";
 import SocialButton from "./Button/SocialButton";
-import Text from "./Text/Text";
 import PublicationReel from "./Cards/PublicationReel";
 import DescriptionCard from "./Cards/DescriptionCard";
 import ImagePicker from "./ImagePicker/ImagePicker";
@@ -17,6 +17,8 @@ import PublicationDatosCard from "./Cards/PublicationDatosCard";
 import PublicationRow from "./Text/PublicationRow";
 import PublicationActionsDialog from "./Dialogs/PublicationActionsDialog";
 import PublicationUserInfoDialog from "./Dialogs/PublicationUserInfoDialog";
+import Divider from "./Auth/Divider";
+import Carousel from "./Carousel/Carousel";
 
 export {
   AppHeader,
@@ -38,4 +40,6 @@ export {
   PublicationRow,
   PublicationActionsDialog,
   PublicationUserInfoDialog,
+  Divider,
+  Carousel,
 };

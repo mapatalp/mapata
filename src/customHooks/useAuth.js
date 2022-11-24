@@ -1,17 +1,29 @@
+import { auth } from "../firebase/config";
+import {
+  GoogleAuthProvider,
+  signInWithCredential,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
+
 const useAuth = () => {
-  const handleResponse = ({ response, handlerFunction, method }) => {
-    if (response?.type === "success") {
-      const { id_token } = response.params;
-      if (method === "google") {
-        googleAuthentication();
-      }
-    }
+  const googleAuthentication = async ({ id_token }) => {
+    const credential = GoogleAuthProvider.credential(id_token);
+    return await signInWithCredential(auth, credential);
   };
 
-  const googleAuthentication = () => {};
+  const loginWithEmailAndPassword = async ({ email, password }) => {
+    await signInWithEmailAndPassword(auth, email, password);
+  };
+
+  const registerWithEmailAndPassword = async ({ email, password }) => {
+    await createUserWithEmailAndPassword(auth, email, password);
+  };
 
   return {
-    handleResponse,
+    googleAuthentication,
+    loginWithEmailAndPassword,
+    registerWithEmailAndPassword,
   };
 };
 

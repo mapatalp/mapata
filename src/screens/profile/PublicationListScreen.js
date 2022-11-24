@@ -16,7 +16,13 @@ const PublicationListScreen = ({ publicationList }) => {
             navigate(ROUTES.SCREEN.VIEW_PUBLICATION, {
               publication: item,
             });
-          return <PublicationCard publication={item} onPress={onPress} />;
+          return (
+            <PublicationCard
+              publication={item}
+              key={"key-publication-" + index}
+              onPress={onPress}
+            />
+          );
         })}
       </ScrollView>
     </View>

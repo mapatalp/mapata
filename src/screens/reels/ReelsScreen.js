@@ -26,7 +26,9 @@ const ReelsScreen = () => {
           .sort((a, b) => Date.parse(b.date) - Date.parse(a.date))
           .filter((publication) => filterPublications(publication, searchQuery))
           .map((item, index) => {
-            return <PublicationReel publication={item} />;
+            return (
+              <PublicationReel key={"key-reel-" + index} publication={item} />
+            );
           })}
       </ScrollView>
     </View>

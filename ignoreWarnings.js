@@ -1,6 +1,7 @@
 import { LogBox } from "react-native";
 
 const ignoreWarns = [
+  "Constants.platform.ios.model has been deprecated in favor of expo-device's Device.modelName property.",
   "AsyncStorage has been extracted from react-native core and will be removed in a future release",
 ];
 

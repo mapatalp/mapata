@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Image, View, Pressable } from "react-native";
-import * as ImagePicker from "expo-image-picker";
+import * as ImagePickerExpo from "expo-image-picker";
 import { Portal, Provider, Modal, useTheme } from "react-native-paper";
 import Button from "../../components/Button/Button";
 
 import useStorage from "../../customHooks/useStorage";
+import Loading from "../Loading/Loading";
 
-export default function ImagePickerExample(setImageSelected) {
+const ImagePicker = ({ setFieldValue }) => {
   const [image, setImage] = useState({
     uri: "",
     default: require("./ImageDefault.png"),
@@ -21,14 +22,15 @@ export default function ImagePickerExample(setImageSelected) {
 
   useEffect(() => {
     if (image.uri) {
-      setImageSelected(image.uri);
+      setFieldValue(image.uri);
+      hideModal();
     }
   }, [image]);
 
   const pickImageGallery = async () => {
     // No permissions request is necessary for launching the image library
-    let pickerResult = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
+    let pickerResult = await ImagePickerExpo.launchImageLibraryAsync({
+      mediaTypes: ImagePickerExpo.MediaTypeOptions.All,
       allowsEditing: true,
       aspect: [4, 3],
       quality: 1,
@@ -39,8 +41,8 @@ export default function ImagePickerExample(setImageSelected) {
 
   const pickImageCamera = async () => {
     // No permissions request is necessary for launching the image library
-    let pickerResult = await ImagePicker.launchCameraAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
+    let pickerResult = await ImagePickerExpo.launchCameraAsync({
+      mediaTypes: ImagePickerExpo.MediaTypeOptions.All,
       allowsEditing: true,
       aspect: [4, 3],
       quality: 1,
@@ -50,53 +52,62 @@ export default function ImagePickerExample(setImageSelected) {
   };
 
   return (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      <Pressable onPress={showModal} style={{ width: "100%", height: 300 }}>
-        <Image
-          source={!!image.uri ? { uri: image.uri } : image.default}
-          style={{ width: "100%", height: 300 }}
-        />
-      </Pressable>
-      <Provider>
-        <Portal>
-          <Modal
-            visible={visible}
-            onDismiss={hideModal}
-            contentContainerStyle={containerStyle}
-            style={{
-              marginTop: -5,
-            }}
-          >
-            <Button
-              style={{
-                borderBottomColor: colors.black,
-                borderWidth: 1,
-                borderRadius: 0,
-                marginBottom: 5,
-              }}
-              textColor={"black"}
-              onPress={pickImageGallery}
-            >
-              Galería
-            </Button>
-            <Button
-              style={{
-                borderBottomColor: colors.black,
-                borderWidth: 1,
-                borderRadius: 0,
-                marginBottom: 5,
-              }}
-              textColor={colors.black}
-              onPress={pickImageCamera}
-            >
-              Camara
-            </Button>
-            <Button onPress={hideModal} textColor={colors.black}>
-              Cerrar
-            </Button>
-          </Modal>
-        </Portal>
-      </Provider>
-    </View>
+    <>
+      {!uploading && (
+        <View
+          style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+        >
+          <Pressable onPress={showModal} style={{ width: "100%", height: 300 }}>
+            <Image
+              source={!!image.uri ? { uri: image.uri } : image.default}
+              style={{ width: "100%", height: 300 }}
+            />
+          </Pressable>
+          <Provider>
+            <Portal>
+              <Modal
+                visible={visible}
+                onDismiss={hideModal}
+                contentContainerStyle={containerStyle}
+                style={{
+                  marginTop: -5,
+                }}
+              >
+                <Button
+                  style={{
+                    borderBottomColor: colors.black,
+                    borderWidth: 1,
+                    borderRadius: 0,
+                    marginBottom: 5,
+                  }}
+                  textColor={"black"}
+                  onPress={pickImageGallery}
+                >
+                  Galería
+                </Button>
+                <Button
+                  style={{
+                    borderBottomColor: colors.black,
+                    borderWidth: 1,
+                    borderRadius: 0,
+                    marginBottom: 5,
+                  }}
+                  textColor={colors.black}
+                  onPress={pickImageCamera}
+                >
+                  Camara
+                </Button>
+                <Button onPress={hideModal} textColor={colors.black}>
+                  Cerrar
+                </Button>
+              </Modal>
+            </Portal>
+          </Provider>
+        </View>
+      )}
+      <Loading show={uploading} text={"Espere mientras se sube la imagen"} />
+    </>
   );
-}
+};
+
+export default ImagePicker;

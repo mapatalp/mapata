@@ -1,7 +1,17 @@
 import React from "react";
-import { KeyboardAvoidingView, Platform, ScrollView } from "react-native";
+import {
+  Dimensions,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+} from "react-native";
 
-const ScreenWithInputs = ({ children }) => {
+const screenHeight = Dimensions.get("screen").height - 60;
+
+/**
+ * @param {import("react-native").ScrollViewProps} scrollViewProps
+ */
+const ScreenWithInputs = ({ children, style, ...scrollViewProps }) => {
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" && "padding"}
@@ -9,9 +19,10 @@ const ScreenWithInputs = ({ children }) => {
     >
       <ScrollView
         keyboardShouldPersistTaps="handled"
-        style={{ padding: 30 }}
+        style={[{ padding: 30, minHeight: screenHeight }, style]}
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
+        {...scrollViewProps}
       >
         {children}
       </ScrollView>

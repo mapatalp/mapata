@@ -21,5 +21,11 @@ export function validationSchema() {
     age: Yup.string().required("La edad es obligatoria"),
     description: Yup.string().required("La descripción es obligatoria"),
     image: Yup.string().required("La imagen es obligatoria"),
+    location: Yup.object()
+      .shape({
+        latitude: Yup.number().required(),
+        longitude: Yup.number().required(),
+      })
+      .required("La ubicacion es obligatoria"),
   });
 }

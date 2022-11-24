@@ -1,4 +1,6 @@
 import "./ignoreWarnings";
+import "react-native-gesture-handler";
+
 import React, { useCallback, useEffect, useState } from "react";
 import * as SplashScreen from "expo-splash-screen";
 import { Provider as PaperProvider } from "react-native-paper";
@@ -6,7 +8,6 @@ import Toast from "react-native-toast-message";
 
 import Navigation from "./src/navigation/Navigation";
 import { theme } from "./src/ui";
-import { Loading } from "./src/components";
 
 SplashScreen.preventAutoHideAsync();
 

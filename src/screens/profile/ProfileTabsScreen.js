@@ -24,10 +24,10 @@ const RenderTabs = ({ isSelf }) => {
           backgroundColor: "#fff",
         }}
       >
-        {[...Array(tabs.length).keys()].map((item) => {
+        {[...Array(tabs.length).keys()].map((item, index) => {
           return (
             <View
-              key={item}
+              key={"key-tab-" + index}
               style={{
                 flex: 1,
                 backgroundColor:

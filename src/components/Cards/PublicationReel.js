@@ -1,6 +1,7 @@
 import React from "react";
 import { StyleSheet, View, Image, TouchableOpacity } from "react-native";
-import { Text, Row } from "../../components";
+import Text from "../Text/Text";
+import Row from "../Grid/Row";
 import { Card, useTheme } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 import ROUTES from "../../constants/routes";
