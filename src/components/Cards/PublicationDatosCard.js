@@ -29,10 +29,7 @@ const PublicationDatosCard = ({ publication }) => {
         }}
       />
       <PublicationRow title="Animal" text={publication.animal} />
-      <PublicationRow
-        title="Sexo"
-        text={parseAnimalGender(publication.gender)}
-      />
+      <PublicationRow title="Sexo" text={publication.gender} />
       <PublicationRow title="Edad" text={publication.age} />
       <PublicationRow title="Estado" text={publication.state} />
       <PublicationRow
