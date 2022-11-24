@@ -35,7 +35,7 @@ const getUserByUID = async (uid) => {
   const users = await get(ref(db, "/users"));
 
   // filtro por uid
-  const user = Object.values(users.val()).find((user) => user.uid === uid);
+  const user = Object.values(users.val()).find((u) => u.uid === uid);
 
   // lo guardo en el store
   store.dispatch(setUser(user));

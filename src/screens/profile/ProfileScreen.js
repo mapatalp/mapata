@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from "react";
-import { View } from "react-native"; //por que verga tengo que importarlo de aca si en el login screen lo hace desde components
+import React, { useState, useEffect, useMemo } from "react";
+import { View, ScrollView } from "react-native";
 import { UserProfilePic, Row, SocialButton, Text } from "../../components";
 import { ProfileTabsScreen } from "./ProfileTabsScreen";
 import { getMockedProfile } from "../../utils/ProfileHelper";
 import DescriptionCard from "../../components/Cards/DescriptionCard";
 import { Carousel } from "../../components";
-import { ScrollView } from "react-native-gesture-handler";
 import { store } from "../../redux";
+import { useTheme } from "react-native-paper";
 
 const ProfileScreen = () => {
   let isRefugio = false;
@@ -41,6 +41,7 @@ const ProfileScreen = () => {
     }
   }, [image]);
 
+
   if (!user) return null;
 
   return (
@@ -59,9 +60,10 @@ const ProfileScreen = () => {
             marginTop: 15,
             fontWeight: "bold",
             fontSize: 20,
+            color: colors.black,
           }}
         >
-          {user.data.usename}
+          {name}
         </Text>
         {isRefugio && <DescriptionCard text={profile.description} />}
         <Row
