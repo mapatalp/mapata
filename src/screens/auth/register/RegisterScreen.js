@@ -20,7 +20,7 @@ import { LogoMapata } from "../../../components/Svg";
 import ROUTES from "../../../constants/routes";
 import { initialValues, validationSchema } from "./RegisterScreen.data";
 import useAuth from "../../../customHooks/useAuth";
-import { createUser } from "../../../firebase/methods/user";
+import { createUser, getUserByUID } from "../../../firebase/methods/user";
 
 WebBrowser.maybeCompleteAuthSession();
 const RegisterScreen = () => {
@@ -51,7 +51,7 @@ const RegisterScreen = () => {
             await createUser({
               email,
               username: email,
-              uID: uid,
+             uid,
             });
           } else {
             await getUserByUID(uid);

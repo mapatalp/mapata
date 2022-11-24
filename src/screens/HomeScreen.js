@@ -35,7 +35,7 @@ const HomeScreen = () => {
     longitudeDelta: 0.001,
   });
 
-  useEffect(() => console.log(user.data), [user]);
+  useEffect(() => console.log(user), [user]);
 
   useEffect(() => {
     (async () => {

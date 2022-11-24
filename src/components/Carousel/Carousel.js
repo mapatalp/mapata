@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Dimensions, Image, View, Pressable } from "react-native";
 import Carousel from "react-native-reanimated-carousel";
-import Toast from "react-native-toast-message";
 import ImagePicker from "../ImagePicker/ImagePicker";
 
 const CarouselCustom = ({ data, isSelf, setImage }) => {

@@ -17,7 +17,6 @@ const ProfileScreen = () => {
     "https://unoarrecifes.com/wp-content/uploads/2015/07/Refugio-Municipal-de-Animales-Tana.jpg",
     "https://www.importancia.org/wp-content/uploads/social-de-los/Refugio-Animales-ABANDONO-CACHORROS.jpg",
     "https://i.ytimg.com/vi/X7N_Ow8RP18/maxresdefault.jpg",
-    "https://i.ytimg.com/vi/X7N_Ow8RP18/maxresdefault.jpg",
   ]);
 
   useEffect(() => {

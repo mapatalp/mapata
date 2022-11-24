@@ -21,10 +21,12 @@ import { useTheme } from "react-native-paper";
 import MapView, { Marker } from "react-native-maps";
 import Toast from "react-native-toast-message";
 import ROUTES from "../../constants/routes";
+import { store } from "../../redux";
 
 const CreatePublicationScreen = ({ navigation }) => {
   const [showModalMap, setShowModalMap] = useState(false);
   const { colors } = useTheme();
+  const { user } = store.getState();
 
   const {
     values,
@@ -39,7 +41,7 @@ const CreatePublicationScreen = ({ navigation }) => {
     validateOnChange: true,
     onSubmit: async (values) => {
       try {
-        await createPublication(values);
+        await createPublication(values, user.data.id);
         Toast.show({
           type: "success",
           position: "bottom",
@@ -62,7 +64,7 @@ const CreatePublicationScreen = ({ navigation }) => {
     latitude: 0.001,
     longitude: 0.001,
   });
-
+  
   useEffect(() => {
     (async () => {
       const { status } = await Location.requestForegroundPermissionsAsync();

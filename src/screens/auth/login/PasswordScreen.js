@@ -18,6 +18,7 @@ import { LogoMapata } from "../../../components/Svg";
 import ROUTES from "../../../constants/routes";
 import { initialValues, validationSchema } from "./PasswordScreen.data";
 import useAuth from "../../../customHooks/useAuth";
+import { getUserByUID } from "../../../firebase/methods/user";
 
 const PasswordScreen = ({ route }) => {
   const { loginWithEmailAndPassword } = useAuth();
