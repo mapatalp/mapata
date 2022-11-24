@@ -5,14 +5,19 @@ import { useNavigation } from "@react-navigation/native";
 import { PublicationCard, Row, Text } from "../../components";
 
 import ROUTES from "../../constants/routes";
+import { store } from "../../redux";
 
-const PublicationListScreen = ({ publicationList, favorites = false }) => {
+const PublicationListScreen = ({ favorites = false }) => {
   const { navigate } = useNavigation();
 
   const onPress = (publication) =>
     navigate(ROUTES.SCREEN.VIEW_PUBLICATION, {
       publication,
     });
+
+  const { user } = store.getState();
+
+  const publicationList = favorites ? user.favorites : user.ownPublications;
 
   return (
     <View style={{ width: "100%", padding: 10 }}>
