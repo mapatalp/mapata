@@ -8,7 +8,7 @@ import {
   Text,
   Carousel,
 } from "../../components";
-import { ProfileTabsScreen } from "./ProfileTabsScreen";
+import ProfileTabsScreen from "./ProfileTabsScreen";
 import { getMockedProfile } from "../../utils/ProfileHelper";
 import DescriptionCard from "../../components/Cards/DescriptionCard";
 import { store } from "../../redux";
@@ -25,42 +25,38 @@ const ProfileScreen = () => {
     user
   );
 
-  const name = useMemo(() => user?.data?.username, [user]);
+  const username = useMemo(() => user?.data?.username, [user]);
 
   return (
-    <View style={{ height: "100%", width: "100%" }}>
-      <ScrollView>
-        <Row>{isRefugio ? <Carousel /> : <UserProfilePic />}</Row>
+    <ScrollView showsVerticalScrollIndicator={false}>
+      <Row>{isRefugio ? <Carousel /> : <UserProfilePic />}</Row>
 
-        <Row justifyContent="center">
-          <Text
-            style={{
-              marginTop: 15,
-              fontSize: 20,
-              color: colors.black,
-            }}
-          >
-            {name}
-          </Text>
-        </Row>
-
-        {isRefugio && <DescriptionCard text={profile.description} />}
-        <Row
-          additionalStyles={{
-            marginTop: 20,
-            alignSelf: "center",
-            marginBottom: 15,
+      <Row justifyContent="center">
+        <Text
+          style={{
+            marginTop: 15,
+            fontSize: 20,
+            color: colors.black,
           }}
         >
-          {profile.socialMediaList.map((item, index) => {
-            return (
-              <SocialButton key={"key-profile-" + index} socialUrl={item} />
-            );
-          })}
-        </Row>
-        <ProfileTabsScreen isSelf={isSelf} />
-      </ScrollView>
-    </View>
+          {username}
+        </Text>
+      </Row>
+
+      {isRefugio && <DescriptionCard text={profile.description} />}
+      <Row
+        additionalStyles={{
+          marginTop: 20,
+          alignSelf: "center",
+          marginBottom: 15,
+        }}
+      >
+        {profile.socialMediaList.map((item, index) => {
+          return <SocialButton key={"key-profile-" + index} socialUrl={item} />;
+        })}
+      </Row>
+      <ProfileTabsScreen isSelf={isSelf} user={user} />
+    </ScrollView>
   );
 };
 
