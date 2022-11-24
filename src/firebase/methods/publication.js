@@ -1,7 +1,7 @@
 import { ref, push, update, child } from "firebase/database";
 import { db } from "..";
 import { store } from "../../redux";
-import { addPublication } from "../../redux/slice/user";
+import { addPublication, updatePublication } from "../../redux/slice/user";
 
 const createPublication = async (publication, userId) => {
   const newPublicationKey = push(child(ref(db), "/publications")).key;
@@ -18,13 +18,18 @@ const createPublication = async (publication, userId) => {
 };
 
 const editPublication = async (publication, userId) => {
-  console.log(publication);
   await update(ref(db, "/publications/" + publication.id), {
     ...publication,
     userId: userId,
     date: new Date().toISOString().split("T")[0],
   });
-  // store.dispatch(addPublication(newPublication));
+  store.dispatch(
+    updatePublication({
+      ...publication,
+      userId: userId,
+      date: new Date().toISOString().split("T")[0],
+    })
+  );
 };
 
 export { createPublication, editPublication };

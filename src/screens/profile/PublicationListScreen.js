@@ -15,6 +15,7 @@ const PublicationListScreen = ({ publicationList, favorites = false }) => {
       publication,
     });
 
+  
   return (
     <View style={{ width: "100%", padding: 10 }}>
       {publicationList && publicationList.length > 0 ? (

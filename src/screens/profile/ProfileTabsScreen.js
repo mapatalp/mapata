@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { useTheme } from "react-native-paper";
 import { View } from "react-native";
 import PublicationListScreen from "./PublicationListScreen";
@@ -14,6 +14,7 @@ const ProfileTabsScreen = ({ isSelf, user }) => {
   const [selected, setSelected] = useState(0);
   let tabs = isSelf ? ["Publicaciones", "Mis favoritos"] : ["Publicaciones"];
 
+ 
   return (
     <View>
       <Row
