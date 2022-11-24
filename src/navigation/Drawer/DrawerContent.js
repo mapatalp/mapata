@@ -14,7 +14,7 @@ const DrawerContent = () => {
   return (
     <SafeAreaView
       style={{
-        backgroundColor: colors.primary,
+        backgroundColor: colors.white,
         paddingEnd: 40,
         paddingStart: 20,
       }}
@@ -25,6 +25,24 @@ const DrawerContent = () => {
         }}
         justifyContent="flex-end"
       >
+        <View
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            marginTop: 40,
+            padding: 20,
+            alignSelf: "center",
+            borderRadius: 50 / 2,
+            width: "100%",
+            height: 100,
+            flex: 1,
+            justifyContent: "center",
+          }}
+        >
+          <LogoMapata />
+        </View>
+
         <Pressable
           onPress={async () => await logOut()}
           style={{
@@ -33,7 +51,7 @@ const DrawerContent = () => {
         >
           <View
             style={{
-              backgroundColor: colors.white,
+              backgroundColor: colors.primary,
               width: "50%",
               height: 1,
               marginBottom: 20,
@@ -48,7 +66,7 @@ const DrawerContent = () => {
               variant="bodyLarge"
               style={{
                 fontWeight: "bold",
-                color: colors.white,
+                color: colors.primary,
               }}
             >
               Cerrar Sesión
