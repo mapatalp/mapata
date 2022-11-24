@@ -1,6 +1,7 @@
 import React from "react";
 import { StyleSheet, View, Image, TouchableOpacity } from "react-native";
-import { Text, Row } from "../../components";
+import Text from "../Text/Text";
+import Row from "../Grid/Row";
 import { Card, useTheme } from "react-native-paper";
 
 const styles = StyleSheet.create({
@@ -25,7 +26,6 @@ const PublicationReel = ({ publication }) => {
   const { colors } = useTheme();
   let borderRadius = 8;
   let iconSize = 30;
-  console.log(publication);
   return (
     <TouchableOpacity activeOpacity={0.85}>
       <Card style={{ borderRadius: borderRadius, marginBottom: 15 }}>

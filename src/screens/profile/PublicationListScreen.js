@@ -9,7 +9,12 @@ const PublicationListScreen = ({ publicationList }) => {
     <View style={{ width: "100%", padding: 10 }}>
       <ScrollView style={{ height: 250 }}>
         {publicationList.map((item, index) => {
-          return <PublicationCard publication={item} />;
+          return (
+            <PublicationCard
+              publication={item}
+              key={"key-publication-" + index}
+            />
+          );
         })}
       </ScrollView>
     </View>

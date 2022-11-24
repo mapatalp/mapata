@@ -18,14 +18,16 @@ import {
 import * as Location from "expo-location";
 import { createPublication } from "../../firebase/methods/publication";
 import { useTheme } from "react-native-paper";
-import MapView from "react-native-maps";
+import MapView, { Marker } from "react-native-maps";
 import Toast from "react-native-toast-message";
 import { color } from "react-native-reanimated";
+import ROUTES from "../../constants/routes";
+import { useNavigation } from "@react-navigation/native";
 
 const CreatePublicationScreen = () => {
   const [showModalMap, setShowModalMap] = useState(false);
-  const [imageSelected, setImageSelected] = useState();
   const { colors } = useTheme();
+  const { navigate } = useNavigation();
 
   const {
     values,
@@ -41,32 +43,27 @@ const CreatePublicationScreen = () => {
     onSubmit: async (values) => {
       try {
         await createPublication(values);
-      } catch (error) {}
+        Toast.show({
+          type: "success",
+          position: "bottom",
+          text1: "Publicación creada con éxito",
+        });
+        setTimeout(() => {
+          navigate(ROUTES.SCREEN.HOME);
+        }, 1000);
+      } catch (error) {
+        Toast.show({
+          type: "error",
+          position: "bottom",
+          text1: "Hubo un error al crear la publicación",
+        });
+      }
     },
   });
 
-  const submitForm = async () => {
-    let validate = await validateForm();
-    if (Object.keys(validate).length === 0) {
-      handleSubmit;
-    } else if (validate.image) {
-      Toast.show({
-        type: "error",
-        position: "bottom",
-        text1: "Debe subir una imagen",
-      });
-    } else
-      Toast.show({
-        type: "error",
-        position: "bottom",
-        text1: "Debe completar los campos obligatorios",
-      });
-  };
   const [location, setLocation] = useState({
     latitude: 0.001,
     longitude: 0.001,
-    latitudeDelta: 0.001,
-    longitudeDelta: 0.001,
   });
 
   useEffect(() => {
@@ -87,11 +84,34 @@ const CreatePublicationScreen = () => {
       setLocation({
         latitude: locationTemp.coords.latitude,
         longitude: locationTemp.coords.longitude,
-        latitudeDelta: 0.001,
-        longitudeDelta: 0.001,
       });
     })();
   }, []);
+
+  const submitForm = async () => {
+    let validate = await validateForm();
+
+    if (Object.keys(validate).length === 0) {
+      handleSubmit();
+    } else if (validate.image) {
+      Toast.show({
+        type: "error",
+        position: "bottom",
+        text1: "Debe subir una imagen",
+      });
+    } else if (validate.location) {
+      Toast.show({
+        type: "error",
+        position: "bottom",
+        text1: "Debe elegir una ubicación",
+      });
+    } else
+      Toast.show({
+        type: "error",
+        position: "bottom",
+        text1: "Debe completar los campos obligatorios",
+      });
+  };
 
   const saveLocation = () => {
     setFieldValue("location", location);
@@ -119,11 +139,21 @@ const CreatePublicationScreen = () => {
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
               <MapView
-                initialRegion={location}
-                showsUserLocation={true}
+                initialRegion={{
+                  latitude: location.latitude,
+                  longitude: location.longitude,
+                  latitudeDelta: 0.001,
+                  longitudeDelta: 0.001,
+                }}
                 style={{ width: 300, height: 400 }}
               >
-                <MapView.Marker draggable coordinate={location} />
+                <Marker
+                  draggable
+                  coordinate={location}
+                  onDragEnd={(direction) => {
+                    setLocation(direction.nativeEvent.coordinate);
+                  }}
+                />
               </MapView>
 
               <Row>
@@ -169,7 +199,7 @@ const CreatePublicationScreen = () => {
   return (
     <ScreenWithInputs>
       <Row>
-        <ImagePicker setImageSelected={setImageSelected} />
+        <ImagePicker setFieldValue={(url) => setFieldValue("image", url)} />
       </Row>
       <Row>
         <Column additionalStyles={{ width: "100%" }}>

@@ -26,7 +26,9 @@ const ReelsScreen = () => {
         {publicationList
           .filter((publication) => filterPublications(publication, searchQuery))
           .map((item, index) => {
-            return <PublicationReel publication={item} />;
+            return (
+              <PublicationReel key={"key-reel-" + index} publication={item} />
+            );
           })}
       </ScrollView>
     </View>

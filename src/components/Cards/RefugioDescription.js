@@ -1,4 +1,5 @@
-import { Text, Column } from "../../components";
+import Text from "../Text/Text";
+import Column from "../Grid/Column";
 import { Card } from "react-native-paper";
 
 const RefugioDescription = ({ text }) => {
