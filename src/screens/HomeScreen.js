@@ -14,6 +14,7 @@ import { Loading } from "../components";
 import ROUTES from "../constants/routes";
 import { store } from "../redux";
 import { db } from "../firebase";
+import { PawMarker } from "../components/Svg";
 
 const { width } = Dimensions.get("window");
 
@@ -69,7 +70,6 @@ const HomeScreen = () => {
     setLoading(false);
   };
 
-
   useEffect(() => {
     const prepare = async () => {
       await getLocation();
@@ -119,7 +119,11 @@ const HomeScreen = () => {
               <Marker
                 key={`key-marker-${publication.title}-${ix}`}
                 coordinate={publication.location}
-              />
+              >
+                <View>
+                  <PawMarker width={35} height={35} />
+                </View>
+              </Marker>
             ))}
         </MapView>
       )}
