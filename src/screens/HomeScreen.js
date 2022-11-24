@@ -14,6 +14,7 @@ import ROUTES from "../constants/routes";
 import { store } from "../redux";
 import { db } from "../firebase";
 import { PawMarker } from "../components/Svg";
+import { CustomMarkerWindow } from "../components";
 
 const { width } = Dimensions.get("window");
 
@@ -127,13 +128,16 @@ const HomeScreen = () => {
               <Marker
                 key={`key-marker-${publication.title}-${ix}`}
                 coordinate={publication.location}
-                title={publication.title}
-                description={publication.animal}
-                onCalloutPress={() => handleMarkerPress(publication)}
+                borderRadius={10}
               >
                 <View>
                   <PawMarker width={35} height={35} />
                 </View>
+                <CustomMarkerWindow
+                  publication={publication}
+                  onPress={() => handleMarkerPress(publication)}
+                  colors={colors}
+                />
               </Marker>
             ))}
         </MapView>
