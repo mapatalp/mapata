@@ -13,6 +13,7 @@ import Text from "./Text/Text";
 import PublicationReel from "./Cards/PublicationReel";
 import RefugioDescription from "./Cards/RefugioDescription";
 import ImagePicker from "./ImagePicker/ImagePicker";
+import Carousel from "./Carousel/Carousel";
 
 export {
   AppHeader,
@@ -30,4 +31,5 @@ export {
   PublicationReel,
   RefugioDescription,
   ImagePicker,
+  Carousel
 };
