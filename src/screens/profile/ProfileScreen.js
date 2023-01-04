@@ -12,20 +12,17 @@ import { getMockedProfile } from "../../utils/ProfileHelper";
 import DescriptionCard from "../../components/Cards/DescriptionCard";
 import { store } from "../../redux";
 import { useTheme } from "react-native-paper";
+import { editUser } from "../../firebase/methods/user";
 
 const ProfileScreen = () => {
   let isSelf = true;
   let profile = getMockedProfile();
   const { user } = store.getState();
   const { colors } = useTheme();
-  const [image, setImage] = useState();
+  const [image, setImage] = useState("");
   const [isRefugio, setIsRefugio] = useState(false);
 
-  const [dataCarousel, setDataCarousel] = useState([
-    "https://unoarrecifes.com/wp-content/uploads/2015/07/Refugio-Municipal-de-Animales-Tana.jpg",
-    "https://www.importancia.org/wp-content/uploads/social-de-los/Refugio-Animales-ABANDONO-CACHORROS.jpg",
-    "https://i.ytimg.com/vi/X7N_Ow8RP18/maxresdefault.jpg",
-  ]);
+  const [dataCarousel, setDataCarousel] = useState([]);
 
   useEffect(() => {
     if (dataCarousel.length < 5 && !dataCarousel.includes("uploadData")) {
@@ -36,21 +33,44 @@ const ProfileScreen = () => {
   }, []);
 
   useEffect(() => {
+    console.log(user.data);
     if (user.data) {
-      setIsRefugio(!!user.data.isRefugio);
+      setIsRefugio(!!user.data.refugio);
+      setDataCarousel(
+        user.data.images && user.data.images.length < 5
+          ? [...user.data.images, "uploadData"]
+          : user.data.images && user.data.images > 0
+          ? user.data.images
+          : ["uploadData"]
+      );
     }
   }, [user]);
 
   useEffect(() => {
-    if (image) {
+    console.log("pase por aca", image);
+    console.log(dataCarousel);
+    if (image !== "") {
+      console.log("entre al if");
+      let dataCarouselTemp;
       if (dataCarousel.length === 5) {
         let newDataCarousel = dataCarousel.filter(
           (item) => item !== "uploadData"
         );
-        setDataCarousel([...newDataCarousel, image]);
+        dataCarouselTemp = [...newDataCarousel, image];
       } else {
-        setDataCarousel([...dataCarousel, image]);
+        dataCarouselTemp = [...dataCarousel, image];
       }
+
+      setDataCarousel(dataCarouselTemp);
+
+      let userData = {
+        ...user.data,
+        images: dataCarouselTemp.filter(
+          (item) => item && item !== "uploadData"
+        ),
+      };
+      editUser(userData);
+      setImage("");
     }
   }, [image]);
 

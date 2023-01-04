@@ -27,7 +27,6 @@ const createUser = async (user) => {
       id: newUserKey,
     })
   );
-
 };
 
 const getUserByUID = async (uid) => {
@@ -39,7 +38,20 @@ const getUserByUID = async (uid) => {
 
   // lo guardo en el store
   store.dispatch(setUser(user));
-
 };
 
-export { createUser, logOut, getUserByUID };
+const editUser = async (user) => {
+  // mando los datos a firebase
+  await update(ref(db, "/users/" + user.id), {
+    ...user,
+  });
+
+  // lo guardo en el store
+  store.dispatch(
+    setUser({
+      ...user,
+    })
+  );
+};
+
+export { createUser, logOut, getUserByUID, editUser };
