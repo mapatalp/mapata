@@ -116,10 +116,12 @@ export function parsePublicationState(publicationState) {
   return text;
 }
 
-export function getButtonTextByPublicationState(publicationState) {
+export function getButtonTextByPublicationState(publicationState, isOwner) {
   // return publicationState === CONSTANTS.PUBLICATION_STATES.TRANSITO
   return publicationState === "En tránsito"
-    ? "Lo quiero adoptar"
+    ? isOwner
+      ? "Adopción"
+      : "Lo quiero adoptar"
     : "Lo encontré";
 }
 

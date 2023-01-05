@@ -83,7 +83,10 @@ const CreatePublicationScreen = ({ route, navigation }) => {
   };
 
   useEffect(() => {
-    if (route.params?.publication && Object.keys(route.params?.publication).length > 0) {
+    if (
+      route.params?.publication &&
+      Object.keys(route.params?.publication).length > 0
+    ) {
       let publi = route.params?.publication;
       setIsEditing(true);
 

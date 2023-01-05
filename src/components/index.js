@@ -16,6 +16,7 @@ import ImagePicker from "./ImagePicker/ImagePicker";
 import PublicationDatosCard from "./Cards/PublicationDatosCard";
 import PublicationRow from "./Text/PublicationRow";
 import PublicationActionsDialog from "./Dialogs/PublicationActionsDialog";
+import PublicationOwnerActionsDialog from "./Dialogs/PublicationoOwnerActionsDialog";
 import PublicationUserInfoDialog from "./Dialogs/PublicationUserInfoDialog";
 import Divider from "./Auth/Divider";
 import Carousel from "./Carousel/Carousel";
@@ -40,6 +41,7 @@ export {
   PublicationDatosCard,
   PublicationRow,
   PublicationActionsDialog,
+  PublicationOwnerActionsDialog,
   PublicationUserInfoDialog,
   Divider,
   Carousel,

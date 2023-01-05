@@ -9,6 +9,7 @@ import {
   PublicationDatosCard,
   Button,
   PublicationActionsDialog,
+  PublicationOwnerActionsDialog,
   PublicationUserInfoDialog,
 } from "../../components";
 
@@ -21,10 +22,12 @@ const ViewPublicationScreen = ({ route, navigation }) => {
   const { publication } = route.params;
   const { user } = store.getState();
   const { colors } = useTheme();
+  let isOwner = user.data.id === publication.userId;
   let profile = getMockedProfile();
-  let buttonText = getButtonTextByPublicationState(publication.state);
+  let buttonText = getButtonTextByPublicationState(publication.state, isOwner);
 
   const [actionsVisible, setActionsVisible] = useState(false);
+  const [ownerActionsVisible, setOwnerActionsVisible] = useState(false);
   const [contactVisible, setContactVisible] = useState(false);
 
   return (
@@ -32,6 +35,12 @@ const ViewPublicationScreen = ({ route, navigation }) => {
       <PublicationActionsDialog
         visible={actionsVisible}
         hideDialog={() => setActionsVisible(false)}
+        colors={colors}
+      />
+      <PublicationOwnerActionsDialog
+        visible={ownerActionsVisible}
+        hideDialog={() => setOwnerActionsVisible(false)}
+        publication={publication}
         colors={colors}
       />
       <PublicationUserInfoDialog
@@ -60,13 +69,15 @@ const ViewPublicationScreen = ({ route, navigation }) => {
           labelStyle={{ color: colors.primary }}
           onPress={() =>
             publication.state === "En tránsito"
-              ? setContactVisible(true)
+              ? user.data.id === publication.userId
+                ? setOwnerActionsVisible(true)
+                : setContactVisible(true)
               : setActionsVisible(true)
           }
         >
           {buttonText}
         </Button>
-        {user.data.id === publication.userId && (
+        {isOwner && (
           <Button
             style={{
               marginBottom: 150,

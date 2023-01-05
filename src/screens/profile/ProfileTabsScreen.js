@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useTheme } from "react-native-paper";
 import { View } from "react-native";
 import PublicationListScreen from "./PublicationListScreen";
@@ -8,10 +8,9 @@ const ProfileTabsScreen = ({ isSelf }) => {
   const { colors } = useTheme();
   const [switchToFavouritesTab, setSwitchToFavouritesTab] = useState(false);
   const [selected, setSelected] = useState(0);
-
+  isSelf = false; //Lo deshabilitaremos para la presentación del proyecto, no entraba en el alcance
   let tabs = isSelf ? ["Publicaciones", "Mis favoritos"] : ["Publicaciones"];
 
- 
   return (
     <View>
       <Row
