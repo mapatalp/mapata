@@ -5,7 +5,7 @@ import { Dialog, Portal } from "react-native-paper";
 import { View } from "react-native";
 import { editPublication } from "../../firebase/methods/publication";
 
-const PublicationOwnerActionsDialog = ({
+const PublicationTransitanteActionsDialog = ({
   visible,
   hideDialog,
   colors,
@@ -38,7 +38,7 @@ const PublicationOwnerActionsDialog = ({
                 marginBottom: 2,
                 backgroundColor: "rgba(255,255,255,.1)",
               }}
-              labelStyle={{ color: "#666666", fontSize: 15 }}
+              labelStyle={{ color: colors.adopcion, fontSize: 15 }}
               onPress={() => {
                 adoptPublicationState(publication, publication.userId);
               }}
@@ -50,7 +50,7 @@ const PublicationOwnerActionsDialog = ({
                 borderRadius: 5,
                 backgroundColor: "rgba(255,255,255,.1)",
               }}
-              labelStyle={{ color: "#666666", fontSize: 15 }}
+              labelStyle={{ color: colors.adopcionSecondary, fontSize: 15 }}
               onPress={() => {
                 adoptPublicationState(publication, "UnkownAdopterId"); //TODO buscar usuario? escribirlo a mano?
               }}
@@ -69,20 +69,17 @@ const PublicationOwnerActionsDialog = ({
           </Dialog.Content>
           <Dialog.Actions>
             <Row additionalStyles={{ width: "100%" }} justifyContent="center">
-              <Button onPress={hideDialog} labelStyle={{ color: "#666" }}>
-                Cancelar
-              </Button>
               <Button
                 onPress={hideDialog}
+                labelStyle={{ color: "#666" }}
                 style={{
                   backgroundColor: colors.white,
-                  borderColor: colors.primary,
+                  borderColor: "#666",
                   borderWidth: 1,
                   opacity: 0.9,
                 }}
-                labelStyle={{ color: colors.primary }}
               >
-                Aceptar
+                Cancelar
               </Button>
             </Row>
           </Dialog.Actions>
@@ -101,4 +98,4 @@ function adoptPublicationState(publication, adopterId) {
   editPublication(newPublication, newPublication.userId);
 }
 
-export default PublicationOwnerActionsDialog;
+export default PublicationTransitanteActionsDialog;

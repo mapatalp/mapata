@@ -11,5 +11,8 @@ export const theme = {
     google: "#4885ed",
     black: "#333",
     grey: "#888",
+    transito: "#F4BB44",
+    adopcion: "#30a608",
+    adopcionSecondary: "#349314",
   },
 };

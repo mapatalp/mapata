@@ -5,15 +5,20 @@ import { addPublication, updatePublication } from "../../redux/slice/user";
 
 const createPublication = async (publication, userId) => {
   const newPublicationKey = push(child(ref(db), "/publications")).key;
-
+  let transitanteId = "";
+  if (publication.state == "En tránsito") {
+    transitanteId = userId;
+  }
   let newPublication = {
     ...publication,
     userId: userId,
     date: new Date().toISOString().split("T")[0],
     id: newPublicationKey,
+    transitanteId: transitanteId,
   };
-
-  push(ref(db, "/publications"), newPublication);
+  const updatePublication = {};
+  updatePublication["/publications/" + newPublicationKey] = newPublication;
+  update(ref(db), updatePublication);
   store.dispatch(addPublication(newPublication));
 };
 

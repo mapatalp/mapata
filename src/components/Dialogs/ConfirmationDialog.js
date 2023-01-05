@@ -4,7 +4,7 @@ import Row from "../../components/Grid/Row";
 import { Dialog, Portal } from "react-native-paper";
 import { View } from "react-native";
 
-const PublicationActionsDialog = ({ visible, hideDialog, colors }) => {
+const ConfirmationDialog = ({ visible, hideDialog, colors }) => {
   return (
     <View>
       <Portal>
@@ -32,7 +32,7 @@ const PublicationActionsDialog = ({ visible, hideDialog, colors }) => {
                 marginBottom: 2,
                 backgroundColor: "rgba(255,255,255,.1)",
               }}
-              labelStyle={{ color: colors.transito, fontSize: 15 }}
+              labelStyle={{ color: "#666666", fontSize: 15 }}
               onPress={() => {}}
             >
               Quiero transitar
@@ -42,7 +42,7 @@ const PublicationActionsDialog = ({ visible, hideDialog, colors }) => {
                 borderRadius: 5,
                 backgroundColor: "rgba(255,255,255,.1)",
               }}
-              labelStyle={{ color: colors.adopcion, fontSize: 15 }}
+              labelStyle={{ color: "#30a608", fontSize: 15 }}
               onPress={() => {}}
             >
               Quiero adoptar
@@ -59,17 +59,20 @@ const PublicationActionsDialog = ({ visible, hideDialog, colors }) => {
           </Dialog.Content>
           <Dialog.Actions>
             <Row additionalStyles={{ width: "100%" }} justifyContent="center">
+              <Button onPress={hideDialog} labelStyle={{ color: "#666" }}>
+                Cancelar
+              </Button>
               <Button
                 onPress={hideDialog}
-                labelStyle={{ color: "#666" }}
                 style={{
                   backgroundColor: colors.white,
-                  borderColor: "#666",
+                  borderColor: colors.primary,
                   borderWidth: 1,
                   opacity: 0.9,
                 }}
+                labelStyle={{ color: colors.primary }}
               >
-                Cancelar
+                Aceptar
               </Button>
             </Row>
           </Dialog.Actions>
@@ -79,4 +82,4 @@ const PublicationActionsDialog = ({ visible, hideDialog, colors }) => {
   );
 };
 
-export default PublicationActionsDialog;
+export default ConfirmationDialog;
