@@ -3,7 +3,7 @@ import Button from "../Button/Button";
 import Row from "../Grid/Row";
 import { Dialog, Portal } from "react-native-paper";
 import { View } from "react-native";
-import { editPublication } from "../../firebase/methods/publication";
+import { adoptarAnimal } from "../../firebase/methods/publication";
 
 const PublicationTransitanteActionsDialog = ({
   visible,
@@ -40,7 +40,8 @@ const PublicationTransitanteActionsDialog = ({
               }}
               labelStyle={{ color: colors.adopcion, fontSize: 15 }}
               onPress={() => {
-                adoptPublicationState(publication, publication.userId);
+                adoptarAnimal(publication, publication.userId);
+                hideDialog;
               }}
             >
               Lo quiero adoptar
@@ -52,7 +53,8 @@ const PublicationTransitanteActionsDialog = ({
               }}
               labelStyle={{ color: colors.adopcionSecondary, fontSize: 15 }}
               onPress={() => {
-                adoptPublicationState(publication, "UnkownAdopterId"); //TODO buscar usuario? escribirlo a mano?
+                adoptarAnimal(publication, "UnkownAdopterId"); //TODO buscar usuario? escribirlo a mano?
+                hideDialog;
               }}
             >
               Me contactaron y lo han adoptado
@@ -88,14 +90,5 @@ const PublicationTransitanteActionsDialog = ({
     </View>
   );
 };
-
-function adoptPublicationState(publication, adopterId) {
-  let newPublication = {
-    ...publication,
-  };
-  newPublication.state = "Adoptado";
-  newPublication.adopterId = adopterId;
-  editPublication(newPublication, newPublication.userId);
-}
 
 export default PublicationTransitanteActionsDialog;

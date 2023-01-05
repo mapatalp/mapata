@@ -37,4 +37,22 @@ const editPublication = async (publication, userId) => {
   );
 };
 
-export { createPublication, editPublication };
+function adoptarAnimal(publication, adoptanteId) {
+  let newPublication = {
+    ...publication,
+  };
+  newPublication.state = "Adoptado";
+  newPublication.adopterId = adoptanteId;
+  editPublication(newPublication, newPublication.userId);
+}
+
+function transitarAnimal(publication, transitanteId) {
+  let newPublication = {
+    ...publication,
+  };
+  newPublication.state = "En tránsito";
+  newPublication.transitanteId = transitanteId;
+  editPublication(newPublication, newPublication.userId);
+}
+
+export { createPublication, editPublication, adoptarAnimal, transitarAnimal };

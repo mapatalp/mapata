@@ -26,6 +26,7 @@ const ViewPublicationScreen = ({ route, navigation }) => {
   let profile = getMockedProfile();
   let isOwner = user.data.id === publication.userId;
   let isTransitante = user.data.id === publication.transitanteId;
+  let isPerdido = publication.state === "Lo perdí";
   let buttonText = getButtonTextByPublicationState(
     publication.state,
     isTransitante
@@ -40,6 +41,7 @@ const ViewPublicationScreen = ({ route, navigation }) => {
       <PublicationActionsDialog
         visible={actionsVisible}
         hideDialog={() => setActionsVisible(false)}
+        publication={publication}
         colors={colors}
       />
       <PublicationOwnerActionsDialog
@@ -53,6 +55,7 @@ const ViewPublicationScreen = ({ route, navigation }) => {
         hideDialog={() => setContactVisible(false)}
         colors={colors}
         socialMediaList={profile.socialMediaList}
+        isPerdido={isPerdido}
       />
       <ScrollView showsVerticalScrollIndicator={false}>
         <Image
@@ -78,6 +81,8 @@ const ViewPublicationScreen = ({ route, navigation }) => {
                 ? isTransitante
                   ? setTransitanteActionsVisible(true)
                   : setContactVisible(true)
+                : isPerdido
+                ? setContactVisible(true)
                 : setActionsVisible(true)
             }
           >

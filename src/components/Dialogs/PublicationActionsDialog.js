@@ -3,8 +3,17 @@ import Button from "../../components/Button/Button";
 import Row from "../../components/Grid/Row";
 import { Dialog, Portal } from "react-native-paper";
 import { View } from "react-native";
+import {
+  transitarAnimal,
+  adoptarAnimal,
+} from "../../firebase/methods/publication";
 
-const PublicationActionsDialog = ({ visible, hideDialog, colors }) => {
+const PublicationActionsDialog = ({
+  visible,
+  hideDialog,
+  colors,
+  publication,
+}) => {
   return (
     <View>
       <Portal>
@@ -33,7 +42,10 @@ const PublicationActionsDialog = ({ visible, hideDialog, colors }) => {
                 backgroundColor: "rgba(255,255,255,.1)",
               }}
               labelStyle={{ color: colors.transito, fontSize: 15 }}
-              onPress={() => {}}
+              onPress={() => {
+                transitarAnimal(publication, publication.userId);
+                hideDialog;
+              }}
             >
               Quiero transitar
             </Button>
@@ -43,7 +55,10 @@ const PublicationActionsDialog = ({ visible, hideDialog, colors }) => {
                 backgroundColor: "rgba(255,255,255,.1)",
               }}
               labelStyle={{ color: colors.adopcion, fontSize: 15 }}
-              onPress={() => {}}
+              onPress={() => {
+                adoptarAnimal(publication, publication.userId);
+                hideDialog;
+              }}
             >
               Quiero adoptar
             </Button>
