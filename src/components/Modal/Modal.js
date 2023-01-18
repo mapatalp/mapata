@@ -1,7 +1,10 @@
 import React from "react";
 import { View, Modal, StyleSheet } from "react-native";
 import { useTheme } from "react-native-paper";
-import { Row, Column, Button } from "../../components";
+import Row from "../../components/Grid/Row";
+import Column from "../../components/Grid/Column";
+import Button from "../../components/Button/Button";
+
 /**
  * @param {{
  * showModalMap: boolean,

@@ -74,10 +74,18 @@ const ProfileScreen = () => {
 
   const username = useMemo(() => user?.data?.username, [user]);
 
+  const saveData = (texto) => {
+    let userData = {
+      ...user.data,
+      description: texto,
+    };
+    editUser(userData);
+  };
+
   const ModalRedes = () => {
     return (
       <Modal
-        onPress={()=>console.log("on press")}
+        onPress={() => console.log("on press")}
         showModalMap={isEditing}
         setShowModalMap={setIsEditing}
       >
@@ -110,7 +118,12 @@ const ProfileScreen = () => {
         </Text>
       </Row>
 
-      {isRefugio && <DescriptionCard text={profile.description} />}
+      {isRefugio && (
+        <DescriptionCard
+          text={user.data.description}
+          saveData={(texto) => saveData(texto)}
+        />
+      )}
 
       <Row justifyContent="flex-end">
         <Text
