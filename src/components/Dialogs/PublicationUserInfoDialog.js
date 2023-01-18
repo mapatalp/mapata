@@ -11,7 +11,9 @@ const PublicationUserInfoDialog = ({
   hideDialog,
   colors,
   socialMediaList,
+  isPerdido,
 }) => {
+  let titleText = isPerdido ? "Contacto del dueño" : "Contacto del transitante";
   return (
     <View>
       <Portal>
@@ -21,7 +23,7 @@ const PublicationUserInfoDialog = ({
           style={{ borderRadius: 30 }}
         >
           <Row justifyContent="center">
-            <Dialog.Title>Contacto del transitante</Dialog.Title>
+            <Dialog.Title>{titleText}</Dialog.Title>
           </Row>
           <Dialog.Content>
             <View

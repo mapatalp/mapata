@@ -1,14 +1,11 @@
 import React from "react";
-import Button from "../../components/Button/Button";
-import Row from "../../components/Grid/Row";
+import Button from "../Button/Button";
+import Row from "../Grid/Row";
 import { Dialog, Portal } from "react-native-paper";
 import { View } from "react-native";
-import {
-  transitarAnimal,
-  adoptarAnimal,
-} from "../../firebase/methods/publication";
+import { adoptarAnimal } from "../../firebase/methods/publication";
 
-const PublicationActionsDialog = ({
+const PublicationTransitanteActionsDialog = ({
   visible,
   hideDialog,
   colors,
@@ -41,26 +38,26 @@ const PublicationActionsDialog = ({
                 marginBottom: 2,
                 backgroundColor: "rgba(255,255,255,.1)",
               }}
-              labelStyle={{ color: colors.transito, fontSize: 15 }}
-              onPress={() => {
-                transitarAnimal(publication, publication.userId);
-                hideDialog;
-              }}
-            >
-              Quiero transitar
-            </Button>
-            <Button
-              style={{
-                borderRadius: 5,
-                backgroundColor: "rgba(255,255,255,.1)",
-              }}
               labelStyle={{ color: colors.adopcion, fontSize: 15 }}
               onPress={() => {
                 adoptarAnimal(publication, publication.userId);
                 hideDialog;
               }}
             >
-              Quiero adoptar
+              Lo quiero adoptar
+            </Button>
+            <Button
+              style={{
+                borderRadius: 5,
+                backgroundColor: "rgba(255,255,255,.1)",
+              }}
+              labelStyle={{ color: colors.adopcionSecondary, fontSize: 15 }}
+              onPress={() => {
+                adoptarAnimal(publication, "UnkownAdopterId"); //TODO buscar usuario? escribirlo a mano?
+                hideDialog;
+              }}
+            >
+              Me contactaron y lo han adoptado
             </Button>
             <View
               style={{
@@ -94,4 +91,4 @@ const PublicationActionsDialog = ({
   );
 };
 
-export default PublicationActionsDialog;
+export default PublicationTransitanteActionsDialog;

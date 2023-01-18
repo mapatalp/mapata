@@ -3,17 +3,8 @@ import Button from "../../components/Button/Button";
 import Row from "../../components/Grid/Row";
 import { Dialog, Portal } from "react-native-paper";
 import { View } from "react-native";
-import {
-  transitarAnimal,
-  adoptarAnimal,
-} from "../../firebase/methods/publication";
 
-const PublicationActionsDialog = ({
-  visible,
-  hideDialog,
-  colors,
-  publication,
-}) => {
+const ConfirmationDialog = ({ visible, hideDialog, colors }) => {
   return (
     <View>
       <Portal>
@@ -41,11 +32,8 @@ const PublicationActionsDialog = ({
                 marginBottom: 2,
                 backgroundColor: "rgba(255,255,255,.1)",
               }}
-              labelStyle={{ color: colors.transito, fontSize: 15 }}
-              onPress={() => {
-                transitarAnimal(publication, publication.userId);
-                hideDialog;
-              }}
+              labelStyle={{ color: "#666666", fontSize: 15 }}
+              onPress={() => {}}
             >
               Quiero transitar
             </Button>
@@ -54,11 +42,8 @@ const PublicationActionsDialog = ({
                 borderRadius: 5,
                 backgroundColor: "rgba(255,255,255,.1)",
               }}
-              labelStyle={{ color: colors.adopcion, fontSize: 15 }}
-              onPress={() => {
-                adoptarAnimal(publication, publication.userId);
-                hideDialog;
-              }}
+              labelStyle={{ color: "#30a608", fontSize: 15 }}
+              onPress={() => {}}
             >
               Quiero adoptar
             </Button>
@@ -74,17 +59,20 @@ const PublicationActionsDialog = ({
           </Dialog.Content>
           <Dialog.Actions>
             <Row additionalStyles={{ width: "100%" }} justifyContent="center">
+              <Button onPress={hideDialog} labelStyle={{ color: "#666" }}>
+                Cancelar
+              </Button>
               <Button
                 onPress={hideDialog}
-                labelStyle={{ color: "#666" }}
                 style={{
                   backgroundColor: colors.white,
-                  borderColor: "#666",
+                  borderColor: colors.primary,
                   borderWidth: 1,
                   opacity: 0.9,
                 }}
+                labelStyle={{ color: colors.primary }}
               >
-                Cancelar
+                Aceptar
               </Button>
             </Row>
           </Dialog.Actions>
@@ -94,4 +82,4 @@ const PublicationActionsDialog = ({
   );
 };
 
-export default PublicationActionsDialog;
+export default ConfirmationDialog;

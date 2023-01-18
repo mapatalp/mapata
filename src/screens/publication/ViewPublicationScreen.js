@@ -9,6 +9,7 @@ import {
   PublicationDatosCard,
   Button,
   PublicationActionsDialog,
+  PublicationOwnerActionsDialog,
   PublicationUserInfoDialog,
 } from "../../components";
 
@@ -21,10 +22,18 @@ const ViewPublicationScreen = ({ route, navigation }) => {
   const { publication } = route.params;
   const { user } = store.getState();
   const { colors } = useTheme();
+  let isAdopted = publication.adopterId != null;
   let profile = getMockedProfile();
-  let buttonText = getButtonTextByPublicationState(publication.state);
+  let isOwner = user.data.id === publication.userId;
+  let isTransitante = user.data.id === publication.transitanteId;
+  let isPerdido = publication.state === "Lo perdí";
+  let buttonText = getButtonTextByPublicationState(
+    publication.state,
+    isTransitante
+  );
 
   const [actionsVisible, setActionsVisible] = useState(false);
+  const [ownerActionsVisible, setTransitanteActionsVisible] = useState(false);
   const [contactVisible, setContactVisible] = useState(false);
 
   return (
@@ -32,6 +41,13 @@ const ViewPublicationScreen = ({ route, navigation }) => {
       <PublicationActionsDialog
         visible={actionsVisible}
         hideDialog={() => setActionsVisible(false)}
+        publication={publication}
+        colors={colors}
+      />
+      <PublicationOwnerActionsDialog
+        visible={ownerActionsVisible}
+        hideDialog={() => setTransitanteActionsVisible(false)}
+        publication={publication}
         colors={colors}
       />
       <PublicationUserInfoDialog
@@ -39,6 +55,7 @@ const ViewPublicationScreen = ({ route, navigation }) => {
         hideDialog={() => setContactVisible(false)}
         colors={colors}
         socialMediaList={profile.socialMediaList}
+        isPerdido={isPerdido}
       />
       <ScrollView showsVerticalScrollIndicator={false}>
         <Image
@@ -47,26 +64,32 @@ const ViewPublicationScreen = ({ route, navigation }) => {
         ></Image>
         <DescriptionCard text={publication.description} />
         <PublicationDatosCard publication={publication} />
-        <Button
-          style={{
-            marginTop: 10,
-            backgroundColor: colors.white,
-            borderColor: colors.primary,
-            borderRadius: 10,
-            marginTop: 20,
-            borderWidth: 1,
-            opacity: 0.9,
-          }}
-          labelStyle={{ color: colors.primary }}
-          onPress={() =>
-            publication.state === "En tránsito"
-              ? setContactVisible(true)
-              : setActionsVisible(true)
-          }
-        >
-          {buttonText}
-        </Button>
-        {user.data.id === publication.userId && (
+        {!isAdopted && (
+          <Button
+            style={{
+              marginTop: 10,
+              backgroundColor: colors.white,
+              borderColor: colors.primary,
+              borderRadius: 10,
+              marginTop: 20,
+              borderWidth: 1,
+              opacity: 0.9,
+            }}
+            labelStyle={{ color: colors.primary }}
+            onPress={() =>
+              publication.state === "En tránsito"
+                ? isTransitante
+                  ? setTransitanteActionsVisible(true)
+                  : setContactVisible(true)
+                : isPerdido
+                ? setContactVisible(true)
+                : setActionsVisible(true)
+            }
+          >
+            {buttonText}
+          </Button>
+        )}
+        {isOwner && (
           <Button
             style={{
               marginBottom: 150,
