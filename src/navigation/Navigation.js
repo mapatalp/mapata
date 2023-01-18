@@ -227,9 +227,11 @@ export default function Navigation({ onReady }) {
   const [userLoggedIn, setUserLoggedIn] = useState(false);
 
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      setUserLoggedIn(user ? true : false);
-    });
+    const subscriber = onAuthStateChanged(auth, (user) =>
+      setUserLoggedIn(user ? true : false)
+    );
+
+    return subscriber;
   }, []);
 
   return (
