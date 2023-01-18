@@ -21,6 +21,7 @@ import PublicationUserInfoDialog from "./Dialogs/PublicationUserInfoDialog";
 import Divider from "./Auth/Divider";
 import Carousel from "./Carousel/Carousel";
 import CustomMarkerWindow from "./Maps/CustomMarkerWindow";
+import  Modal from "./Modal/Modal";
 
 export {
   AppHeader,
@@ -46,4 +47,5 @@ export {
   Divider,
   Carousel,
   CustomMarkerWindow,
+  Modal,
 };

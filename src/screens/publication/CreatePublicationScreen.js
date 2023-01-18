@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { View, Modal, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
+import { Modal } from "../../components";
 import { useFormik } from "formik";
 import {
   initialValues,
@@ -159,79 +160,31 @@ const CreatePublicationScreen = ({ route, navigation }) => {
 
   const ModalWithMap = () => {
     return (
-      <View
-        style={{
-          flex: 1,
-          justifyContent: "center",
-          alignItems: "center",
-          marginTop: 22,
-        }}
+      <Modal
+        onPress={saveLocation}
+        showModalMap={showModalMap}
+        setShowModalMap={setShowModalMap}
       >
-        <Modal
-          animationType="slide"
-          transparent={true}
-          onRequestClose={() => {
-            showModalMap(false);
+       <View>
+        <MapView
+          initialRegion={{
+            latitude: location.latitude,
+            longitude: location.longitude,
+            latitudeDelta: 0.001,
+            longitudeDelta: 0.001,
           }}
-          visible={showModalMap}
+          style={{ width: 300, height: 400 }}
         >
-          <View style={styles.centeredView}>
-            <View style={styles.modalView}>
-              <MapView
-                initialRegion={{
-                  latitude: location.latitude,
-                  longitude: location.longitude,
-                  latitudeDelta: 0.001,
-                  longitudeDelta: 0.001,
-                }}
-                style={{ width: 300, height: 400 }}
-              >
-                <Marker
-                  draggable
-                  coordinate={location}
-                  onDragEnd={(direction) => {
-                    setLocation(direction.nativeEvent.coordinate);
-                  }}
-                />
-              </MapView>
-
-              <Row>
-                <Column>
-                  <Button
-                    style={{
-                      borderWidth: 1,
-                      width: 100,
-                      borderColor: colors.primary,
-                      marginRight: 10,
-                      marginTop: 20,
-                    }}
-                    textColor={colors.white}
-                    buttonColor={colors.primary}
-                    onPress={saveLocation}
-                  >
-                    Guardar
-                  </Button>
-                </Column>
-                <Column>
-                  <Button
-                    style={{
-                      borderWidth: 1,
-                      width: 100,
-                      borderColor: colors.grey,
-                      marginTop: 20,
-                    }}
-                    textColor={colors.white}
-                    buttonColor={colors.grey}
-                    onPress={() => setShowModalMap(false)}
-                  >
-                    Cerrar
-                  </Button>
-                </Column>
-              </Row>
-            </View>
-          </View>
-        </Modal>
-      </View>
+          <Marker
+            draggable
+            coordinate={location}
+            onDragEnd={(direction) => {
+              setLocation(direction.nativeEvent.coordinate);
+            }}
+          />
+        </MapView>
+        </View>
+      </Modal>
     );
   };
 

@@ -44,9 +44,6 @@ const HomeScreen = () => {
     longitudeDelta: 0.001,
   });
 
-  useEffect(()=>{
-console.log(user)
-  },[])
   const getLocation = async () => {
     const { status } = await Location.requestForegroundPermissionsAsync();
 

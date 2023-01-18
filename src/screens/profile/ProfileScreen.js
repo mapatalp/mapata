@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useMemo } from "react";
-import { ScrollView } from "react-native";
+import { ScrollView, View } from "react-native";
 import {
   UserProfilePic,
   Row,
   SocialButton,
   Text,
   Carousel,
+  Modal,
 } from "../../components";
 import ProfileTabsScreen from "./ProfileTabsScreen";
 import { getMockedProfile } from "../../utils/ProfileHelper";
@@ -21,6 +22,7 @@ const ProfileScreen = () => {
   const { colors } = useTheme();
   const [image, setImage] = useState("");
   const [isRefugio, setIsRefugio] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
 
   const [dataCarousel, setDataCarousel] = useState([]);
 
@@ -33,7 +35,6 @@ const ProfileScreen = () => {
   }, []);
 
   useEffect(() => {
-    console.log(user.data);
     if (user.data) {
       setIsRefugio(!!user.data.refugio);
       setDataCarousel(
@@ -47,10 +48,7 @@ const ProfileScreen = () => {
   }, [user]);
 
   useEffect(() => {
-    console.log("pase por aca", image);
-    console.log(dataCarousel);
     if (image !== "") {
-      console.log("entre al if");
       let dataCarouselTemp;
       if (dataCarousel.length === 5) {
         let newDataCarousel = dataCarousel.filter(
@@ -76,6 +74,20 @@ const ProfileScreen = () => {
 
   const username = useMemo(() => user?.data?.username, [user]);
 
+  const ModalRedes = () => {
+    return (
+      <Modal
+        onPress={()=>console.log("on press")}
+        showModalMap={isEditing}
+        setShowModalMap={setIsEditing}
+      >
+        <View>
+          <Text>ACA VAN LAS REDES</Text>
+        </View>
+      </Modal>
+    );
+  };
+
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <Row>
@@ -99,6 +111,24 @@ const ProfileScreen = () => {
       </Row>
 
       {isRefugio && <DescriptionCard text={profile.description} />}
+
+      <Row justifyContent="flex-end">
+        <Text
+          style={{
+            marginTop: 10,
+            marginHorizontal: 20,
+            fontWeight: "bold",
+            fontSize: 15,
+            color: "black",
+          }}
+          onPress={() => {
+            setIsEditing(!isEditing);
+          }}
+        >
+          Editar redes
+        </Text>
+      </Row>
+
       <Row
         additionalStyles={{
           marginTop: 20,
@@ -111,6 +141,8 @@ const ProfileScreen = () => {
         })}
       </Row>
       <ProfileTabsScreen isSelf={isSelf} user={user} />
+
+      <ModalRedes />
     </ScrollView>
   );
 };
