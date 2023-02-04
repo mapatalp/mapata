@@ -8,7 +8,7 @@ import Row from "../Grid/Row";
 /**
  * @param {import("react-native-paper").RefugioDescriptionProps} props
  */
-const RefugioDescription = ({ text, saveData }) => {
+const RefugioDescription = ({ text, saveData, isSelf }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [texto, setTexto] = useState(text);
   return (
@@ -25,21 +25,23 @@ const RefugioDescription = ({ text, saveData }) => {
         >
           Descripción
         </Text>
-        <Text
-          style={{
-            marginTop: 10,
-            marginHorizontal: 20,
-            fontWeight: "bold",
-            fontSize: 15,
-            color: "black",
-          }}
-          onPress={() => {
-            isEditing && saveData(texto)
-            setIsEditing(!isEditing);
-          }}
-        >
-          {isEditing ? "Guardar" : "Editar"}
-        </Text>
+        {isSelf && (
+          <Text
+            style={{
+              marginTop: 10,
+              marginHorizontal: 20,
+              fontWeight: "bold",
+              fontSize: 15,
+              color: "black",
+            }}
+            onPress={() => {
+              isEditing && saveData(texto);
+              setIsEditing(!isEditing);
+            }}
+          >
+            {isEditing ? "Guardar" : "Editar"}
+          </Text>
+        )}
       </Row>
 
       {isEditing ? (

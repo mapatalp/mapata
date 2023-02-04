@@ -7,16 +7,18 @@ import CONSTANTS from "../../constants/constants";
  * @param {import("react-native-paper").SocialButtonProps} props
  */
 const SocialButton = (props) => {
-  var iconUrl = parseSocialIconUrl(props.socialUrl);
+  var iconUrl = props.socialUrl ? parseSocialIconUrl(props.socialUrl) : "";
   return (
     <TouchableOpacity
       onPress={() => {
-        if (props.socialUrl.includes(CONSTANTS.HTTP)) {
-          Linking.openURL(props.socialUrl);
-        } else {
-          Linking.openURL(
-            `${CONSTANTS.SOCIALS.WHATSAPP.BASE_URL}?phone=${props.socialUrl}`
-          );
+        if (props.socialUrl !== undefined) {
+          if (props.socialUrl.includes(CONSTANTS.HTTP)) {
+            Linking.openURL(props.socialUrl);
+          } else {
+            Linking.openURL(
+              `${CONSTANTS.SOCIALS.WHATSAPP.BASE_URL}?phone=${props.socialUrl}`
+            );
+          }
         }
       }}
     >

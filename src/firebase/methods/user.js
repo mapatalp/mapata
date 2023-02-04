@@ -40,6 +40,16 @@ const getUserByUID = async (uid) => {
   store.dispatch(setUser(user));
 };
 
+const getUserByID = async (id) => {
+  // me traigo todos los usuarios
+  const users = await get(ref(db, "/users"));
+
+  // filtro por id
+  const user = Object.values(users.val()).find((u) => u.id === id);
+
+  return user
+};
+
 const editUser = async (user) => {
   // mando los datos a firebase
   await update(ref(db, "/users/" + user.id), {
@@ -54,4 +64,4 @@ const editUser = async (user) => {
   );
 };
 
-export { createUser, logOut, getUserByUID, editUser };
+export { createUser, logOut, getUserByUID, editUser, getUserByID };

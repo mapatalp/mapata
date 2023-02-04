@@ -17,6 +17,7 @@ import { getMockedProfile } from "../../utils/ProfileHelper";
 import CONSTANTS from "../../constants/constants";
 import { store } from "../../redux";
 import ROUTES from "../../constants/routes";
+import { getUserByID } from "../../firebase/methods/user";
 
 const ViewPublicationScreen = ({ route, navigation }) => {
   const { publication } = route.params;
@@ -35,7 +36,18 @@ const ViewPublicationScreen = ({ route, navigation }) => {
   const [actionsVisible, setActionsVisible] = useState(false);
   const [ownerActionsVisible, setTransitanteActionsVisible] = useState(false);
   const [contactVisible, setContactVisible] = useState(false);
+  const [publicanteInfo, setPublicanteInfo] = useState();
 
+  useEffect(() => {
+    const getPublicanteInfo = async () => {
+      let publicanteInfo = await getUserByID(publication.userId);
+      setPublicanteInfo(publicanteInfo);
+    };
+
+    if (publication.userId) {
+      getPublicanteInfo();
+    }
+  }, [publication]);
   return (
     <View style={{ margin: 10 }}>
       <PublicationActionsDialog
@@ -54,7 +66,15 @@ const ViewPublicationScreen = ({ route, navigation }) => {
         visible={contactVisible}
         hideDialog={() => setContactVisible(false)}
         colors={colors}
-        socialMediaList={profile.socialMediaList}
+        socialMediaList={
+          publicanteInfo
+            ? [
+                publicanteInfo.facebook,
+                publicanteInfo.instagram,
+                publicanteInfo.whatsapp,
+              ]
+            : []
+        }
         isPerdido={isPerdido}
       />
       <ScrollView showsVerticalScrollIndicator={false}>
