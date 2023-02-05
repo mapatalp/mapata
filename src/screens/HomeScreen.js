@@ -4,27 +4,33 @@ import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import * as Location from "expo-location";
 import Toast from "react-native-toast-message";
 import { FAB, useTheme } from "react-native-paper";
-import { useNavigation } from "@react-navigation/native";
-import { useDispatch } from "react-redux";
 import { ref, onValue } from "firebase/database";
+import { useNavigation } from "@react-navigation/native";
+import { useDispatch, useSelector } from "react-redux";
+
+import ROUTES from "../constants/routes";
+
+import { Loading } from "../components";
+import { CustomMarkerWindow } from "../components";
+import { PawMarker } from "../components/Svg";
+
 import { setAllPublications } from "../redux/slice/publication";
 import { setPublications as setLoggedUserPublications } from "../redux/slice/user";
-import { Loading } from "../components";
-import ROUTES from "../constants/routes";
-import { store } from "../redux";
+
 import { db } from "../firebase";
-import { PawMarker } from "../components/Svg";
-import { CustomMarkerWindow } from "../components";
 
 const { width } = Dimensions.get("window");
 
 const HomeScreen = () => {
+  const { colors } = useTheme();
+
   const [publications, setPublications] = useState([]);
   const [loading, setLoading] = useState(false);
+
   const { navigate } = useNavigation();
-  const { user } = store.getState();
+
+  const data = useSelector((state) => state.user.data);
   const dispatch = useDispatch();
-  const { colors } = useTheme();
 
   const styles = StyleSheet.create({
     fab: {
@@ -78,14 +84,14 @@ const HomeScreen = () => {
     const publicationsRef = ref(db, "/publications");
 
     onValue(publicationsRef, (snapshot) => {
-      const data = Object.values(snapshot.val());
-      setPublications(data);
-      dispatch(setAllPublications(data));
+      const publications = Object.values(snapshot.val());
+      setPublications(publications);
+      dispatch(setAllPublications(publications));
 
       let userLoggedPublications = [];
-      data.map((item) => {
-        if (item.userId === user.data.id) {
-          userLoggedPublications.push(item);
+      publications.map((publication) => {
+        if (publication.userId === data.id) {
+          userLoggedPublications.push(publication);
         }
       });
       dispatch(setLoggedUserPublications(userLoggedPublications));

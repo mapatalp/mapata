@@ -1,5 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+import { setItemToLS } from "../../../utils/StorageHelper";
+
 const initialState = {
   data: {},
   ownPublications: [],
@@ -11,6 +13,7 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     setUser: (state, { payload }) => {
+      setItemToLS({ key: "user", value: payload });
       state.data = payload;
     },
     addPublication: (state, { payload }) => {
@@ -38,6 +41,12 @@ const userSlice = createSlice({
 
 const { actions, reducer } = userSlice;
 
-export const { setUser, clear, addFavorite, addPublication, setPublications, updatePublication } =
-  actions;
+export const {
+  setUser,
+  clear,
+  addFavorite,
+  addPublication,
+  setPublications,
+  updatePublication,
+} = actions;
 export default reducer;

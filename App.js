@@ -10,6 +10,7 @@ import Toast from "react-native-toast-message";
 import Navigation from "./src/navigation/Navigation";
 import { theme } from "./src/ui";
 import { store } from "./src/redux";
+import { getItemFromLS } from "./src/utils/StorageHelper";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -20,6 +21,9 @@ export default function App() {
     async function prepare() {
       try {
         // make any API calls you need to do here
+
+        loadUser();
+
         return true;
       } catch (e) {
         console.warn(e);
@@ -31,6 +35,13 @@ export default function App() {
 
     prepare();
   }, []);
+
+  const loadUser = async () => {
+    const user = getItemFromLS("user");
+    
+    if(user){
+    }
+  };
 
   const onReady = useCallback(async () => {
     if (appIsReady) {

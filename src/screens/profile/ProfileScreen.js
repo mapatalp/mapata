@@ -11,14 +11,15 @@ import {
 import ProfileTabsScreen from "./ProfileTabsScreen";
 import { getMockedProfile } from "../../utils/ProfileHelper";
 import DescriptionCard from "../../components/Cards/DescriptionCard";
-import { store } from "../../redux";
 import { useTheme } from "react-native-paper";
 import { editUser } from "../../firebase/methods/user";
+import { useSelector } from "react-redux";
 
 const ProfileScreen = () => {
   let isSelf = true;
   let profile = getMockedProfile();
-  const { user } = store.getState();
+  const data = useSelector((state) => state.user.data);
+  console.log("🚀 ~ file: ProfileScreen.js:23 ~ ProfileScreen ~ data", data)
   const { colors } = useTheme();
   const [image, setImage] = useState("");
   const [isRefugio, setIsRefugio] = useState(false);
@@ -35,17 +36,17 @@ const ProfileScreen = () => {
   }, []);
 
   useEffect(() => {
-    if (user.data) {
-      setIsRefugio(!!user.data.refugio);
+    if (data) {
+      setIsRefugio(!!data.refugio);
       setDataCarousel(
-        user.data.images && user.data.images.length < 5
-          ? [...user.data.images, "uploadData"]
-          : user.data.images && user.data.images > 0
-          ? user.data.images
+        data.images && data.images.length < 5
+          ? [...data.images, "uploadData"]
+          : data.images && data.images > 0
+          ? data.images
           : ["uploadData"]
       );
     }
-  }, [user]);
+  }, [data]);
 
   useEffect(() => {
     if (image !== "") {
@@ -62,7 +63,7 @@ const ProfileScreen = () => {
       setDataCarousel(dataCarouselTemp);
 
       let userData = {
-        ...user.data,
+        ...data,
         images: dataCarouselTemp.filter(
           (item) => item && item !== "uploadData"
         ),
@@ -72,11 +73,11 @@ const ProfileScreen = () => {
     }
   }, [image]);
 
-  const username = useMemo(() => user?.data?.username, [user]);
+  const username = useMemo(() => data?.username, [data]);
 
   const saveData = (texto) => {
     let userData = {
-      ...user.data,
+      ...data,
       description: texto,
     };
     editUser(userData);
@@ -120,7 +121,7 @@ const ProfileScreen = () => {
 
       {isRefugio && (
         <DescriptionCard
-          text={user.data.description}
+          text={data.description}
           saveData={(texto) => saveData(texto)}
         />
       )}
@@ -153,7 +154,7 @@ const ProfileScreen = () => {
           return <SocialButton key={"key-profile-" + index} socialUrl={item} />;
         })}
       </Row>
-      <ProfileTabsScreen isSelf={isSelf} user={user} />
+      <ProfileTabsScreen isSelf={isSelf} />
 
       <ModalRedes />
     </ScrollView>
