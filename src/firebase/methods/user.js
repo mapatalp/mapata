@@ -36,8 +36,17 @@ const getUserByUID = async (uid) => {
   // filtro por uid
   const user = Object.values(users.val()).find((u) => u.uid === uid);
 
-  // lo guardo en el store
-  store.dispatch(setUser(user));
+  return user;
+};
+
+const getUserByID = async (id) => {
+  // me traigo todos los usuarios
+  const users = await get(ref(db, "/users"));
+
+  // filtro por id
+  const user = Object.values(users.val()).find((u) => u.id === id);
+
+  return user;
 };
 
 const editUser = async (user) => {
@@ -54,4 +63,4 @@ const editUser = async (user) => {
   );
 };
 
-export { createUser, logOut, getUserByUID, editUser };
+export { createUser, logOut, getUserByUID, editUser, getUserByID };

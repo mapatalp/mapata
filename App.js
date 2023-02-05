@@ -11,6 +11,8 @@ import Navigation from "./src/navigation/Navigation";
 import { theme } from "./src/ui";
 import { store } from "./src/redux";
 import { getItemFromLS } from "./src/utils/StorageHelper";
+import { getUserByID } from "./src/firebase/methods/user";
+import { setUser } from "./src/redux/slice/user";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -37,9 +39,11 @@ export default function App() {
   }, []);
 
   const loadUser = async () => {
-    const user = getItemFromLS("user");
-    
-    if(user){
+    const userFromLS = await getItemFromLS("user");
+
+    if (userFromLS) {
+      const user = await getUserByID(userFromLS.id);
+      store.dispatch(setUser(user));
     }
   };
 

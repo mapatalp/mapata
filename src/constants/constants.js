@@ -23,6 +23,8 @@ const CONSTANTS = {
       BASE_URL: "whatsapp://send",
     },
   },
+  ICON_INFO:
+    "https://cdn-icons-png.flaticon.com/512/665/665049.png",
   ANIMAL_TYPE: {
     GATO: 0,
     PERRO: 1,

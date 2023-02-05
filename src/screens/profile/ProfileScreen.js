@@ -7,9 +7,10 @@ import {
   Text,
   Carousel,
   Modal,
+  Column,
+  TextInput,
 } from "../../components";
 import ProfileTabsScreen from "./ProfileTabsScreen";
-import { getMockedProfile } from "../../utils/ProfileHelper";
 import DescriptionCard from "../../components/Cards/DescriptionCard";
 import { useTheme } from "react-native-paper";
 import { editUser } from "../../firebase/methods/user";
@@ -17,15 +18,20 @@ import { useSelector } from "react-redux";
 
 const ProfileScreen = () => {
   let isSelf = true;
-  let profile = getMockedProfile();
+
   const data = useSelector((state) => state.user.data);
-  console.log("🚀 ~ file: ProfileScreen.js:23 ~ ProfileScreen ~ data", data)
+
   const { colors } = useTheme();
-  const [image, setImage] = useState("");
-  const [isRefugio, setIsRefugio] = useState(false);
-  const [isEditing, setIsEditing] = useState(false);
 
   const [dataCarousel, setDataCarousel] = useState([]);
+  const [isRefugio, setIsRefugio] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [image, setImage] = useState("");
+  const [redes, setRedes] = useState({
+    facebook: data.facebook || "",
+    instagram: data.instagram || "",
+    whatsapp: data.whatsapp || "",
+  });
 
   useEffect(() => {
     if (dataCarousel.length < 5 && !dataCarousel.includes("uploadData")) {
@@ -79,6 +85,19 @@ const ProfileScreen = () => {
     let userData = {
       ...data,
       description: texto,
+      facebook: redes.facebook,
+      instagram: redes.instagram,
+      whatsapp: redes.whatsapp,
+    };
+    editUser(userData);
+  };
+
+  const saveMedia = () => {
+    let userData = {
+      ...user.data,
+      facebook: redes.facebook,
+      instagram: redes.instagram,
+      whatsapp: redes.whatsapp,
     };
     editUser(userData);
   };
@@ -86,12 +105,48 @@ const ProfileScreen = () => {
   const ModalRedes = () => {
     return (
       <Modal
-        onPress={() => console.log("on press")}
+        onPress={() => {
+          saveMedia();
+          setIsEditing(false);
+        }}
         showModalMap={isEditing}
         setShowModalMap={setIsEditing}
+        backgroundColor={"#BDBDBD"}
       >
         <View>
-          <Text>ACA VAN LAS REDES</Text>
+          <Row>
+            <Column additionalStyles={{ width: "100%" }}>
+              <TextInput
+                placeholder="Facebook url"
+                value={redes.facebook}
+                onChangeText={(title) =>
+                  setRedes({ ...redes, facebook: title })
+                }
+              />
+            </Column>
+          </Row>
+          <Row>
+            <Column additionalStyles={{ width: "100%" }}>
+              <TextInput
+                placeholder="Instagram url"
+                value={redes.instagram}
+                onChangeText={(title) =>
+                  setRedes({ ...redes, instagram: title })
+                }
+              />
+            </Column>
+          </Row>
+          <Row>
+            <Column additionalStyles={{ width: "100%" }}>
+              <TextInput
+                placeholder="whatsapp"
+                value={redes.whatsapp}
+                onChangeText={(title) =>
+                  setRedes({ ...redes, whatsapp: title })
+                }
+              />
+            </Column>
+          </Row>
         </View>
       </Modal>
     );
@@ -121,27 +176,30 @@ const ProfileScreen = () => {
 
       {isRefugio && (
         <DescriptionCard
+          isSelf={isSelf}
           text={data.description}
-          saveData={(texto) => saveData(texto)}
+          saveData={(text) => saveData(text)}
         />
       )}
 
-      <Row justifyContent="flex-end">
-        <Text
-          style={{
-            marginTop: 10,
-            marginHorizontal: 20,
-            fontWeight: "bold",
-            fontSize: 15,
-            color: "black",
-          }}
-          onPress={() => {
-            setIsEditing(!isEditing);
-          }}
-        >
-          Editar redes
-        </Text>
-      </Row>
+      {isSelf && (
+        <Row justifyContent="flex-end">
+          <Text
+            style={{
+              marginTop: 10,
+              marginHorizontal: 20,
+              fontWeight: "bold",
+              fontSize: 15,
+              color: "black",
+            }}
+            onPress={() => {
+              setIsEditing(true);
+            }}
+          >
+            Editar redes
+          </Text>
+        </Row>
+      )}
 
       <Row
         additionalStyles={{
@@ -150,13 +208,13 @@ const ProfileScreen = () => {
           marginBottom: 15,
         }}
       >
-        {profile.socialMediaList.map((item, index) => {
-          return <SocialButton key={"key-profile-" + index} socialUrl={item} />;
-        })}
+        {Object.values(redes).map((item, index) => (
+          <SocialButton key={"key-profile-" + index} socialUrl={item} />
+        ))}
       </Row>
       <ProfileTabsScreen isSelf={isSelf} />
 
-      <ModalRedes />
+      {ModalRedes()}
     </ScrollView>
   );
 };

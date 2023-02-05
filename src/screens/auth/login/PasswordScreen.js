@@ -16,9 +16,14 @@ import {
 import { LogoMapata } from "../../../components/Svg";
 
 import ROUTES from "../../../constants/routes";
-import { initialValues, validationSchema } from "./PasswordScreen.data";
-import useAuth from "../../../customHooks/useAuth";
+
 import { getUserByUID } from "../../../firebase/methods/user";
+import { setUser } from "../../../redux/slice/user";
+import { store } from "../../../redux";
+
+import useAuth from "../../../customHooks/useAuth";
+
+import { initialValues, validationSchema } from "./PasswordScreen.data";
 
 const PasswordScreen = ({ route }) => {
   const { loginWithEmailAndPassword } = useAuth();
@@ -44,7 +49,9 @@ const PasswordScreen = ({ route }) => {
               user: { uid },
             } = data;
 
-            await getUserByUID(uid);
+            const user = await getUserByUID(uid);
+            // lo guardo en el store
+            store.dispatch(setUser(user));
           })
           .catch(showError)
           .finally(() => {
