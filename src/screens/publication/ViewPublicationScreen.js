@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Image, ScrollView, Text } from "react-native";
+import { View, Image, ScrollView, Text, TouchableOpacity } from "react-native";
 import { useTheme } from "react-native-paper";
 
 import { getButtonTextByPublicationState } from "../../utils/PublicationHelper";
@@ -11,6 +11,7 @@ import {
   PublicationActionsDialog,
   PublicationOwnerActionsDialog,
   PublicationUserInfoDialog,
+  Row,
 } from "../../components";
 
 import { getMockedProfile } from "../../utils/ProfileHelper";
@@ -82,6 +83,19 @@ const ViewPublicationScreen = ({ route, navigation }) => {
           source={{ uri: publication.image }}
           style={{ height: 220, borderRadius: 10 }}
         ></Image>
+        <TouchableOpacity
+          onPress={() => {
+            setContactVisible(true);
+          }}
+        >
+          <Row alignItems="center" additionalStyles={{ marginTop: 10 }}>
+            <Image
+              source={{ uri: CONSTANTS.ICON_INFO }}
+              style={{ width: 40, height: 40, margin: 10 }}
+            />
+            <Text>Información de contacto</Text>
+          </Row>
+        </TouchableOpacity>
         <DescriptionCard text={publication.description} />
         <PublicationDatosCard publication={publication} />
         {!isAdopted && (

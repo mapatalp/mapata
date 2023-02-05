@@ -22,10 +22,12 @@ const SocialButton = (props) => {
         }
       }}
     >
+      {iconUrl && 
       <Image
-        source={{ uri: iconUrl }}
-        style={{ width: 40, height: 40, margin: 5 }}
+      source={{ uri: iconUrl}}
+      style={{ width: 40, height: 40, margin: 5 }}
       />
+    }
     </TouchableOpacity>
   );
 };
