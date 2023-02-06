@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { View } from "react-native";
+import { View, Linking } from "react-native";
 import { useFormik } from "formik";
 import { useTheme } from "react-native-paper";
 import * as WebBrowser from "expo-web-browser";
@@ -14,6 +14,7 @@ import {
   Row,
   Divider,
   ScreenWithInputs,
+  Modal,
 } from "../../../components";
 import { LogoMapata } from "../../../components/Svg";
 
@@ -27,6 +28,7 @@ const RegisterScreen = () => {
   const [loading, setLoading] = useState(false);
   const { navigate } = useNavigation();
   const { colors } = useTheme();
+  const [showNextSteps, setShowNextSteps] = useState(false);
 
   const [request, response, promptAsync] = Google.useIdTokenAuthRequest({
     clientId:
@@ -83,6 +85,48 @@ const RegisterScreen = () => {
     },
   });
 
+  const ModalRedes = () => {
+    return (
+      <Modal
+        onPress={() => navigate(ROUTES.SCREEN.REGISTER_SUCCESS)}
+        showModalMap={showNextSteps}
+        setShowModalMap={setShowNextSteps}
+        positiveButtonText="Aceptar"
+      >
+        <View>
+          <Text
+            style={{
+              fontWeight: "bold",
+              fontSize: 20,
+              marginBottom: 20,
+              color: "#645a56",
+              width: "100%",
+              alignSelf: "center",
+            }}
+          >
+            ¡Atención!
+          </Text>
+          <Text
+            style={{
+              marginBottom: 20,
+              color: "#645a56",
+              alignSelf: "center",
+            }}
+          >
+            Para registrarte como refugio mandá un mail a{" "}
+            <Text
+              style={{
+                fontWeight: "bold",
+              }}
+            >
+              mapatalp@gmail.com
+            </Text>
+          </Text>
+        </View>
+      </Modal>
+    );
+  };
+
   return (
     <>
       {loading && <Loading show />}
@@ -99,7 +143,9 @@ const RegisterScreen = () => {
           </Row>
           <Row justifyContent="center">
             <Text
-              onPress={() => {}}
+              onPress={() => {
+                setShowNextSteps(true);
+              }}
               numberOfLines={1}
               style={{ color: "#005390" }}
               lineBreakMode={"tail"}
@@ -182,6 +228,7 @@ const RegisterScreen = () => {
             Inicia Sesión
           </Text>
         </Row>
+        <ModalRedes />
       </ScreenWithInputs>
     </>
   );

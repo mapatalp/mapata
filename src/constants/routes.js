@@ -12,6 +12,7 @@ const ROUTES = {
     LOGIN_PASSWORD: "LoginPasswordScreen",
     REGISTER: "RegisterScreen",
     REGISTER_PASSWORD: "RegisterPasswordScreen",
+    REGISTER_SUCCESS: "RegisterSuccessScreen",
     CREATE_PUBLICATION: "CreatePublicationScreen",
     VIEW_PUBLICATION: "ViewPublicationScreen",
   },

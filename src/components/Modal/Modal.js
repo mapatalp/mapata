@@ -12,7 +12,14 @@ import Button from "../../components/Button/Button";
  * onPress: onPress
  * }} props
  */
-const ModalMapata = ({ children, showModalMap, setShowModalMap, onPress }) => {
+const ModalMapata = ({
+  children,
+  showModalMap,
+  setShowModalMap,
+  onPress,
+  positiveButtonText,
+  title,
+}) => {
   const { colors } = useTheme();
 
   return (
@@ -49,7 +56,7 @@ const ModalMapata = ({ children, showModalMap, setShowModalMap, onPress }) => {
                   buttonColor={colors.primary}
                   onPress={onPress}
                 >
-                  Guardar
+                  {positiveButtonText != null ? positiveButtonText : "Guardar"}
                 </Button>
               </Column>
               <Column>
