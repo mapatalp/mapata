@@ -3,10 +3,7 @@ import { View, Text } from "react-native";
 import { WebView } from "react-native-webview";
 import { Callout } from "react-native-maps";
 
-/**
- * @param {import("react-native-paper").CustomMarkerWindowProps} props
- */
-const CustomMarkerWindow = ({ publication, onPress, colors }) => {
+const CustomMarkerWindow = ({ item, onPress, colors }) => {
   return (
     <Callout
       tooltip
@@ -33,14 +30,16 @@ const CustomMarkerWindow = ({ publication, onPress, colors }) => {
             color: colors.white,
           }}
         >
-          {publication.title}
+          {item.label}
         </Text>
-        <View style={{ borderRadius: 10 }}>
-          <WebView
-            style={{ height: 100, width: 200, borderRadius: 10 }}
-            source={{ uri: publication.image }}
-          />
-        </View>
+        {item.image && (
+          <View style={{ borderRadius: 10 }}>
+            <WebView
+              style={{ height: 100, width: 200, borderRadius: 10 }}
+              source={{ uri: item.image }}
+            />
+          </View>
+        )}
       </View>
     </Callout>
   );

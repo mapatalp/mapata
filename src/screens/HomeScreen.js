@@ -12,7 +12,7 @@ import ROUTES from "../constants/routes";
 
 import { Loading } from "../components";
 import { CustomMarkerWindow } from "../components";
-import { PawMarker } from "../components/Svg";
+import { AnimalShelterMarker, PawMarker } from "../components/Svg";
 
 import { setAllPublications } from "../redux/slice/publication";
 import { setPublications as setLoggedUserPublications } from "../redux/slice/user";
@@ -25,6 +25,7 @@ const HomeScreen = () => {
   const { colors } = useTheme();
 
   const [publications, setPublications] = useState([]);
+  const [refugios, setRefugios] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const { navigate } = useNavigation();
@@ -97,6 +98,15 @@ const HomeScreen = () => {
       dispatch(setLoggedUserPublications(userLoggedPublications));
     });
 
+    const usersRef = ref(db, "/users");
+
+    onValue(usersRef, (snapshot) => {
+      const users = Object.values(snapshot.val());
+      console.log("🚀 ~ file: HomeScreen.js:105 ~ onValue ~ users", users);
+
+      setRefugios(users.filter((user) => user?.refugio === true));
+    });
+
     prepare();
   }, []);
 
@@ -132,11 +142,36 @@ const HomeScreen = () => {
                 </View>
                 <CustomMarkerWindow
                   publication={publication}
+                  item={{ label: publication.title, image: publication.image }}
                   onPress={() => handleMarkerPress(publication)}
                   colors={colors}
                 />
               </Marker>
             ))}
+          {refugios &&
+            refugios.length > 0 &&
+            refugios.map(
+              (refugio, ix) =>
+                !!refugio?.location && (
+                  <Marker
+                    key={`key-marker-${refugio.uid}-${ix}`}
+                    coordinate={refugio.location}
+                    borderRadius={10}
+                  >
+                    <View>
+                      <AnimalShelterMarker width={35} height={35} />
+                    </View>
+                    <CustomMarkerWindow
+                      item={{
+                        label: refugio.name,
+                        image: !!refugio?.image && refugio?.image[0],
+                      }}
+                      onPress={() => console.log(refugio)}
+                      colors={colors}
+                    />
+                  </Marker>
+                )
+            )}
         </MapView>
       )}
 

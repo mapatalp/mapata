@@ -49,6 +49,18 @@ const getUserByID = async (id) => {
   return user;
 };
 
+const getRefugios = async () => {
+  // me traigo todos los usuarios
+  const users = await get(ref(db, "/users"));
+
+  // filtro por tipo
+  const refugios = Object.values(users.val()).filter(
+    (user) => user?.refugio && user.refugio === true
+  );
+
+  return refugios;
+};
+
 const editUser = async (user) => {
   // mando los datos a firebase
   await update(ref(db, "/users/" + user.id), {
@@ -63,4 +75,4 @@ const editUser = async (user) => {
   );
 };
 
-export { createUser, logOut, getUserByUID, editUser, getUserByID };
+export { createUser, logOut, getUserByUID, editUser, getUserByID, getRefugios };
