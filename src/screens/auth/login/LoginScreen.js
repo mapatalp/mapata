@@ -21,6 +21,8 @@ import ROUTES from "../../../constants/routes";
 import { initialValues, validationSchema } from "./LoginScreen.data";
 import useAuth from "../../../customHooks/useAuth";
 import { createUser, getUserByUID } from "../../../firebase/methods/user";
+import { store } from "../../../redux";
+import { setUser } from "../../../redux/slice/user";
 
 WebBrowser.maybeCompleteAuthSession();
 const LoginScreen = () => {
@@ -54,7 +56,9 @@ const LoginScreen = () => {
               uid,
             });
           } else {
-            await getUserByUID(uid);
+            const user = await getUserByUID(uid);
+            // lo guardo en el store
+            store.dispatch(setUser(user));
           }
         });
       }

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Image, ScrollView, Text } from "react-native";
+import { View, Image, ScrollView, Text, TouchableOpacity } from "react-native";
 import { useTheme } from "react-native-paper";
 
 import { getButtonTextByPublicationState } from "../../utils/PublicationHelper";
@@ -11,12 +11,14 @@ import {
   PublicationActionsDialog,
   PublicationOwnerActionsDialog,
   PublicationUserInfoDialog,
+  Row,
 } from "../../components";
 
 import { getMockedProfile } from "../../utils/ProfileHelper";
 import CONSTANTS from "../../constants/constants";
 import { store } from "../../redux";
 import ROUTES from "../../constants/routes";
+import { getUserByID } from "../../firebase/methods/user";
 
 const ViewPublicationScreen = ({ route, navigation }) => {
   const { publication } = route.params;
@@ -35,7 +37,18 @@ const ViewPublicationScreen = ({ route, navigation }) => {
   const [actionsVisible, setActionsVisible] = useState(false);
   const [ownerActionsVisible, setTransitanteActionsVisible] = useState(false);
   const [contactVisible, setContactVisible] = useState(false);
+  const [publicanteInfo, setPublicanteInfo] = useState();
 
+  useEffect(() => {
+    const getPublicanteInfo = async () => {
+      let publicanteInfo = await getUserByID(publication.userId);
+      setPublicanteInfo(publicanteInfo);
+    };
+
+    if (publication.userId) {
+      getPublicanteInfo();
+    }
+  }, [publication]);
   return (
     <View style={{ margin: 10 }}>
       <PublicationActionsDialog
@@ -54,7 +67,15 @@ const ViewPublicationScreen = ({ route, navigation }) => {
         visible={contactVisible}
         hideDialog={() => setContactVisible(false)}
         colors={colors}
-        socialMediaList={profile.socialMediaList}
+        socialMediaList={
+          publicanteInfo
+            ? [
+                publicanteInfo.facebook,
+                publicanteInfo.instagram,
+                publicanteInfo.whatsapp,
+              ]
+            : []
+        }
         isPerdido={isPerdido}
       />
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -62,6 +83,19 @@ const ViewPublicationScreen = ({ route, navigation }) => {
           source={{ uri: publication.image }}
           style={{ height: 220, borderRadius: 10 }}
         ></Image>
+        <TouchableOpacity
+          onPress={() => {
+            setContactVisible(true);
+          }}
+        >
+          <Row alignItems="center" additionalStyles={{ marginTop: 10 }}>
+            <Image
+              source={{ uri: CONSTANTS.ICON_INFO }}
+              style={{ width: 40, height: 40, margin: 10 }}
+            />
+            <Text>Información de contacto</Text>
+          </Row>
+        </TouchableOpacity>
         <DescriptionCard text={publication.description} />
         <PublicationDatosCard publication={publication} />
         {!isAdopted && (

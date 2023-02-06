@@ -10,6 +10,9 @@ import Toast from "react-native-toast-message";
 import Navigation from "./src/navigation/Navigation";
 import { theme } from "./src/ui";
 import { store } from "./src/redux";
+import { getItemFromLS } from "./src/utils/StorageHelper";
+import { getUserByID } from "./src/firebase/methods/user";
+import { setUser } from "./src/redux/slice/user";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -20,6 +23,9 @@ export default function App() {
     async function prepare() {
       try {
         // make any API calls you need to do here
+
+        loadUser();
+
         return true;
       } catch (e) {
         console.warn(e);
@@ -31,6 +37,15 @@ export default function App() {
 
     prepare();
   }, []);
+
+  const loadUser = async () => {
+    const userFromLS = await getItemFromLS("user");
+
+    if (userFromLS) {
+      const user = await getUserByID(userFromLS.id);
+      store.dispatch(setUser(user));
+    }
+  };
 
   const onReady = useCallback(async () => {
     if (appIsReady) {

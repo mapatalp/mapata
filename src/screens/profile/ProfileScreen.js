@@ -7,24 +7,31 @@ import {
   Text,
   Carousel,
   Modal,
+  Column,
+  TextInput,
 } from "../../components";
 import ProfileTabsScreen from "./ProfileTabsScreen";
-import { getMockedProfile } from "../../utils/ProfileHelper";
 import DescriptionCard from "../../components/Cards/DescriptionCard";
-import { store } from "../../redux";
 import { useTheme } from "react-native-paper";
 import { editUser } from "../../firebase/methods/user";
+import { useSelector } from "react-redux";
 
 const ProfileScreen = () => {
   let isSelf = true;
-  let profile = getMockedProfile();
-  const { user } = store.getState();
+
+  const data = useSelector((state) => state.user.data);
+
   const { colors } = useTheme();
-  const [image, setImage] = useState("");
-  const [isRefugio, setIsRefugio] = useState(false);
-  const [isEditing, setIsEditing] = useState(false);
 
   const [dataCarousel, setDataCarousel] = useState([]);
+  const [isRefugio, setIsRefugio] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [image, setImage] = useState("");
+  const [redes, setRedes] = useState({
+    facebook: data.facebook || "",
+    instagram: data.instagram || "",
+    whatsapp: data.whatsapp || "",
+  });
 
   useEffect(() => {
     if (dataCarousel.length < 5 && !dataCarousel.includes("uploadData")) {
@@ -35,17 +42,17 @@ const ProfileScreen = () => {
   }, []);
 
   useEffect(() => {
-    if (user.data) {
-      setIsRefugio(!!user.data.refugio);
+    if (data) {
+      setIsRefugio(!!data.refugio);
       setDataCarousel(
-        user.data.images && user.data.images.length < 5
-          ? [...user.data.images, "uploadData"]
-          : user.data.images && user.data.images > 0
-          ? user.data.images
+        data.images && data.images.length < 5
+          ? [...data.images, "uploadData"]
+          : data.images && data.images > 0
+          ? data.images
           : ["uploadData"]
       );
     }
-  }, [user]);
+  }, [data]);
 
   useEffect(() => {
     if (image !== "") {
@@ -62,7 +69,7 @@ const ProfileScreen = () => {
       setDataCarousel(dataCarouselTemp);
 
       let userData = {
-        ...user.data,
+        ...data,
         images: dataCarouselTemp.filter(
           (item) => item && item !== "uploadData"
         ),
@@ -72,12 +79,25 @@ const ProfileScreen = () => {
     }
   }, [image]);
 
-  const username = useMemo(() => user?.data?.username, [user]);
+  const username = useMemo(() => data?.username, [data]);
 
   const saveData = (texto) => {
     let userData = {
-      ...user.data,
+      ...data,
       description: texto,
+      facebook: redes.facebook,
+      instagram: redes.instagram,
+      whatsapp: redes.whatsapp,
+    };
+    editUser(userData);
+  };
+
+  const saveMedia = () => {
+    let userData = {
+      ...user.data,
+      facebook: redes.facebook,
+      instagram: redes.instagram,
+      whatsapp: redes.whatsapp,
     };
     editUser(userData);
   };
@@ -85,12 +105,48 @@ const ProfileScreen = () => {
   const ModalRedes = () => {
     return (
       <Modal
-        onPress={() => console.log("on press")}
+        onPress={() => {
+          saveMedia();
+          setIsEditing(false);
+        }}
         showModalMap={isEditing}
         setShowModalMap={setIsEditing}
+        backgroundColor={"#BDBDBD"}
       >
         <View>
-          <Text>ACA VAN LAS REDES</Text>
+          <Row>
+            <Column additionalStyles={{ width: "100%" }}>
+              <TextInput
+                placeholder="Facebook url"
+                value={redes.facebook}
+                onChangeText={(title) =>
+                  setRedes({ ...redes, facebook: title })
+                }
+              />
+            </Column>
+          </Row>
+          <Row>
+            <Column additionalStyles={{ width: "100%" }}>
+              <TextInput
+                placeholder="Instagram url"
+                value={redes.instagram}
+                onChangeText={(title) =>
+                  setRedes({ ...redes, instagram: title })
+                }
+              />
+            </Column>
+          </Row>
+          <Row>
+            <Column additionalStyles={{ width: "100%" }}>
+              <TextInput
+                placeholder="whatsapp"
+                value={redes.whatsapp}
+                onChangeText={(title) =>
+                  setRedes({ ...redes, whatsapp: title })
+                }
+              />
+            </Column>
+          </Row>
         </View>
       </Modal>
     );
@@ -120,27 +176,30 @@ const ProfileScreen = () => {
 
       {isRefugio && (
         <DescriptionCard
-          text={user.data.description}
-          saveData={(texto) => saveData(texto)}
+          isSelf={isSelf}
+          text={data.description}
+          saveData={(text) => saveData(text)}
         />
       )}
 
-      <Row justifyContent="flex-end">
-        <Text
-          style={{
-            marginTop: 10,
-            marginHorizontal: 20,
-            fontWeight: "bold",
-            fontSize: 15,
-            color: "black",
-          }}
-          onPress={() => {
-            setIsEditing(!isEditing);
-          }}
-        >
-          Editar redes
-        </Text>
-      </Row>
+      {isSelf && (
+        <Row justifyContent="flex-end">
+          <Text
+            style={{
+              marginTop: 10,
+              marginHorizontal: 20,
+              fontWeight: "bold",
+              fontSize: 15,
+              color: "black",
+            }}
+            onPress={() => {
+              setIsEditing(true);
+            }}
+          >
+            Editar redes
+          </Text>
+        </Row>
+      )}
 
       <Row
         additionalStyles={{
@@ -149,13 +208,13 @@ const ProfileScreen = () => {
           marginBottom: 15,
         }}
       >
-        {profile.socialMediaList.map((item, index) => {
-          return <SocialButton key={"key-profile-" + index} socialUrl={item} />;
-        })}
+        {Object.values(redes).map((item, index) => (
+          <SocialButton key={"key-profile-" + index} socialUrl={item} />
+        ))}
       </Row>
-      <ProfileTabsScreen isSelf={isSelf} user={user} />
+      <ProfileTabsScreen isSelf={isSelf} />
 
-      <ModalRedes />
+      {ModalRedes()}
     </ScrollView>
   );
 };

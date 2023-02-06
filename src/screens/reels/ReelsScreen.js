@@ -1,21 +1,21 @@
 import React, { useState } from "react";
 import { View, ScrollView } from "react-native";
 import { Searchbar } from "react-native-paper";
-import _ from "lodash";
+import { useSelector } from "react-redux";
+import { cloneDeep } from "lodash";
 
 import { PublicationReel } from "../../components";
 
 import { filterPublicationsNoParser } from "../../utils/PublicationHelper";
-import { store } from "../../redux";
 
 const ReelsScreen = () => {
   const [searchQuery, setSearchQuery] = useState("");
 
   const onChangeSearch = (query) => setSearchQuery(query);
 
-  let { publication } = store.getState();
+  const { data } = useSelector((state) => state.publication);
 
-  const publications = _.cloneDeep(publication.data);
+  let publications = cloneDeep(data);
 
   return (
     <View style={{ margin: 15, marginBottom: 60 }}>
