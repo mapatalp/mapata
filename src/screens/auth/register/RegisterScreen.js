@@ -5,6 +5,7 @@ import { useFormik } from "formik";
 import { useTheme } from "react-native-paper";
 import * as WebBrowser from "expo-web-browser";
 import * as Google from "expo-auth-session/providers/google";
+import CONSTANTS from "../../../constants/constants";
 
 import {
   Button,
@@ -24,6 +25,7 @@ import useAuth from "../../../customHooks/useAuth";
 import { createUser, getUserByUID } from "../../../firebase/methods/user";
 import { store } from "../../../redux";
 import { setUser } from "../../../redux/slice/user";
+import { sendEmail } from "../../../utils/SendMailHelper";
 
 WebBrowser.maybeCompleteAuthSession();
 const RegisterScreen = () => {
@@ -92,7 +94,11 @@ const RegisterScreen = () => {
   const ModalRedes = () => {
     return (
       <Modal
-        onPress={() => navigate(ROUTES.SCREEN.REGISTER_SUCCESS)}
+        onPress={() =>
+          Linking.openURL(
+            `${CONSTANTS.SOCIALS.WHATSAPP.BASE_URL}?phone=+542216169971`
+          )
+        }
         showModalMap={showNextSteps}
         setShowModalMap={setShowNextSteps}
         positiveButtonText="Aceptar"
@@ -117,11 +123,21 @@ const RegisterScreen = () => {
               alignSelf: "center",
             }}
           >
-            Para registrarte como refugio mandá un mail a{" "}
+            Para registrarte como refugio mandanos un mensaje por WhatsApp.
+            {"\n"}
+            {"\n"}De manera alternativa, te proporcionamos nuestro mail:{" "}
             <Text
               style={{
                 fontWeight: "bold",
+                color: "#005390",
               }}
+              onPress={() =>
+                sendEmail(
+                  "mapatalp@gmail.com",
+                  "Solicitud de registro refugio",
+                  "Hola!"
+                )
+              }
             >
               mapatalp@gmail.com
             </Text>
