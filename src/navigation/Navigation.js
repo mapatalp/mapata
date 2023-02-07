@@ -20,6 +20,7 @@ import {
   RegisterScreen,
   LoginPasswordScreen,
   RegisterPasswordScreen,
+  RegisterSuccessScreen,
 } from "../screens/auth";
 
 import { AppHeader } from "../components";
@@ -134,6 +135,13 @@ function AuthenticationStack() {
       <AuthenticationStackNavigator.Screen
         name={ROUTES.SCREEN.REGISTER_PASSWORD}
         component={RegisterPasswordScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <AuthenticationStackNavigator.Screen
+        name={ROUTES.SCREEN.REGISTER_SUCCESS}
+        component={RegisterSuccessScreen}
         options={{
           headerShown: false,
         }}

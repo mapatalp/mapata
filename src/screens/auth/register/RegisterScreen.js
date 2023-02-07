@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { View } from "react-native";
+import { View, Linking } from "react-native";
 import { useFormik } from "formik";
 import { useTheme } from "react-native-paper";
 import * as WebBrowser from "expo-web-browser";
 import * as Google from "expo-auth-session/providers/google";
+import CONSTANTS from "../../../constants/constants";
 
 import {
   Button,
@@ -14,6 +15,7 @@ import {
   Row,
   Divider,
   ScreenWithInputs,
+  Modal,
 } from "../../../components";
 import { LogoMapata } from "../../../components/Svg";
 
@@ -23,12 +25,14 @@ import useAuth from "../../../customHooks/useAuth";
 import { createUser, getUserByUID } from "../../../firebase/methods/user";
 import { store } from "../../../redux";
 import { setUser } from "../../../redux/slice/user";
+import { sendEmail } from "../../../utils/SendMailHelper";
 
 WebBrowser.maybeCompleteAuthSession();
 const RegisterScreen = () => {
   const [loading, setLoading] = useState(false);
   const { navigate } = useNavigation();
   const { colors } = useTheme();
+  const [showNextSteps, setShowNextSteps] = useState(false);
 
   const [request, response, promptAsync] = Google.useIdTokenAuthRequest({
     clientId:
@@ -87,6 +91,66 @@ const RegisterScreen = () => {
     },
   });
 
+  const ModalRedes = () => {
+    return (
+      <Modal
+        onPress={() =>
+          Linking.openURL(
+            `${CONSTANTS.SOCIALS.WHATSAPP.BASE_URL}?phone=+541136133363`
+          ).then(() => {
+            navigate(ROUTES.SCREEN.REGISTER_SUCCESS);
+          })
+        }
+        showModalMap={showNextSteps}
+        setShowModalMap={setShowNextSteps}
+        positiveButtonText="Aceptar"
+      >
+        <View>
+          <Text
+            style={{
+              fontWeight: "bold",
+              fontSize: 20,
+              marginBottom: 20,
+              color: "#645a56",
+              width: "100%",
+              alignSelf: "center",
+            }}
+          >
+            ¡Atención!
+          </Text>
+          <Text
+            style={{
+              marginBottom: 20,
+              color: "#645a56",
+              alignSelf: "center",
+            }}
+          >
+            Para registrarte como refugio mandanos un mensaje por WhatsApp.
+            {"\n"}
+            {"\n"}De manera alternativa, te proporcionamos nuestro mail:{" "}
+            <Text
+              style={{
+                fontWeight: "bold",
+                color: "#005390",
+              }}
+              onPress={() =>
+                sendEmail(
+                  "mapatalp@gmail.com",
+                  "Solicitud de registro refugio",
+                  "Hola!"
+                ).then(() => {
+                  navigate(ROUTES.SCREEN.REGISTER_SUCCESS);
+                })
+              }
+            >
+              mapatalp@gmail.com
+            </Text>
+          </Text>
+        </View>
+      </Modal>
+    );
+  };
+
   return (
     <>
       {loading && <Loading show />}
@@ -103,9 +167,11 @@ const RegisterScreen = () => {
           </Row>
           <Row justifyContent="center">
             <Text
-              onPress={() => {}}
+              onPress={() => {
+                setShowNextSteps(true);
+              }}
               numberOfLines={1}
-              style={{ color: "#005390" }}
+              style={{ color: "#005390", padding: 5 }}
               lineBreakMode={"tail"}
               variant={"titleSmall"}
             >
@@ -186,6 +252,7 @@ const RegisterScreen = () => {
             Inicia Sesión
           </Text>
         </Row>
+        <ModalRedes />
       </ScreenWithInputs>
     </>
   );

@@ -17,6 +17,8 @@ const ModalMapata = ({
   showModalMap,
   setShowModalMap,
   onPress,
+  positiveButtonText,
+  title,
   backgroundColor,
 }) => {
   const { colors } = useTheme();
@@ -84,7 +86,7 @@ const ModalMapata = ({
                   buttonColor={colors.primary}
                   onPress={onPress}
                 >
-                  Guardar
+                  {positiveButtonText != null ? positiveButtonText : "Guardar"}
                 </Button>
               </Column>
               <Column>
