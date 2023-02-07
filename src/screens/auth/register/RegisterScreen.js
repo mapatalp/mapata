@@ -167,7 +167,7 @@ const RegisterScreen = () => {
                 setShowNextSteps(true);
               }}
               numberOfLines={1}
-              style={{ color: "#005390" }}
+              style={{ color: "#005390", padding: 5 }}
               lineBreakMode={"tail"}
               variant={"titleSmall"}
             >
