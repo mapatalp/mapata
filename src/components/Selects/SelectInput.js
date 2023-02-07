@@ -3,9 +3,7 @@ import { useTheme } from "react-native-paper";
 import SelectDropdown from "react-native-select-dropdown";
 
 /**
- *
  * @param {import("react-native-select-dropdown").SelectDropdownProps} props
- * @returns
  */
 const SelectInput = (props) => {
   const { colors } = useTheme();

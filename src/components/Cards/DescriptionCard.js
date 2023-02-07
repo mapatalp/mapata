@@ -5,9 +5,6 @@ import { useState } from "react";
 import TextInput from "../Inputs/TextInput";
 import Row from "../Grid/Row";
 
-/**
- * @param {import("react-native-paper").RefugioDescriptionProps} props
- */
 const RefugioDescription = ({ text, saveData, isSelf }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [texto, setTexto] = useState(text);

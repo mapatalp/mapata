@@ -29,9 +29,6 @@ const styles = StyleSheet.create({
   },
 });
 
-/**
- * @param {import("react-native-paper").UserProfilePicProps} props
- */
 const UserProfilePic = () => {
   const [imageUrl, setImageUrl] = useState(false);
 
