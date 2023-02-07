@@ -19,6 +19,7 @@ import CONSTANTS from "../../constants/constants";
 import { store } from "../../redux";
 import ROUTES from "../../constants/routes";
 import { getUserByID } from "../../firebase/methods/user";
+import { openURL } from "expo-linking";
 
 const ViewPublicationScreen = ({ route, navigation }) => {
   const { publication } = route.params;
@@ -45,6 +46,19 @@ const ViewPublicationScreen = ({ route, navigation }) => {
       getPublicanteInfo();
     }
   }, [publication]);
+
+  const createNavigationURL = (lat, lng) => {
+    const scheme = Platform.select({
+      ios: `maps:0.001?q=`,
+      android: `geo:0.001?q=`,
+    });
+    const latLng = `${lat},${lng}`;
+    const url = Platform.select({
+      ios: `${scheme}@${latLng}`,
+      android: `${scheme}${latLng}`,
+    });
+    return url;
+  };
   return (
     <View style={{ margin: 10 }}>
       <PublicationActionsDialog
@@ -79,6 +93,24 @@ const ViewPublicationScreen = ({ route, navigation }) => {
           source={{ uri: publication.image }}
           style={{ height: 220, borderRadius: 10 }}
         ></Image>
+        <TouchableOpacity
+          onPress={() => {
+            openURL(
+              createNavigationURL(
+                publication.location.latitude,
+                publication.location.longitude
+              )
+            );
+          }}
+        >
+          <Row alignItems="center" additionalStyles={{ marginTop: 10 }}>
+            <Image
+              source={{ uri: CONSTANTS.GOOGLE_MAPS }}
+              style={{ width: 40, height: 40, margin: 10, marginBottom: 0 }}
+            />
+            <Text>Abrir en google maps</Text>
+          </Row>
+        </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
             setContactVisible(true);

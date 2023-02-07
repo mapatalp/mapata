@@ -25,6 +25,8 @@ const CONSTANTS = {
   },
   ICON_INFO:
     "https://cdn-icons-png.flaticon.com/512/665/665049.png",
+    GOOGLE_MAPS:
+    "https://assets.stickpng.com/images/588891debc2fc2ef3a1860a2.png",
   ANIMAL_TYPE: {
     GATO: 0,
     PERRO: 1,
