@@ -5,16 +5,11 @@ import { addPublication, updatePublication } from "../../redux/slice/user";
 
 const createPublication = async (publication, userId) => {
   const newPublicationKey = push(child(ref(db), "/publications")).key;
-  let transitanteId = "";
-  if (publication.state == "En tránsito") {
-    transitanteId = userId;
-  }
   let newPublication = {
     ...publication,
     userId: userId,
     date: new Date().toISOString().split("T")[0],
     id: newPublicationKey,
-    transitanteId: transitanteId,
   };
   const updatePublication = {};
   updatePublication["/publications/" + newPublicationKey] = newPublication;
@@ -42,7 +37,7 @@ function adoptarAnimal(publication, adoptanteId) {
     ...publication,
   };
   newPublication.state = "Adoptado";
-  newPublication.adopterId = adoptanteId;
+  newPublication.userId = adoptanteId;
   editPublication(newPublication, newPublication.userId);
 }
 
@@ -51,7 +46,7 @@ function transitarAnimal(publication, transitanteId) {
     ...publication,
   };
   newPublication.state = "En tránsito";
-  newPublication.transitanteId = transitanteId;
+  newPublication.userId = transitanteId;
   editPublication(newPublication, newPublication.userId);
 }
 

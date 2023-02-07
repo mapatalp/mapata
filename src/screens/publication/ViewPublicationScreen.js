@@ -27,12 +27,8 @@ const ViewPublicationScreen = ({ route, navigation }) => {
   let isAdopted = publication.adopterId != null;
   let profile = getMockedProfile();
   let isOwner = user.data.id === publication.userId;
-  let isTransitante = user.data.id === publication.transitanteId;
   let isPerdido = publication.state === "Lo perdí";
-  let buttonText = getButtonTextByPublicationState(
-    publication.state,
-    isTransitante
-  );
+  let buttonText = getButtonTextByPublicationState(publication.state, isOwner);
 
   const [actionsVisible, setActionsVisible] = useState(false);
   const [ownerActionsVisible, setTransitanteActionsVisible] = useState(false);
@@ -112,7 +108,7 @@ const ViewPublicationScreen = ({ route, navigation }) => {
             labelStyle={{ color: colors.primary }}
             onPress={() =>
               publication.state === "En tránsito"
-                ? isTransitante
+                ? isOwner
                   ? setTransitanteActionsVisible(true)
                   : setContactVisible(true)
                 : isPerdido
