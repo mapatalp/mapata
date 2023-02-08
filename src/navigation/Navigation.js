@@ -227,6 +227,13 @@ function MainStack() {
         canGoBack
         options={{ headerShown: false }}
       />
+      <MainStackNavigator.Screen
+        name={ROUTES.SCREEN.PROFILE}
+        component={ProfileScreen}
+        options={{
+          header: () => <AppHeader title={"Mapata"} />,
+        }}
+      />
     </MainStackNavigator.Navigator>
   );
 }

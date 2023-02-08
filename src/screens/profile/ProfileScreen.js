@@ -16,10 +16,13 @@ import { useTheme } from "react-native-paper";
 import { editUser } from "../../firebase/methods/user";
 import { useSelector } from "react-redux";
 
-const ProfileScreen = () => {
+const ProfileScreen = ({ route }) => {
+  const { refugioParam } = route?.params || {};
   let isSelf = true;
-
-  const data = useSelector((state) => state.user.data);
+  const data =
+    refugioParam != null
+      ? refugioParam
+      : useSelector((state) => state.user.data);
 
   const { colors } = useTheme();
 

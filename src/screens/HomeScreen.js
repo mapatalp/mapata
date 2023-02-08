@@ -166,7 +166,10 @@ const HomeScreen = () => {
                         label: refugio.name,
                         image: !!refugio?.image && refugio?.image[0],
                       }}
-                      onPress={() => console.log(refugio)}
+                      onPress={() => {
+                        let refugioParam = refugio;
+                        navigate(ROUTES.SCREEN.PROFILE, { refugioParam });
+                      }}
                       colors={colors}
                     />
                   </Marker>
